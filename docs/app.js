@@ -228,33 +228,12 @@ function init() {
 
     async function fetchSheetIdeas() {
         try {
-            const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues?labels=${ISSUE_LABEL}&state=open`, {
-                headers: { 'Accept': 'application/vnd.github.v3+json' }
-            });
-            const issues = await response.json();
-            
-            return issues.map(issue => {
-                // Parse estimate from body (looks for "Estimación: text")
-                const estimateMatch = issue.body.match(/Estimación:\s*(.*)/i);
-                const estimate = estimateMatch ? estimateMatch[1] : "";
-                const cleanBody = issue.body.replace(/Estimación:\s*.*/i, '').trim();
-
-                return {
-                    id: issue.id,
-                    number: issue.number,
-                    title: issue.title,
-                    description: cleanBody,
-                    estimate: estimate,
-                    author: issue.user.login,
-                    votes: issue.reactions ? (issue.reactions['+1'] + issue.reactions['heart'] + issue.reactions['hooray'] || 0) : issue.comments, // Fallback to comments if no reactions
-                    status: issue.labels.find(l => l.name !== ISSUE_LABEL)?.name || "Nueva",
-                    tags: [ISSUE_LABEL],
-                    comments_url: issue.html_url,
-                    comments_count: issue.comments
-                };
-            });
+            const response = await fetch(`${SHEET_URL}?action=get`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const ideas = await response.json();
+            return ideas || [];
         } catch (e) {
-            console.error("Error fetching GitHub ideas", e);
+            console.error("Error fetching Google Sheet ideas", e);
             return [];
         }
     }
@@ -288,7 +267,8 @@ function init() {
             try {
                 await fetch(SHEET_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({ action: 'vote', id: idea.id })
                 });
                 renderIdeas();
@@ -344,7 +324,8 @@ function init() {
             try {
                 await fetch(SHEET_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({ action: 'add', title, description: desc, estimate })
                 });
                 closeModal();
