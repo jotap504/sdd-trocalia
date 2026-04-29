@@ -282,9 +282,13 @@ function init() {
             </div>
             <div class="idea-comments">
                 <h4>Comentarios / Sub-ideas:</h4>
-                <ul>
+                <ul class="comments-list">
                     ${(idea.comments || ['Esperando feedback del equipo...']).map(c => `<li>${c}</li>`).join('')}
                 </ul>
+                <div class="comment-input-group">
+                    <input type="text" placeholder="Añadir comentario..." class="new-comment-input">
+                    <button class="btn-add-comment">Añadir</button>
+                </div>
             </div>
         `;
 
@@ -298,6 +302,36 @@ function init() {
             setTimeout(() => voteBtn.style.transform = 'scale(1)', 200);
         });
 
+        const commentInput = card.querySelector('.new-comment-input');
+        const addCommentBtn = card.querySelector('.btn-add-comment');
+        const commentsList = card.querySelector('.comments-list');
+
+        const submitComment = () => {
+            const text = commentInput.value.trim();
+            if (text) {
+                // UI Update
+                const li = document.createElement('li');
+                li.textContent = text;
+                commentsList.appendChild(li);
+                commentInput.value = '';
+
+                // Persist
+                try {
+                    const extraComments = JSON.parse(localStorage.getItem('tradealo_extra_comments') || '{}');
+                    if (!extraComments[idea.id]) extraComments[idea.id] = [];
+                    extraComments[idea.id].push(text);
+                    localStorage.setItem('tradealo_extra_comments', JSON.stringify(extraComments));
+                } catch (e) {
+                    console.error("Error saving comment", e);
+                }
+            }
+        };
+
+        addCommentBtn.addEventListener('click', submitComment);
+        commentInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitComment();
+        });
+
         return card;
     }
 
@@ -305,8 +339,10 @@ function init() {
     function renderIdeas() {
         ideasContainer.innerHTML = '';
         let localIdeas = [];
+        let extraComments = {};
         try {
             localIdeas = JSON.parse(localStorage.getItem('tradealo_local_ideas') || '[]');
+            extraComments = JSON.parse(localStorage.getItem('tradealo_extra_comments') || '{}');
         } catch (e) {
             console.error("LocalStorage blocked or corrupted", e);
         }
@@ -314,6 +350,13 @@ function init() {
         // Combined list: local ideas first (newest first), then official ones
         const allIdeas = [...localIdeas].reverse().concat(IDEAS_DATA);
         allIdeas.forEach(idea => {
+            // Merge extra comments if they exist
+            if (extraComments[idea.id]) {
+                if (!idea.comments) idea.comments = [];
+                // Filter duplicates if any (basic check)
+                const combinedComments = [...idea.comments, ...extraComments[idea.id]];
+                idea.comments = combinedComments;
+            }
             ideasContainer.appendChild(createIdeaCard(idea));
         });
     }
