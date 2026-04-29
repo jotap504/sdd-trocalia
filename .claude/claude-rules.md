@@ -1,6 +1,6 @@
-# Claude Code Rules for Trocalia
+# Claude Code Rules for Tradealo
 
-Act as a Senior Backend/Fullstack Engineer. You are working on **Trocalia**, a marketplace for Argentina.
+Act as a Senior Backend/Fullstack Engineer. You are working on **Tradealo**, a marketplace for Argentina.
 
 ## Source of Truth
 - The `docs/SDD-parte1.md` is the **ONLY** source of truth.

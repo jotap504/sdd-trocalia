@@ -1,4 +1,4 @@
-# TROCALIA — SDD v1.0
+# Tradealo — SDD v1.0
 # Parte 5: API Contracts completos + Jobs + Categorías seed
 
 ---
@@ -8,7 +8,7 @@
 ### 13.1 Convenciones generales
 
 ```
-Base URL:          https://api.trocalia.com.ar/api/v1
+Base URL:          https://api.Tradealo.com.ar/api/v1
 Autenticación:     Bearer {accessToken} en header Authorization
 Formato entrada:   application/json
 Formato salida:    application/json
@@ -110,7 +110,7 @@ Response 200:
         "username": "juanperez",
         "firstName": "Juan",
         "lastName": "Pérez",
-        "avatarUrl": "https://cdn.trocalia.com.ar/avatars/uuid.webp",
+        "avatarUrl": "https://cdn.Tradealo.com.ar/avatars/uuid.webp",
         "bio": "Vendo...",
         "whatsapp": "+5491112345678",
         "showPhone": true,
@@ -161,7 +161,7 @@ Response 200:
     "data": {
       "uploadUrl": "https://...", // presigned URL (5 min TTL)
       "r2Key": "avatars/uuid/filename.webp",
-      "publicUrl": "https://cdn.trocalia.com.ar/avatars/uuid/filename.webp"
+      "publicUrl": "https://cdn.Tradealo.com.ar/avatars/uuid/filename.webp"
     }
   }
 
@@ -336,7 +336,7 @@ Guard: JwtAuthGuard
 Body:
   {
     "packId": "uuid",
-    "couponCode": "TROCALIA20",  // opcional
+    "couponCode": "Tradealo20",  // opcional
     "idempotencyKey": "uuid-generado-por-cliente"  // OBLIGATORIO
   }
 Response 201:
@@ -352,7 +352,7 @@ Response 201:
         "finalPrice": "8000.00",
         "currency": "ARS",
         "tokensToReceive": 92,
-        "promotionApplied": "TROCALIA20"
+        "promotionApplied": "Tradealo20"
       }
     }
   }
@@ -408,7 +408,7 @@ Response 201:
       "wasFreeQuota": true,
       "creditsSpent": 0,
       "expiresAt": "2026-05-28T...",
-      "url": "https://trocalia.com.ar/p/uuid"
+      "url": "https://Tradealo.com.ar/p/uuid"
     }
   }
 Errors: 403 KYC_LEVEL_REQUIRED, 402 INSUFFICIENT_TOKENS, 422 VALIDATION_ERROR
@@ -448,7 +448,7 @@ Response 200:
         "condition": "used",
         "type": "premium",
         "isCollectible": false,
-        "primaryImage": "https://cdn.trocalia.com.ar/...",
+        "primaryImage": "https://cdn.Tradealo.com.ar/...",
         "city": "Palermo",
         "province": "Buenos Aires",
         "seller": {
@@ -527,7 +527,7 @@ Response 200:
     "data": {
       "uploadUrl": "https://...",           // presigned PUT URL, 10 min TTL
       "r2Key": "listings/uuid/img-uuid.webp",
-      "publicUrl": "https://cdn.trocalia.com.ar/listings/uuid/img-uuid.webp"
+      "publicUrl": "https://cdn.Tradealo.com.ar/listings/uuid/img-uuid.webp"
     }
   }
 
@@ -891,7 +891,7 @@ export const COLLECTIBLE_ATTRIBUTES_SEED = [
 
 export const EMAIL_TEMPLATES = {
   VERIFY_EMAIL: {
-    subject: 'Verificá tu email en Trocalia',
+    subject: 'Verificá tu email en Tradealo',
     // Variables: { firstName, verificationUrl }
   },
   LISTING_PUBLISHED: {
@@ -907,7 +907,7 @@ export const EMAIL_TEMPLATES = {
     // Variables: { firstName, listingTitle, renewUrl }
   },
   TOKENS_RECEIVED: {
-    subject: 'Recibiste tokens en Trocalia',
+    subject: 'Recibiste tokens en Tradealo',
     // Variables: { firstName, tokensAmount, reason, newBalance }
   },
   KYC_APPROVED: {

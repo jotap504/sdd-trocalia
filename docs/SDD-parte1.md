@@ -1,4 +1,4 @@
-# TROCALIA — SOFTWARE DESIGN DOCUMENT v1.0
+# Tradealo — SOFTWARE DESIGN DOCUMENT v1.0
 # Parte 1: Instrucciones, Stack, Estructura y Convenciones
 
 ---
@@ -100,7 +100,7 @@ REGLA-010: Nunca leer system_config de la DB directamente — siempre via Config
 ## SECCIÓN 1 — VISIÓN Y ALCANCE MVP
 
 ### 1.1 Descripción
-Trocalia es un marketplace argentino donde usuarios pueden publicar productos para vender. Los vendedores usan tokens (créditos) para publicar. La plataforma cobra solo por la venta de tokens, no por las transacciones entre usuarios.
+Tradealo es un marketplace argentino donde usuarios pueden publicar productos para vender. Los vendedores usan tokens (créditos) para publicar. La plataforma cobra solo por la venta de tokens, no por las transacciones entre usuarios.
 
 ### 1.2 Alcance MVP — Argentina únicamente
 
@@ -207,7 +207,7 @@ SMS/Push:         OneSignal
 ## SECCIÓN 3 — ESTRUCTURA DE CARPETAS COMPLETA
 
 ```
-trocalia/
+Tradealo/
 ├── package.json                    (root — Turborepo config)
 ├── pnpm-workspace.yaml
 ├── turbo.json

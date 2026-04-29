@@ -1,4 +1,4 @@
-# TROCALIA — SDD v1.0
+# Tradealo — SDD v1.0
 # Parte 3: Especificación completa de módulos
 
 ---
@@ -714,7 +714,7 @@ NOTIF-005: El endpoint GET /me/notifications solo retorna las últimas 50 no le�
 ```bash
 # apps/api/.env
 # Base de datos
-DATABASE_URL=postgresql://trocalia:password@localhost:5432/trocalia
+DATABASE_URL=postgresql://Tradealo:password@localhost:5432/Tradealo
 REDIS_URL=redis://localhost:6379
 ELASTICSEARCH_URL=http://localhost:9200
 
@@ -727,15 +727,15 @@ JWT_REFRESH_EXPIRES=30d
 R2_ACCOUNT_ID=
 R2_ACCESS_KEY_ID=
 R2_SECRET_ACCESS_KEY=
-R2_BUCKET_NAME=trocalia-uploads
-R2_KYC_BUCKET_NAME=trocalia-kyc-private
-R2_PUBLIC_URL=https://cdn.trocalia.com.ar
+R2_BUCKET_NAME=Tradealo-uploads
+R2_KYC_BUCKET_NAME=Tradealo-kyc-private
+R2_PUBLIC_URL=https://cdn.Tradealo.com.ar
 
 # MercadoPago
 MP_ACCESS_TOKEN=
 MP_PUBLIC_KEY=
 MP_WEBHOOK_SECRET=
-MP_NOTIFICATION_URL=https://api.trocalia.com.ar/api/v1/token-packs/webhook/mercadopago
+MP_NOTIFICATION_URL=https://api.Tradealo.com.ar/api/v1/token-packs/webhook/mercadopago
 
 # DeepSeek
 DEEPSEEK_API_KEY=
@@ -743,7 +743,7 @@ DEEPSEEK_BASE_URL=https://api.deepseek.com
 
 # Email (Resend)
 RESEND_API_KEY=
-RESEND_FROM_EMAIL=noreply@trocalia.com.ar
+RESEND_FROM_EMAIL=noreply@Tradealo.com.ar
 
 # Push (OneSignal)
 ONESIGNAL_APP_ID=

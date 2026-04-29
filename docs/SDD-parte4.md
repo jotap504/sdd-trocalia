@@ -1,4 +1,4 @@
-# TROCALIA — SDD v1.0
+# Tradealo — SDD v1.0
 # Parte 4: Seguridad, Testing Loop, API Contracts y Setup
 
 ---
@@ -249,7 +249,7 @@ export const FIXTURES = {
   userKyc1:         { email: 'kyc1@test.com',          kycLevel: 1 },
   userKyc2Seller:   { email: 'seller@test.com',        kycLevel: 2 },
   userKyc4Verified: { email: 'verified@test.com',      kycLevel: 4 },
-  adminUser:        { email: 'admin@trocalia.com.ar',   role: 'super_admin' },
+  adminUser:        { email: 'admin@Tradealo.com.ar',   role: 'super_admin' },
 }
 ```
 
@@ -378,7 +378,7 @@ import { test, expect } from '@playwright/test'
 test('E2E-01: Registro completo y primera publicación', async ({ page }) => {
   // 1. Registro
   await page.goto('/register')
-  await page.fill('[name=email]', 'e2etest@trocalia.com.ar')
+  await page.fill('[name=email]', 'e2etest@Tradealo.com.ar')
   await page.fill('[name=password]', 'TestPass123')
   await page.click('[type=submit]')
   await expect(page).toHaveURL('/dashboard')
@@ -438,7 +438,7 @@ SECURITY CHECKLIST — ejecutar antes de cada release
 ### 10.1 Comandos para inicializar el monorepo
 ```bash
 # 1. Crear estructura
-mkdir trocalia && cd trocalia
+mkdir Tradealo && cd Tradealo
 pnpm init
 pnpm add -D turbo
 
@@ -478,15 +478,15 @@ services:
   postgres:
     image: postgis/postgis:16-3.4
     environment:
-      POSTGRES_DB: trocalia
-      POSTGRES_USER: trocalia
+      POSTGRES_DB: Tradealo
+      POSTGRES_USER: Tradealo
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U trocalia"]
+      test: ["CMD-SHELL", "pg_isready -U Tradealo"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -602,8 +602,8 @@ export function buildWhatsAppUrl(phone: string, listingTitle: string, listingId:
   const formatted = formatArgentinePhone(phone)
   const number = formatted.replace('+', '')
   const message = encodeURIComponent(
-    `Hola! Te consulto por tu publicación en Trocalia: "${listingTitle}" ` +
-    `https://trocalia.com.ar/p/${listingId}`
+    `Hola! Te consulto por tu publicación en Tradealo: "${listingTitle}" ` +
+    `https://Tradealo.com.ar/p/${listingId}`
   )
   return `https://wa.me/${number}?text=${message}`
 }

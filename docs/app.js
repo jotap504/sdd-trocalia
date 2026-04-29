@@ -240,7 +240,7 @@ function init() {
         btn.addEventListener('click', () => {
             let text = "";
             if (btn.id === 'copy-sdd') {
-                text = "Actúa como un experto desarrollador de NestJS/Next.js. El SDD de Trocalia es nuestra única fuente de verdad.";
+                text = "Actúa como un experto desarrollador de NestJS/Next.js. El SDD de Tradealo es nuestra única fuente de verdad.";
             } else {
                 text = btn.previousElementSibling.textContent;
             }

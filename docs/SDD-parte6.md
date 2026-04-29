@@ -1,4 +1,4 @@
-# TROCALIA — SDD v1.0
+# Tradealo — SDD v1.0
 # Parte 6: Frontend, CEO Panel, CI/CD, .cursorrules y checklist final
 
 ---
@@ -142,13 +142,13 @@ ReputationStars            avg, count                                       comp
 export async function generateMetadata({ params }) {
   const listing = await getListing(params.id)
   return {
-    title: `${listing.title} | Trocalia`,
+    title: `${listing.title} | Tradealo`,
     description: listing.description.slice(0, 160),
     openGraph: {
       title: listing.title,
       description: listing.description.slice(0, 160),
       images: [listing.primaryImage],
-      url: `https://trocalia.com.ar/listing/${listing.id}`,
+      url: `https://Tradealo.com.ar/listing/${listing.id}`,
     },
   }
 }
@@ -267,7 +267,7 @@ jobs:
     services:
       postgres:
         image: postgis/postgis:16-3.4
-        env: { POSTGRES_DB: trocalia_test, POSTGRES_USER: trocalia, POSTGRES_PASSWORD: password }
+        env: { POSTGRES_DB: Tradealo_test, POSTGRES_USER: Tradealo, POSTGRES_PASSWORD: password }
         ports: ['5433:5432']
         options: --health-cmd pg_isready --health-interval 5s
       redis:
@@ -285,10 +285,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm db:migrate
         env:
-          DATABASE_URL: postgresql://trocalia:password@localhost:5433/trocalia_test
+          DATABASE_URL: postgresql://Tradealo:password@localhost:5433/Tradealo_test
       - run: pnpm test:integration --filter=api
         env:
-          DATABASE_URL: postgresql://trocalia:password@localhost:5433/trocalia_test
+          DATABASE_URL: postgresql://Tradealo:password@localhost:5433/Tradealo_test
           REDIS_URL: redis://localhost:6380
           ELASTICSEARCH_URL: http://localhost:9201
 
@@ -317,7 +317,7 @@ jobs:
 ## SECCIÓN 19 — .cursorrules COMPLETO
 
 ```
-# TROCALIA — Cursor Rules v1.0
+# Tradealo — Cursor Rules v1.0
 # Este archivo define las reglas que Cursor debe seguir al generar código.
 # SIEMPRE consultar el SDD antes de implementar cualquier feature.
 

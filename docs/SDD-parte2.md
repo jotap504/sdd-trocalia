@@ -1,4 +1,4 @@
-# TROCALIA — SDD v1.0
+# Tradealo — SDD v1.0
 # Parte 2: Schema de Base de Datos Completo (Drizzle)
 
 ---
