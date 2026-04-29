@@ -253,7 +253,7 @@ function init() {
                 votes: parseInt(idea.votes || idea.Votes || 0),
                 status: idea.status || idea.Status || "Nueva",
                 estimate: idea.estimate || idea.Estimate || "",
-                comments_count: idea.comments_count || 0
+                comments: idea.comments || []
             }));
         } catch (e) {
             console.error("Error detallado al obtener ideas:", e);
