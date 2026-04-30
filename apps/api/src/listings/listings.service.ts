@@ -1,0 +1,305 @@
+import {
+  Injectable, Inject, NotFoundException, BadRequestException, ForbiddenException,
+} from '@nestjs/common'
+import { eq, and, desc, asc, lt, or, sql, gte, lte } from 'drizzle-orm'
+import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
+import { DRIZZLE_TOKEN } from '../database/database.module'
+import { ConfigService } from '../config/config.service'
+import { WalletService } from '../wallet/wallet.service'
+import * as schema from '../database/schema'
+import { encodeCursor, decodeCursor } from '../common/utils/cursor.util'
+import { LISTING } from '../common/constants/listing.constants'
+import type { CreateListingDto } from './dto/create-listing.dto'
+import type { ListListingsDto } from './dto/list-listings.dto'
+
+type DB = NodePgDatabase<typeof schema>
+type Listing = typeof schema.listings.$inferSelect
+
+const DEFAULT_LIMIT = 20
+const MAX_LIMIT = 50
+
+@Injectable()
+export class ListingsService {
+  constructor(
+    @Inject(DRIZZLE_TOKEN) private readonly db: DB,
+    private readonly configService: ConfigService,
+    private readonly walletService: WalletService,
+  ) {}
+
+  async create(userId: string, dto: CreateListingDto): Promise<Listing> {
+    const category = await this.db
+      .select({ id: schema.categories.id, isCollectible: schema.categories.isCollectible })
+      .from(schema.categories)
+      .where(eq(schema.categories.id, dto.categoryId))
+      .limit(1)
+
+    if (!category[0]) throw new NotFoundException('CATEGORY_NOT_FOUND')
+
+    const isCollectible = category[0].isCollectible
+    const type = dto.type ?? 'standard'
+
+    const { creditsSpent, wasFreeQuota } = await this.chargePublication(userId, type, isCollectible)
+
+    const durationDays = dto.durationDays ?? await this.configService.getNumber('listing.duration.default', 30)
+    const publishedAt = new Date()
+    const expiresAt = new Date(publishedAt.getTime() + durationDays * 24 * 60 * 60 * 1000)
+
+    const locationSql = dto.lat !== undefined && dto.lng !== undefined
+      ? sql`ST_SetSRID(ST_MakePoint(${dto.lng}, ${dto.lat}), 4326)`
+      : null
+
+    const riskScore = this.computeRiskScore(dto)
+    const moderationStatus = this.resolveModerationStatus(riskScore)
+
+    const [listing] = await this.db
+      .insert(schema.listings)
+      .values({
+        userId,
+        categoryId: dto.categoryId,
+        type,
+        isCollectible,
+        title: dto.title,
+        description: dto.description,
+        price: String(dto.price),
+        currency: dto.currency,
+        priceNegotiable: dto.priceNegotiable,
+        condition: dto.condition,
+        location: locationSql as unknown as string,
+        locationText: dto.locationText,
+        city: dto.city,
+        province: dto.province,
+        paymentMethods: dto.paymentMethods ?? [],
+        shippingOptions: dto.shippingOptions ?? [],
+        shippingDescription: dto.shippingDescription,
+        collectibleAttributes: dto.collectibleAttributes,
+        durationDays,
+        creditsSpent,
+        wasFreeQuota,
+        moderationStatus,
+        riskScore,
+        status: moderationStatus === 'approved' ? 'active' : 'draft',
+        publishedAt: moderationStatus === 'approved' ? publishedAt : undefined,
+        expiresAt: moderationStatus === 'approved' ? expiresAt : undefined,
+      })
+      .returning()
+
+    return listing
+  }
+
+  async findAll(dto: ListListingsDto): Promise<{
+    data: Listing[]
+    nextCursor: string | null
+    hasMore: boolean
+  }> {
+    const limit = Math.min(dto.limit ?? DEFAULT_LIMIT, MAX_LIMIT)
+    const fetchCount = limit + 1
+
+    const conditions = [
+      eq(schema.listings.status, 'active'),
+      eq(schema.listings.moderationStatus, 'approved' as string),
+    ]
+
+    if (dto.categoryId) conditions.push(eq(schema.listings.categoryId, dto.categoryId))
+    if (dto.condition) conditions.push(eq(schema.listings.condition, dto.condition as typeof schema.listings.$inferInsert['condition']))
+    if (dto.province) conditions.push(eq(schema.listings.province, dto.province))
+    if (dto.minPrice !== undefined) conditions.push(gte(schema.listings.price, String(dto.minPrice)))
+    if (dto.maxPrice !== undefined) conditions.push(lte(schema.listings.price, String(dto.maxPrice)))
+
+    if (dto.cursor) {
+      const { createdAt, id } = decodeCursor(dto.cursor)
+      conditions.push(
+        or(
+          lt(schema.listings.createdAt, createdAt),
+          and(eq(schema.listings.createdAt, createdAt), lt(schema.listings.id, id)),
+        )!,
+      )
+    }
+
+    const orderBy = dto.sort === 'price_asc'
+      ? [asc(schema.listings.price), desc(schema.listings.createdAt)]
+      : dto.sort === 'price_desc'
+        ? [desc(schema.listings.price), desc(schema.listings.createdAt)]
+        : [desc(schema.listings.createdAt), desc(schema.listings.id)]
+
+    const rows = await this.db
+      .select()
+      .from(schema.listings)
+      .where(and(...conditions))
+      .orderBy(...orderBy)
+      .limit(fetchCount)
+
+    const hasMore = rows.length > limit
+    const data = hasMore ? rows.slice(0, limit) : rows
+    const last = data[data.length - 1]
+    const nextCursor = hasMore && last
+      ? encodeCursor({ createdAt: last.createdAt, id: last.id })
+      : null
+
+    return { data, nextCursor, hasMore }
+  }
+
+  async findOne(id: string, viewerUserId?: string): Promise<Listing & { images: typeof schema.listingImages.$inferSelect[] }> {
+    const [listing] = await this.db
+      .select()
+      .from(schema.listings)
+      .where(eq(schema.listings.id, id))
+      .limit(1)
+
+    if (!listing) throw new NotFoundException('LISTING_NOT_FOUND')
+    if (listing.status === 'removed' || listing.deletedAt) throw new NotFoundException('LISTING_NOT_FOUND')
+
+    const images = await this.db
+      .select()
+      .from(schema.listingImages)
+      .where(eq(schema.listingImages.listingId, id))
+      .orderBy(asc(schema.listingImages.sortOrder))
+
+    this.recordView(id, viewerUserId).catch(() => {})
+
+    return { ...listing, images }
+  }
+
+  async update(id: string, userId: string, dto: Partial<CreateListingDto>): Promise<Listing> {
+    const [listing] = await this.db
+      .select()
+      .from(schema.listings)
+      .where(eq(schema.listings.id, id))
+      .limit(1)
+
+    if (!listing) throw new NotFoundException('LISTING_NOT_FOUND')
+    if (listing.userId !== userId) throw new ForbiddenException('LISTING_NOT_OWNED')
+    if (!['draft', 'paused'].includes(listing.status)) {
+      throw new BadRequestException('LISTING_NOT_EDITABLE')
+    }
+
+    const [updated] = await this.db
+      .update(schema.listings)
+      .set({
+        ...(dto.title && { title: dto.title }),
+        ...(dto.description && { description: dto.description }),
+        ...(dto.price !== undefined && { price: String(dto.price) }),
+        ...(dto.currency && { currency: dto.currency }),
+        ...(dto.priceNegotiable !== undefined && { priceNegotiable: dto.priceNegotiable }),
+        ...(dto.condition && { condition: dto.condition }),
+        ...(dto.locationText && { locationText: dto.locationText }),
+        ...(dto.city && { city: dto.city }),
+        ...(dto.province && { province: dto.province }),
+        ...(dto.paymentMethods && { paymentMethods: dto.paymentMethods }),
+        ...(dto.shippingOptions && { shippingOptions: dto.shippingOptions }),
+        ...(dto.shippingDescription !== undefined && { shippingDescription: dto.shippingDescription }),
+        ...(dto.collectibleAttributes && { collectibleAttributes: dto.collectibleAttributes }),
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.listings.id, id))
+      .returning()
+
+    return updated
+  }
+
+  async remove(id: string, userId: string): Promise<void> {
+    const [listing] = await this.db
+      .select({ id: schema.listings.id, userId: schema.listings.userId })
+      .from(schema.listings)
+      .where(eq(schema.listings.id, id))
+      .limit(1)
+
+    if (!listing) throw new NotFoundException('LISTING_NOT_FOUND')
+    if (listing.userId !== userId) throw new ForbiddenException('LISTING_NOT_OWNED')
+
+    await this.db
+      .update(schema.listings)
+      .set({ status: 'removed', deletedAt: new Date(), updatedAt: new Date() })
+      .where(eq(schema.listings.id, id))
+  }
+
+  async findByUser(userId: string, cursor?: string, limit = DEFAULT_LIMIT): Promise<{
+    data: Listing[]
+    nextCursor: string | null
+    hasMore: boolean
+  }> {
+    const pageSize = Math.min(limit, MAX_LIMIT)
+    const fetchCount = pageSize + 1
+    const conditions = [eq(schema.listings.userId, userId)]
+
+    if (cursor) {
+      const { createdAt, id } = decodeCursor(cursor)
+      conditions.push(
+        or(
+          lt(schema.listings.createdAt, createdAt),
+          and(eq(schema.listings.createdAt, createdAt), lt(schema.listings.id, id)),
+        )!,
+      )
+    }
+
+    const rows = await this.db
+      .select()
+      .from(schema.listings)
+      .where(and(...conditions))
+      .orderBy(desc(schema.listings.createdAt), desc(schema.listings.id))
+      .limit(fetchCount)
+
+    const hasMore = rows.length > pageSize
+    const data = hasMore ? rows.slice(0, pageSize) : rows
+    const last = data[data.length - 1]
+    const nextCursor = hasMore && last
+      ? encodeCursor({ createdAt: last.createdAt, id: last.id })
+      : null
+
+    return { data, nextCursor, hasMore }
+  }
+
+  private async chargePublication(
+    userId: string,
+    type: string,
+    isCollectible: boolean,
+  ): Promise<{ creditsSpent: number; wasFreeQuota: boolean }> {
+    const quota = await this.walletService.getFreeQuota(userId)
+
+    if (quota.remaining > 0) {
+      await this.walletService.consumeFreeQuota(userId)
+      return { creditsSpent: 0, wasFreeQuota: true }
+    }
+
+    const costKey = isCollectible
+      ? 'listing.cost.collectible'
+      : type === 'premium'
+        ? 'listing.cost.premium'
+        : 'listing.cost.standard'
+
+    const cost = await this.configService.getNumber(costKey, 2)
+
+    await this.walletService.debit(userId, cost, 'listing_publish')
+    return { creditsSpent: cost, wasFreeQuota: false }
+  }
+
+  private computeRiskScore(dto: CreateListingDto): number {
+    let score = 0
+    const title = dto.title.toLowerCase()
+    const desc = dto.description.toLowerCase()
+
+    const spamWords = ['urgente', 'oferta imperdible', 'ganga', 'precio increíble']
+    if (spamWords.some((w) => title.includes(w) || desc.includes(w))) score += 20
+
+    if (dto.price === 0) score += 30
+    if (!dto.city && !dto.province && !dto.locationText) score += 10
+
+    return Math.min(100, score)
+  }
+
+  private resolveModerationStatus(riskScore: number): string {
+    if (riskScore >= LISTING.RISK_SCORE.AUTO_REJECT_MIN) return 'rejected'
+    if (riskScore >= LISTING.RISK_SCORE.MANUAL_REVIEW_MIN) return 'pending'
+    return 'approved'
+  }
+
+  private async recordView(listingId: string, viewerUserId?: string): Promise<void> {
+    await this.db.insert(schema.listingViews).values({
+      listingId,
+      viewerUserId,
+    })
+    await this.db
+      .update(schema.listings)
+      .set({ viewsCount: sql`${schema.listings.viewsCount} + 1` })
+      .where(eq(schema.listings.id, listingId))
+  }
+}
