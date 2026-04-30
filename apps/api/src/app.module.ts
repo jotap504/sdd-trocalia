@@ -11,6 +11,12 @@ import { CategoriesModule } from './categories/categories.module'
 import { ListingsModule } from './listings/listings.module'
 import { AiModule } from './ai/ai.module'
 import { SearchModule } from './search/search.module'
+import { ReviewsModule } from './reviews/reviews.module'
+import { NotificationsModule } from './notifications/notifications.module'
+import { PaymentsModule } from './payments/payments.module'
+import { KycModule } from './kyc/kyc.module'
+import { ModerationModule } from './moderation/moderation.module'
+import { AdminModule } from './admin/admin.module'
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard'
 import { RolesGuard } from './common/guards/roles.guard'
 import { KycLevelGuard } from './common/guards/kyc-level.guard'
@@ -28,6 +34,12 @@ import { KycLevelGuard } from './common/guards/kyc-level.guard'
     ListingsModule,
     AiModule,
     SearchModule,
+    ReviewsModule,
+    NotificationsModule,
+    PaymentsModule,
+    KycModule,
+    ModerationModule,
+    AdminModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
