@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module'
 import { WalletModule } from './wallet/wallet.module'
 import { StorageModule } from './storage/storage.module'
 import { UsersModule } from './users/users.module'
+import { CategoriesModule } from './categories/categories.module'
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard'
 import { RolesGuard } from './common/guards/roles.guard'
 import { KycLevelGuard } from './common/guards/kyc-level.guard'
@@ -20,6 +21,7 @@ import { KycLevelGuard } from './common/guards/kyc-level.guard'
     WalletModule,
     StorageModule,
     UsersModule,
+    CategoriesModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
