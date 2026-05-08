@@ -1,0 +1,174 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Camera } from 'lucide-react';
+import { useAuthStore, toast } from '@/lib/store';
+import { users } from '@/lib/api';
+import { Avatar } from '@/components/ui/Avatar';
+import { Input, Textarea } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { ProvinceSelector } from '@/components/ui/ProvinceSelector';
+import { Card, CardBody } from '@/components/ui/Card';
+
+const schema = z.object({
+  username: z
+    .string()
+    .min(3, 'Mínimo 3 caracteres')
+    .max(30, 'Máximo 30 caracteres')
+    .regex(/^[a-zA-Z0-9_]+$/, 'Solo letras, números y guiones bajos'),
+  bio: z.string().max(300, 'Máximo 300 caracteres').optional(),
+  province: z.string().optional(),
+  city: z.string().optional(),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+export default function EditProfilePage() {
+  const router = useRouter();
+  const user = useAuthStore((s) => s.user);
+  const setUser = useAuthStore((s) => s.setUser);
+  const avatarRef = useRef<HTMLInputElement>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        username: user.username ?? '',
+        bio: user.bio ?? '',
+        province: user.province ?? '',
+        city: user.city ?? '',
+      });
+    }
+  }, [user, reset]);
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarPreview(URL.createObjectURL(file));
+    setUploadingAvatar(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await users.uploadAvatar(fd);
+      setUser({ ...user!, avatarUrl: res.avatarUrl });
+      toast.success('Avatar actualizado');
+    } catch {
+      toast.error('No se pudo subir el avatar');
+      setAvatarPreview(null);
+    } finally {
+      setUploadingAvatar(false);
+      e.target.value = '';
+    }
+  };
+
+  const onSubmit = async (values: FormValues) => {
+    try {
+      const updated = await users.updateProfile({
+        username: values.username,
+        bio: values.bio,
+        province: values.province,
+        city: values.city,
+      });
+      setUser(updated);
+      toast.success('Perfil actualizado');
+      router.push('/profile');
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message ?? 'No se pudo actualizar el perfil';
+      toast.error(msg);
+    }
+  };
+
+  if (!user) return null;
+
+  return (
+    <div className="mx-auto max-w-xl px-4 sm:px-6 py-8 space-y-6">
+      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+        Editar perfil
+      </h1>
+
+      <Card>
+        <CardBody className="p-6 space-y-6">
+          {/* Avatar */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="relative">
+              <Avatar
+                src={avatarPreview ?? user.avatarUrl}
+                username={user.username ?? user.email}
+                size="xl"
+              />
+              <button
+                type="button"
+                onClick={() => avatarRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-trocalia-primary text-white flex items-center justify-center hover:bg-trocalia-primary-hover shadow-sm"
+                aria-label="Cambiar avatar"
+              >
+                <Camera size={14} />
+              </button>
+              <input
+                ref={avatarRef}
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                className="hidden"
+              />
+            </div>
+            <p className="text-xs text-trocalia-text-muted">
+              Hacé clic en el ícono para cambiar tu foto
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <Input
+              label="Nombre de usuario"
+              placeholder="mi_usuario"
+              {...register('username')}
+              error={errors.username?.message}
+            />
+            <Textarea
+              label="Sobre mí (opcional)"
+              placeholder="Contá algo sobre vos…"
+              rows={4}
+              {...register('bio')}
+              error={errors.bio?.message}
+            />
+            <ProvinceSelector label="Provincia" {...register('province')} />
+            <Input
+              label="Ciudad"
+              placeholder="Ej: Rosario"
+              {...register('city')}
+              error={errors.city?.message}
+            />
+            <div className="flex gap-3 pt-2">
+              <Button
+                type="button"
+                variant="secondary"
+                fullWidth
+                onClick={() => router.push('/profile')}
+              >
+                Cancelar
+              </Button>
+              <Button type="submit" fullWidth loading={isSubmitting}>
+                Guardar cambios
+              </Button>
+            </div>
+          </form>
+        </CardBody>
+      </Card>
+    </div>
+  );
+}

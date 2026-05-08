@@ -1,0 +1,86 @@
+import Link from 'next/link';
+import { ShieldCheck, MapPin, Calendar } from 'lucide-react';
+import { Avatar } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/Badge';
+import { ReputationStars } from '@/components/ui/ReputationStars';
+import { Card, CardBody } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { formatDate } from '@/lib/utils';
+import type { User } from '@/types';
+
+interface Props {
+  user: User;
+}
+
+export function SellerCard({ user }: Props) {
+  const rep = user.reputation ?? { average: 0, count: 0 };
+  return (
+    <Card>
+      <CardBody>
+        <div className="flex items-center gap-3">
+          <Avatar
+            src={user.avatarUrl}
+            username={user.username ?? user.email}
+            size="lg"
+          />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <p className="font-heading font-semibold text-base truncate">
+                {user.username ?? user.email}
+              </p>
+              {user.kycLevel >= 1 && (
+                <ShieldCheck
+                  size={15}
+                  className="text-trocalia-primary"
+                  aria-label="Verificado"
+                />
+              )}
+            </div>
+            {user.kycLevel > 0 && (
+              <Badge variant="primary" size="sm" className="mt-1">
+                KYC nivel {user.kycLevel}
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <ReputationStars rating={rep.average} count={rep.count} />
+        </div>
+
+        <div className="mt-4 space-y-1.5 text-sm text-trocalia-text-muted">
+          {user.province && (
+            <div className="flex items-center gap-2">
+              <MapPin size={14} />
+              <span>
+                {user.city ? `${user.city}, ` : ''}
+                {user.province}
+              </span>
+            </div>
+          )}
+          {user.createdAt && (
+            <div className="flex items-center gap-2">
+              <Calendar size={14} />
+              <span>Miembro desde {formatDate(user.createdAt)}</span>
+            </div>
+          )}
+        </div>
+
+        {user.bio && (
+          <p className="mt-3 text-sm text-trocalia-text leading-relaxed">
+            {user.bio}
+          </p>
+        )}
+
+        <Link
+          href={user.username ? `/seller/${user.username}` : '#'}
+          className="block mt-4"
+        >
+          <Button variant="secondary" fullWidth>
+            Ver perfil
+          </Button>
+        </Link>
+      </CardBody>
+    </Card>
+  );
+}
