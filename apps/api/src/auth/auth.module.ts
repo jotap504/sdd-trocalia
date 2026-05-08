@@ -8,7 +8,7 @@ import { JwtStrategy } from './strategies/jwt.strategy'
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({}),
+    JwtModule.register({ secret: process.env.JWT_ACCESS_SECRET ?? 'changeme_dev_only' }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

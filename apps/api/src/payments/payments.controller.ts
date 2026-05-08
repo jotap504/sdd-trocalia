@@ -1,7 +1,6 @@
 import {
-  Controller, Post, Get, Body, Headers, HttpCode, HttpStatus, RawBodyRequest, Req,
+  Controller, Post, Get, Body, Headers, HttpCode, HttpStatus,
 } from '@nestjs/common'
-import type { Request } from 'express'
 import { PaymentsService } from './payments.service'
 import { CreatePreferenceDto } from './dto/create-preference.dto'
 import { CurrentUser, type JwtPayload } from '../common/decorators/current-user.decorator'
@@ -24,7 +23,6 @@ export class PaymentsController {
   @Post('webhook')
   @HttpCode(HttpStatus.OK)
   webhook(
-    @Req() req: RawBodyRequest<Request>,
     @Body() body: Record<string, unknown>,
     @Headers('x-signature') signature?: string,
     @Headers('x-request-id') requestId?: string,

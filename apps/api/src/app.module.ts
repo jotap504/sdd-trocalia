@@ -17,6 +17,7 @@ import { PaymentsModule } from './payments/payments.module'
 import { KycModule } from './kyc/kyc.module'
 import { ModerationModule } from './moderation/moderation.module'
 import { AdminModule } from './admin/admin.module'
+import { JobsModule } from './jobs/jobs.module'
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard'
 import { RolesGuard } from './common/guards/roles.guard'
 import { KycLevelGuard } from './common/guards/kyc-level.guard'
@@ -40,6 +41,7 @@ import { KycLevelGuard } from './common/guards/kyc-level.guard'
     KycModule,
     ModerationModule,
     AdminModule,
+    JobsModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
