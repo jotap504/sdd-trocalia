@@ -28,6 +28,12 @@
       "esbuild",
       "msgpackr-extract",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "multer": ">=2.1.0",
+      "fast-xml-builder": ">=1.1.7",
+      "fast-uri": ">=3.1.2",
+      "picomatch": ">=4.0.4"
+    }
   }
 }

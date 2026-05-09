@@ -21,6 +21,7 @@ export function ListingCard({ listing, variant = 'grid', className }: Props) {
     return (
       <Link
         href={`/listing/${listing.id}`}
+        data-testid="listing-card"
         className={cn(
           'group flex flex-col sm:flex-row bg-white rounded-xl border border-trocalia-border overflow-hidden shadow-card hover:shadow-card-hover transition-shadow',
           className
@@ -73,6 +74,7 @@ export function ListingCard({ listing, variant = 'grid', className }: Props) {
   return (
     <Link
       href={`/listing/${listing.id}`}
+      data-testid="listing-card"
       className={cn(
         'group flex flex-col bg-white rounded-xl border overflow-hidden transition-all duration-200 hover:-translate-y-0.5',
         isPremium
@@ -122,7 +124,7 @@ export function ListingCard({ listing, variant = 'grid', className }: Props) {
         />
         <div className="flex items-center gap-1 text-xs text-trocalia-text-muted">
           <MapPin size={12} />
-          <span className="truncate">
+          <span className="truncate" data-testid="listing-location">
             {listing.city ? `${listing.city}, ` : ''}
             {listing.province}
           </span>

@@ -638,6 +638,7 @@ export default function NewListingPage() {
           </Button>
         ) : (
           <Button
+            data-testid="publish-btn"
             onClick={handlePublish}
             loading={saving}
             disabled={!canAfford}
