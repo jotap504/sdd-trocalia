@@ -17,14 +17,20 @@ export interface PresignedGet {
 
 @Injectable()
 export class StorageService {
-  private readonly storage: StorageClient;
+  private readonly storage: StorageClient | null;
   private readonly bucket: string;
   private readonly logger = new Logger(StorageService.name);
 
   constructor() {
-    const supabaseUrl = process.env.SUPABASE_URL ?? '';
+    const supabaseUrl = (process.env.SUPABASE_URL ?? '').replace(/\/$/, '');
     const serviceKey = process.env.SUPABASE_SERVICE_KEY ?? '';
-    this.bucket = process.env.SUPABASE_STORAGE_BUCKET ?? 'trocalia';
+    this.bucket = process.env.SUPABASE_STORAGE_BUCKET ?? 'tradealo';
+
+    if (!supabaseUrl) {
+      this.logger.warn('SUPABASE_URL not set — storage disabled');
+      this.storage = null;
+      return;
+    }
 
     this.storage = new StorageClient(`${supabaseUrl}/storage/v1`, {
       apikey: serviceKey,
@@ -36,6 +42,7 @@ export class StorageService {
     key: string,
     _contentType: string,
   ): Promise<PresignedPut> {
+    if (!this.storage) throw new Error('Storage not configured');
     const { data, error } = await this.storage
       .from(this.bucket)
       .createSignedUploadUrl(key);
@@ -44,6 +51,7 @@ export class StorageService {
   }
 
   async getPresignedGet(key: string): Promise<PresignedGet> {
+    if (!this.storage) throw new Error('Storage not configured');
     const { data, error } = await this.storage
       .from(this.bucket)
       .createSignedUrl(key, PRESIGNED_GET_TTL);
@@ -52,12 +60,14 @@ export class StorageService {
   }
 
   async deleteObject(key: string): Promise<void> {
+    if (!this.storage) return;
     const { error } = await this.storage.from(this.bucket).remove([key]);
     if (error)
       this.logger.warn(`Failed to delete storage object: ${key}`, error);
   }
 
   getPublicUrl(key: string): string {
+    if (!this.storage) return '';
     const { data } = this.storage.from(this.bucket).getPublicUrl(key);
     return data.publicUrl;
   }
