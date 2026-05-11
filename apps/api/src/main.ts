@@ -63,9 +63,15 @@ async function bootstrap(): Promise<void> {
       standardHeaders: true,
       legacyHeaders: false,
       store: new RedisStore({
-        sendCommand: (...args: string[]) =>
-          redisClient.call(args[0], ...args.slice(1)) as Promise<number>,
+        sendCommand: async (...args: string[]) => {
+          try {
+            return await (redisClient.call(args[0], ...args.slice(1)) as Promise<number>);
+          } catch {
+            return 0;
+          }
+        },
       }),
+      skip: () => redisClient.status !== 'ready',
     }),
   );
 
