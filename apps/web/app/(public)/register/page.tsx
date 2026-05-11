@@ -20,7 +20,11 @@ const schema = z
       .min(3, 'Mínimo 3 caracteres')
       .max(30, 'Máximo 30 caracteres')
       .regex(/^[a-zA-Z0-9_]+$/, 'Solo letras, números y guiones bajos'),
-    password: z.string().min(8, 'Mínimo 8 caracteres'),
+    password: z
+      .string()
+      .min(8, 'Mínimo 8 caracteres')
+      .regex(/[A-Z]/, 'Debe contener al menos una mayúscula')
+      .regex(/\d/, 'Debe contener al menos un número'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -97,7 +101,7 @@ export default function RegisterPage() {
             <Input
               label="Contraseña"
               type="password"
-              placeholder="Mínimo 8 caracteres"
+              placeholder="Ej: MiClave123"
               {...register('password')}
               error={errors.password?.message}
               autoComplete="new-password"
