@@ -86,7 +86,7 @@ export function KycStepCard({ type, status, onUploaded }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-trocalia-border p-5 flex flex-col gap-3">
+    <div className="bg-white rounded-2xl border border-tradealo-border p-5 flex flex-col gap-3">
       <input
         ref={inputRef}
         type="file"
@@ -95,7 +95,7 @@ export function KycStepCard({ type, status, onUploaded }: Props) {
         className="hidden"
       />
       <div className="flex items-start justify-between">
-        <div className="w-11 h-11 rounded-lg bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary">
+        <div className="w-11 h-11 rounded-lg bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary">
           <Icon size={20} />
         </div>
         <Badge variant={badge.variant}>
@@ -106,7 +106,7 @@ export function KycStepCard({ type, status, onUploaded }: Props) {
       </div>
       <div>
         <h4 className="font-heading font-semibold">{meta.title}</h4>
-        <p className="text-sm text-trocalia-text-muted mt-0.5">
+        <p className="text-sm text-tradealo-text-muted mt-0.5">
           {meta.description}
         </p>
       </div>

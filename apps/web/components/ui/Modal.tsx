@@ -58,13 +58,13 @@ export function Modal({
           SIZES[size]
         )}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-trocalia-border">
-          <h3 className="text-base font-semibold text-trocalia-text">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-tradealo-border">
+          <h3 className="text-base font-semibold text-tradealo-text">
             {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-md hover:bg-gray-100 transition-colors text-trocalia-text-muted"
+            className="p-1.5 rounded-md hover:bg-gray-100 transition-colors text-tradealo-text-muted"
             aria-label="Cerrar"
           >
             <X size={18} />

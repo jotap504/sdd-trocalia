@@ -31,12 +31,12 @@ export default function KycPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">
           Verificación de identidad (KYC)
         </h1>
-        <p className="text-sm text-trocalia-text-muted mt-1">
+        <p className="text-sm text-tradealo-text-muted mt-1">
           Verificá tu identidad para acceder a todas las funcionalidades de
-          Trocalia sin límites.
+          Tradealo sin límites.
         </p>
       </div>
 
@@ -50,12 +50,12 @@ export default function KycPage() {
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
           <CheckCircle2
             size={48}
-            className="mx-auto text-trocalia-success mb-3"
+            className="mx-auto text-tradealo-success mb-3"
           />
-          <h2 className="font-heading font-bold text-lg text-trocalia-text">
+          <h2 className="font-heading font-bold text-lg text-tradealo-text">
             ¡Verificación completa!
           </h2>
-          <p className="text-sm text-trocalia-text-muted mt-1 mb-4">
+          <p className="text-sm text-tradealo-text-muted mt-1 mb-4">
             Tu identidad fue verificada con éxito. Podés publicar sin límites.
           </p>
           <Link href="/my-listings/new">

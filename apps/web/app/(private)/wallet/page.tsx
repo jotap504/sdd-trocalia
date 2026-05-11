@@ -54,7 +54,7 @@ export default function WalletPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">
           Mi billetera
         </h1>
         <Link href="/wallet/buy-tokens">
@@ -79,7 +79,7 @@ export default function WalletPage() {
           </h2>
           <Link
             href="/wallet/buy-tokens"
-            className="text-xs text-trocalia-primary hover:underline flex items-center gap-1"
+            className="text-xs text-tradealo-primary hover:underline flex items-center gap-1"
           >
             Comprar más tokens <ArrowRight size={12} />
           </Link>
@@ -93,21 +93,21 @@ export default function WalletPage() {
           </div>
         ) : allTx.length === 0 ? (
           <Card>
-            <div className="text-center py-10 text-trocalia-text-muted p-5">
+            <div className="text-center py-10 text-tradealo-text-muted p-5">
               <Coins size={32} className="mx-auto mb-3 opacity-40" />
               <p className="text-sm">No hay movimientos todavía.</p>
             </div>
           </Card>
         ) : (
           <Card>
-            <div className="divide-y divide-trocalia-border">
+            <div className="divide-y divide-tradealo-border">
               {allTx.map((tx) => (
                 <div key={tx.id} className="flex items-center gap-4 px-5 py-3">
                   <div
                     className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
                       tx.type === 'credit'
-                        ? 'bg-green-100 text-trocalia-success'
-                        : 'bg-red-100 text-trocalia-error'
+                        ? 'bg-green-100 text-tradealo-success'
+                        : 'bg-red-100 text-tradealo-error'
                     }`}
                   >
                     {tx.type === 'credit' ? (
@@ -117,18 +117,18 @@ export default function WalletPage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-trocalia-text truncate">
+                    <p className="text-sm font-medium text-tradealo-text truncate">
                       {tx.description ?? tx.reason}
                     </p>
-                    <p className="text-xs text-trocalia-text-muted">
+                    <p className="text-xs text-tradealo-text-muted">
                       {formatDate(tx.createdAt)}
                     </p>
                   </div>
                   <span
                     className={`font-heading font-bold text-base shrink-0 ${
                       tx.type === 'credit'
-                        ? 'text-trocalia-success'
-                        : 'text-trocalia-error'
+                        ? 'text-tradealo-success'
+                        : 'text-tradealo-error'
                     }`}
                   >
                     {tx.type === 'credit' ? '+' : '-'}

@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Home page', () => {
   test('loads with hero heading', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/Trocalia/);
+    await expect(page).toHaveTitle(/Tradealo/);
     await expect(
       page.getByRole('heading', { name: /Intercambi/ })
     ).toBeVisible();
@@ -29,7 +29,7 @@ test.describe('Home page', () => {
     // Footer is in (public) layout — verified via /listings.
     await page.goto('/listings');
     await expect(
-      page.locator('text=Trocalia — Hecho en Argentina')
+      page.locator('text=Tradealo — Hecho en Argentina')
     ).toBeVisible();
   });
 

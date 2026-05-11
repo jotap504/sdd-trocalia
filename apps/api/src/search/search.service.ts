@@ -1,40 +1,42 @@
-import { Injectable, Inject } from '@nestjs/common'
-import { Client } from '@elastic/elasticsearch'
+import { Injectable, Inject } from '@nestjs/common';
+import { Client } from '@elastic/elasticsearch';
 import type {
-  Sort, FieldValue, QueryDslQueryContainer,
-} from '@elastic/elasticsearch/lib/api/types'
-import { ELASTICSEARCH_TOKEN } from './search.constants'
-import type { SearchListingsDto } from './dto/search-listings.dto'
-import { SearchSort } from './dto/search-listings.dto'
+  Sort,
+  FieldValue,
+  QueryDslQueryContainer,
+} from '@elastic/elasticsearch/lib/api/types';
+import { ELASTICSEARCH_TOKEN } from './search.constants';
+import type { SearchListingsDto } from './dto/search-listings.dto';
+import { SearchSort } from './dto/search-listings.dto';
 
-const INDEX = 'listings'
-const DEFAULT_LIMIT = 20
-const MAX_LIMIT = 50
+const INDEX = 'listings';
+const DEFAULT_LIMIT = 20;
+const MAX_LIMIT = 50;
 
 export interface ListingDocument {
-  id: string
-  title: string
-  description: string
-  price: number
-  currency: string
-  condition: string
-  type: string
-  status: string
-  moderationStatus: string
-  categoryId: string
-  province?: string
-  city?: string
-  location?: { lat: number; lon: number }
-  primaryImageUrl?: string
-  publishedAt?: string
-  createdAt: string
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  currency: string;
+  condition: string;
+  type: string;
+  status: string;
+  moderationStatus: string;
+  categoryId: string;
+  province?: string;
+  city?: string;
+  location?: { lat: number; lon: number };
+  primaryImageUrl?: string;
+  publishedAt?: string;
+  createdAt: string;
 }
 
 export interface SearchResult {
-  data: (ListingDocument & { score?: number })[]
-  nextCursor: string | null
-  hasMore: boolean
-  total: number
+  data: (ListingDocument & { score?: number })[];
+  nextCursor: string | null;
+  hasMore: boolean;
+  total: number;
 }
 
 @Injectable()
@@ -46,20 +48,20 @@ export class SearchService {
       index: INDEX,
       id: doc.id,
       document: doc,
-    })
+    });
   }
 
   async deleteListing(id: string): Promise<void> {
-    await this.es.delete({ index: INDEX, id }).catch(() => {})
+    await this.es.delete({ index: INDEX, id }).catch(() => {});
   }
 
   async search(dto: SearchListingsDto): Promise<SearchResult> {
-    const limit = Math.min(dto.limit ?? DEFAULT_LIMIT, MAX_LIMIT)
+    const limit = Math.min(dto.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
 
     const must: QueryDslQueryContainer[] = [
       { term: { status: 'active' } },
       { term: { moderationStatus: 'approved' } },
-    ]
+    ];
 
     if (dto.q) {
       must.push({
@@ -69,13 +71,13 @@ export class SearchService {
           type: 'best_fields',
           fuzziness: 'AUTO',
         },
-      })
+      });
     }
 
-    const filter: QueryDslQueryContainer[] = []
-    if (dto.categoryId) filter.push({ term: { categoryId: dto.categoryId } })
-    if (dto.condition) filter.push({ term: { condition: dto.condition } })
-    if (dto.province) filter.push({ term: { province: dto.province } })
+    const filter: QueryDslQueryContainer[] = [];
+    if (dto.categoryId) filter.push({ term: { categoryId: dto.categoryId } });
+    if (dto.condition) filter.push({ term: { condition: dto.condition } });
+    if (dto.province) filter.push({ term: { province: dto.province } });
     if (dto.minPrice !== undefined || dto.maxPrice !== undefined) {
       filter.push({
         range: {
@@ -84,7 +86,7 @@ export class SearchService {
             ...(dto.maxPrice !== undefined && { lte: dto.maxPrice }),
           },
         },
-      })
+      });
     }
     if (dto.lat !== undefined && dto.lng !== undefined && dto.radiusKm) {
       filter.push({
@@ -92,11 +94,11 @@ export class SearchService {
           distance: `${dto.radiusKm}km`,
           location: { lat: dto.lat, lon: dto.lng },
         },
-      })
+      });
     }
 
-    const sort = this.buildSort(dto.sort, dto.lat, dto.lng)
-    const searchAfter = dto.cursor ? this.decodeCursor(dto.cursor) : undefined
+    const sort = this.buildSort(dto.sort, dto.lat, dto.lng);
+    const searchAfter = dto.cursor ? this.decodeCursor(dto.cursor) : undefined;
 
     const response = await this.es.search<ListingDocument>({
       index: INDEX,
@@ -105,32 +107,37 @@ export class SearchService {
       sort,
       ...(searchAfter && { search_after: searchAfter as FieldValue[] }),
       track_total_hits: true,
-    })
+    });
 
-    const hits = response.hits.hits
-    const hasMore = hits.length > limit
-    const data = hasMore ? hits.slice(0, limit) : hits
+    const hits = response.hits.hits;
+    const hasMore = hits.length > limit;
+    const data = hasMore ? hits.slice(0, limit) : hits;
 
-    const total = typeof response.hits.total === 'object'
-      ? response.hits.total.value
-      : (response.hits.total ?? 0)
+    const total =
+      typeof response.hits.total === 'object'
+        ? response.hits.total.value
+        : (response.hits.total ?? 0);
 
-    const lastHit = data[data.length - 1]
-    const nextCursor = hasMore && lastHit?.sort
-      ? this.encodeCursor(lastHit.sort as unknown[])
-      : null
+    const lastHit = data[data.length - 1];
+    const nextCursor =
+      hasMore && lastHit?.sort
+        ? this.encodeCursor(lastHit.sort as unknown[])
+        : null;
 
     return {
-      data: data.map((hit) => ({ ...hit._source!, score: hit._score ?? undefined })),
+      data: data.map((hit) => ({
+        ...hit._source!,
+        score: hit._score ?? undefined,
+      })),
       nextCursor,
       hasMore,
       total,
-    }
+    };
   }
 
   async ensureIndex(): Promise<void> {
-    const exists = await this.es.indices.exists({ index: INDEX })
-    if (exists) return
+    const exists = await this.es.indices.exists({ index: INDEX });
+    if (exists) return;
 
     await this.es.indices.create({
       index: INDEX,
@@ -154,31 +161,45 @@ export class SearchService {
           createdAt: { type: 'date' },
         },
       },
-    })
+    });
   }
 
   private buildSort(sort?: SearchSort, lat?: number, lng?: number): Sort {
-    if (sort === SearchSort.PRICE_ASC) return [{ price: 'asc' }, { createdAt: 'desc' }]
-    if (sort === SearchSort.PRICE_DESC) return [{ price: 'desc' }, { createdAt: 'desc' }]
-    if (sort === SearchSort.RECENT) return [{ createdAt: 'desc' }, { id: 'desc' }]
+    if (sort === SearchSort.PRICE_ASC)
+      return [{ price: 'asc' }, { createdAt: 'desc' }];
+    if (sort === SearchSort.PRICE_DESC)
+      return [{ price: 'desc' }, { createdAt: 'desc' }];
+    if (sort === SearchSort.RECENT)
+      return [{ createdAt: 'desc' }, { id: 'desc' }];
     if (lat !== undefined && lng !== undefined) {
       return [
-        { _geo_distance: { location: { lat, lon: lng }, order: 'asc', unit: 'km' } },
+        {
+          _geo_distance: {
+            location: { lat, lon: lng },
+            order: 'asc',
+            unit: 'km',
+          },
+        },
         { createdAt: 'desc' },
-      ]
+      ];
     }
-    return [{ _score: { order: 'desc' as const } }, { createdAt: 'desc' as const }]
+    return [
+      { _score: { order: 'desc' as const } },
+      { createdAt: 'desc' as const },
+    ];
   }
 
   private encodeCursor(sortValues: unknown[]): string {
-    return Buffer.from(JSON.stringify(sortValues)).toString('base64url')
+    return Buffer.from(JSON.stringify(sortValues)).toString('base64url');
   }
 
   private decodeCursor(cursor: string): unknown[] {
     try {
-      return JSON.parse(Buffer.from(cursor, 'base64url').toString('utf-8')) as unknown[]
+      return JSON.parse(
+        Buffer.from(cursor, 'base64url').toString('utf-8'),
+      ) as unknown[];
     } catch {
-      return []
+      return [];
     }
   }
 }

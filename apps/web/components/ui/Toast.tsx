@@ -17,8 +17,8 @@ const ICONS = {
 };
 
 const ICON_COLORS = {
-  success: 'text-trocalia-success',
-  error: 'text-trocalia-error',
+  success: 'text-tradealo-success',
+  error: 'text-tradealo-error',
   info: 'text-blue-500',
 };
 
@@ -41,10 +41,10 @@ export function ToastContainer() {
             )}
           >
             <Icon size={18} className={cn('mt-0.5 shrink-0', ICON_COLORS[t.type])} />
-            <p className="text-sm flex-1 text-trocalia-text">{t.message}</p>
+            <p className="text-sm flex-1 text-tradealo-text">{t.message}</p>
             <button
               onClick={() => dismiss(t.id)}
-              className="absolute right-2 top-2 p-1 rounded hover:bg-black/5 text-trocalia-text-muted"
+              className="absolute right-2 top-2 p-1 rounded hover:bg-black/5 text-tradealo-text-muted"
               aria-label="Cerrar"
             >
               <X size={14} />

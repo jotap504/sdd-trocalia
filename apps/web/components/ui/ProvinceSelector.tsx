@@ -18,7 +18,7 @@ export const ProvinceSelector = forwardRef<HTMLSelectElement, Props>(
         {label && (
           <label
             htmlFor={selectId}
-            className="block text-sm font-medium text-trocalia-text mb-1.5"
+            className="block text-sm font-medium text-tradealo-text mb-1.5"
           >
             {label}
           </label>
@@ -30,8 +30,8 @@ export const ProvinceSelector = forwardRef<HTMLSelectElement, Props>(
             'w-full h-11 rounded-lg border bg-white px-3 text-sm appearance-none',
             'focus:outline-none focus:ring-2',
             error
-              ? 'border-trocalia-error focus:border-trocalia-error focus:ring-red-100'
-              : 'border-trocalia-border focus:border-trocalia-primary focus:ring-trocalia-primary-light',
+              ? 'border-tradealo-error focus:border-tradealo-error focus:ring-red-100'
+              : 'border-tradealo-border focus:border-tradealo-primary focus:ring-tradealo-primary-light',
             className
           )}
           {...rest}
@@ -43,7 +43,7 @@ export const ProvinceSelector = forwardRef<HTMLSelectElement, Props>(
             </option>
           ))}
         </select>
-        {error && <p className="mt-1.5 text-xs text-trocalia-error">{error}</p>}
+        {error && <p className="mt-1.5 text-xs text-tradealo-error">{error}</p>}
       </div>
     );
   }

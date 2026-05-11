@@ -80,9 +80,9 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
               className={cn(
                 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold shrink-0 transition-all',
                 done
-                  ? 'bg-trocalia-success text-white'
+                  ? 'bg-tradealo-success text-white'
                   : active
-                  ? 'bg-trocalia-primary text-white'
+                  ? 'bg-tradealo-primary text-white'
                   : 'bg-gray-200 text-gray-500'
               )}
             >
@@ -92,7 +92,7 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
               <div
                 className={cn(
                   'flex-1 h-1 rounded-full transition-all',
-                  done ? 'bg-trocalia-primary' : 'bg-gray-200'
+                  done ? 'bg-tradealo-primary' : 'bg-gray-200'
                 )}
               />
             )}
@@ -219,7 +219,7 @@ export default function NewListingPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text mb-6">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text mb-6">
         Nueva publicación
       </h1>
 
@@ -276,7 +276,7 @@ export default function NewListingPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Estado del artículo
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -288,8 +288,8 @@ export default function NewListingPage() {
                       className={cn(
                         'py-3 rounded-xl border text-sm font-medium transition-all',
                         formData.condition === c.value
-                          ? 'border-trocalia-primary bg-trocalia-primary-light text-trocalia-primary-hover'
-                          : 'border-trocalia-border bg-white hover:border-trocalia-primary/40'
+                          ? 'border-tradealo-primary bg-tradealo-primary-light text-tradealo-primary-hover'
+                          : 'border-tradealo-border bg-white hover:border-tradealo-primary/40'
                       )}
                     >
                       {c.label}
@@ -306,16 +306,16 @@ export default function NewListingPage() {
                     <div key={attr.key}>
                       {attr.type === 'select' && attr.options ? (
                         <div>
-                          <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+                          <label className="block text-sm font-medium text-tradealo-text mb-1.5">
                             {attr.label}
-                            {attr.required && <span className="text-trocalia-error ml-1">*</span>}
+                            {attr.required && <span className="text-tradealo-error ml-1">*</span>}
                           </label>
                           <select
                             value={String(formData.attributes[attr.key] ?? '')}
                             onChange={(e) =>
                               update({ attributes: { ...formData.attributes, [attr.key]: e.target.value } })
                             }
-                            className="w-full h-11 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary"
+                            className="w-full h-11 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary"
                           >
                             <option value="">Seleccioná…</option>
                             {attr.options.map((o) => (
@@ -331,7 +331,7 @@ export default function NewListingPage() {
                             onChange={(e) =>
                               update({ attributes: { ...formData.attributes, [attr.key]: e.target.checked } })
                             }
-                            className="w-4 h-4 rounded text-trocalia-primary"
+                            className="w-4 h-4 rounded text-tradealo-primary"
                           />
                           <span className="text-sm font-medium">{attr.label}</span>
                         </label>
@@ -359,13 +359,13 @@ export default function NewListingPage() {
               <h2 className="font-heading font-semibold text-lg">
                 Paso 3: Fotos del producto
               </h2>
-              <p className="text-sm text-trocalia-text-muted">
+              <p className="text-sm text-tradealo-text-muted">
                 Subí al menos 1 foto. Las primeras fotos son las más vistas.
               </p>
               {listingId ? (
                 <ImageUploader listingId={listingId} maxImages={8} />
               ) : (
-                <p className="text-sm text-trocalia-error">
+                <p className="text-sm text-tradealo-error">
                   Hubo un error al crear el borrador. Volvé al paso anterior.
                 </p>
               )}
@@ -390,13 +390,13 @@ export default function NewListingPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+                  <label className="block text-sm font-medium text-tradealo-text mb-1.5">
                     Moneda
                   </label>
                   <select
                     value={formData.currency}
                     onChange={(e) => update({ currency: e.target.value as 'ARS' | 'USD' })}
-                    className="h-11 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary"
+                    className="h-11 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary"
                   >
                     <option value="ARS">ARS $</option>
                     <option value="USD">USD U$S</option>
@@ -408,12 +408,12 @@ export default function NewListingPage() {
                   type="checkbox"
                   checked={formData.negotiable}
                   onChange={(e) => update({ negotiable: e.target.checked })}
-                  className="w-4 h-4 rounded text-trocalia-primary"
+                  className="w-4 h-4 rounded text-tradealo-primary"
                 />
                 <span className="text-sm font-medium">Precio negociable</span>
               </label>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Métodos de pago aceptados
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -428,7 +428,7 @@ export default function NewListingPage() {
                             : formData.paymentMethods.filter((p) => p !== m);
                           update({ paymentMethods: next });
                         }}
-                        className="w-4 h-4 rounded text-trocalia-primary"
+                        className="w-4 h-4 rounded text-tradealo-primary"
                       />
                       <span className="text-sm">{m}</span>
                     </label>
@@ -436,7 +436,7 @@ export default function NewListingPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Opciones de envío
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -451,7 +451,7 @@ export default function NewListingPage() {
                             : formData.shippingOptions.filter((o) => o !== s);
                           update({ shippingOptions: next });
                         }}
-                        className="w-4 h-4 rounded text-trocalia-primary"
+                        className="w-4 h-4 rounded text-tradealo-primary"
                       />
                       <span className="text-sm">{s}</span>
                     </label>
@@ -517,17 +517,17 @@ export default function NewListingPage() {
                     className={cn(
                       'p-4 rounded-xl border-2 text-left transition-all',
                       formData.type === t
-                        ? 'border-trocalia-primary bg-trocalia-primary-light'
-                        : 'border-trocalia-border bg-white hover:border-trocalia-primary/40'
+                        ? 'border-tradealo-primary bg-tradealo-primary-light'
+                        : 'border-tradealo-border bg-white hover:border-tradealo-primary/40'
                     )}
                   >
                     <p className="font-heading font-semibold capitalize">{t}</p>
-                    <p className="text-xs text-trocalia-text-muted mt-1">
+                    <p className="text-xs text-tradealo-text-muted mt-1">
                       {t === 'standard'
                         ? 'Gratis con tu cuota mensual'
                         : 'Destacado — requiere tokens'}
                     </p>
-                    <p className="text-xs font-semibold text-trocalia-primary mt-2">
+                    <p className="text-xs font-semibold text-tradealo-primary mt-2">
                       Base: {LISTING_BASE_COST[t]} token
                       {LISTING_BASE_COST[t] !== 1 ? 's' : ''}
                     </p>
@@ -535,7 +535,7 @@ export default function NewListingPage() {
                 ))}
               </div>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Duración
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -547,8 +547,8 @@ export default function NewListingPage() {
                       className={cn(
                         'py-3 rounded-xl border text-sm font-medium transition-all',
                         formData.durationDays === d.days
-                          ? 'border-trocalia-primary bg-trocalia-primary-light text-trocalia-primary-hover'
-                          : 'border-trocalia-border bg-white hover:border-trocalia-primary/40'
+                          ? 'border-tradealo-primary bg-tradealo-primary-light text-tradealo-primary-hover'
+                          : 'border-tradealo-border bg-white hover:border-tradealo-primary/40'
                       )}
                     >
                       {d.label}
@@ -556,28 +556,28 @@ export default function NewListingPage() {
                   ))}
                 </div>
               </div>
-              <div className="bg-gray-50 rounded-xl p-4 space-y-2 border border-trocalia-border">
+              <div className="bg-gray-50 rounded-xl p-4 space-y-2 border border-tradealo-border">
                 <h3 className="font-heading font-semibold text-sm">
                   Resumen de costo
                 </h3>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-trocalia-text-muted">Tipo</span>
+                  <span className="text-tradealo-text-muted">Tipo</span>
                   <span className="capitalize">{formData.type}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-trocalia-text-muted">Duración</span>
+                  <span className="text-tradealo-text-muted">Duración</span>
                   <span>{formData.durationDays} días</span>
                 </div>
-                <div className="flex items-center justify-between font-semibold pt-2 border-t border-trocalia-border">
+                <div className="flex items-center justify-between font-semibold pt-2 border-t border-tradealo-border">
                   <span>Total</span>
                   <TokenBadge tokens={totalCost} size="md" />
                 </div>
-                <div className="flex items-center justify-between text-xs text-trocalia-text-muted">
+                <div className="flex items-center justify-between text-xs text-tradealo-text-muted">
                   <span>Tu balance</span>
                   <span>{balanceData?.balance ?? 0} tokens</span>
                 </div>
                 {!canAfford && (
-                  <p className="text-xs text-trocalia-error pt-1">
+                  <p className="text-xs text-tradealo-error pt-1">
                     No tenés suficientes tokens.{' '}
                     <button
                       type="button"
@@ -595,19 +595,19 @@ export default function NewListingPage() {
                   </p>
                 )}
               </div>
-              <div className="bg-trocalia-primary-light rounded-xl p-4 space-y-1 text-sm">
-                <p className="font-heading font-semibold text-trocalia-primary-hover">
+              <div className="bg-tradealo-primary-light rounded-xl p-4 space-y-1 text-sm">
+                <p className="font-heading font-semibold text-tradealo-primary-hover">
                   Resumen de tu publicación
                 </p>
-                <p className="text-trocalia-text truncate">
+                <p className="text-tradealo-text truncate">
                   <span className="font-medium">Título: </span>
                   {formData.title}
                 </p>
-                <p className="text-trocalia-text">
+                <p className="text-tradealo-text">
                   <span className="font-medium">Precio: </span>
                   {formData.price} {formData.currency}
                 </p>
-                <p className="text-trocalia-text">
+                <p className="text-tradealo-text">
                   <span className="font-medium">Ubicación: </span>
                   {formData.city ? `${formData.city}, ` : ''}
                   {formData.province}

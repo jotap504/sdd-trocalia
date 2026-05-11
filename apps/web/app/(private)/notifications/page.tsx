@@ -32,7 +32,7 @@ const TYPE_ICON: Record<string, React.ComponentType<any>> = {
 function NotifIcon({ type }: { type: string }) {
   const Icon = TYPE_ICON[type] ?? Bell;
   return (
-    <div className="w-10 h-10 rounded-full bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary shrink-0">
+    <div className="w-10 h-10 rounded-full bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary shrink-0">
       <Icon size={18} />
     </div>
   );
@@ -53,7 +53,7 @@ export default function NotificationsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Notificaciones
       </h1>
 
@@ -70,15 +70,15 @@ export default function NotificationsPage() {
           ))}
         </div>
       ) : items.length === 0 ? (
-        <div className="bg-white border border-dashed border-trocalia-border rounded-2xl p-12 text-center">
+        <div className="bg-white border border-dashed border-tradealo-border rounded-2xl p-12 text-center">
           <Bell
             size={40}
-            className="mx-auto text-trocalia-text-muted mb-4 opacity-40"
+            className="mx-auto text-tradealo-text-muted mb-4 opacity-40"
           />
           <h3 className="font-heading font-semibold text-lg mb-1">
             No tenés notificaciones
           </h3>
-          <p className="text-sm text-trocalia-text-muted">
+          <p className="text-sm text-tradealo-text-muted">
             Acá aparecerán las novedades sobre tus publicaciones y actividad.
           </p>
         </div>
@@ -89,14 +89,14 @@ export default function NotificationsPage() {
               key={notif.id}
               className={`flex gap-4 p-4 rounded-xl border transition-all ${
                 notif.read
-                  ? 'bg-white border-trocalia-border'
-                  : 'bg-trocalia-primary-light/30 border-trocalia-primary/20'
+                  ? 'bg-white border-tradealo-border'
+                  : 'bg-tradealo-primary-light/30 border-tradealo-primary/20'
               }`}
             >
               <NotifIcon type={notif.type} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm font-semibold text-trocalia-text">
+                  <p className="text-sm font-semibold text-tradealo-text">
                     {notif.title}
                   </p>
                   {!notif.read && (
@@ -105,10 +105,10 @@ export default function NotificationsPage() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-trocalia-text-muted mt-0.5">
+                <p className="text-sm text-tradealo-text-muted mt-0.5">
                   {notif.message}
                 </p>
-                <p className="text-xs text-trocalia-text-muted mt-1">
+                <p className="text-xs text-tradealo-text-muted mt-1">
                   {formatRelative(notif.createdAt)}
                 </p>
               </div>

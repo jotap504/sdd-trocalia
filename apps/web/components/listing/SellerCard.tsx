@@ -31,7 +31,7 @@ export function SellerCard({ user }: Props) {
               {user.kycLevel >= 1 && (
                 <ShieldCheck
                   size={15}
-                  className="text-trocalia-primary"
+                  className="text-tradealo-primary"
                   aria-label="Verificado"
                 />
               )}
@@ -48,7 +48,7 @@ export function SellerCard({ user }: Props) {
           <ReputationStars rating={rep.average} count={rep.count} />
         </div>
 
-        <div className="mt-4 space-y-1.5 text-sm text-trocalia-text-muted">
+        <div className="mt-4 space-y-1.5 text-sm text-tradealo-text-muted">
           {user.province && (
             <div className="flex items-center gap-2">
               <MapPin size={14} />
@@ -67,7 +67,7 @@ export function SellerCard({ user }: Props) {
         </div>
 
         {user.bio && (
-          <p className="mt-3 text-sm text-trocalia-text leading-relaxed">
+          <p className="mt-3 text-sm text-tradealo-text leading-relaxed">
             {user.bio}
           </p>
         )}

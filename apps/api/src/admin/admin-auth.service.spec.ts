@@ -106,7 +106,7 @@ describe('AdminAuthService', () => {
     const mockSecret = {
       base32: TOTP_SECRET,
       otpauth_url:
-        'otpauth://totp/Trocalia%20Admin%20%28admin%40trocalia.com.ar%29?secret=JBSWY3DPEHPK3PXP',
+        'otpauth://totp/Tradealo%20Admin%20%28admin%40trocalia.com.ar%29?secret=JBSWY3DPEHPK3PXP',
     };
 
     beforeEach(() => {

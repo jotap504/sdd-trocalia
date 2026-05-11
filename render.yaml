@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: trocalia-api
+    name: tradealo-api
     runtime: docker
     dockerfilePath: apps/api/Dockerfile
     dockerContext: .

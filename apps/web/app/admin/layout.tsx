@@ -65,15 +65,15 @@ export default function AdminLayout({
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-trocalia-bg">
+    <div className="flex h-screen overflow-hidden bg-tradealo-bg">
       {/* Sidebar */}
       <aside className="w-60 shrink-0 bg-gray-900 text-white flex flex-col">
         <div className="flex items-center gap-2 px-5 h-16 border-b border-white/10">
-          <span className="w-8 h-8 rounded-lg bg-trocalia-primary flex items-center justify-center">
+          <span className="w-8 h-8 rounded-lg bg-tradealo-primary flex items-center justify-center">
             <Repeat size={16} strokeWidth={2.5} />
           </span>
           <span className="font-heading font-bold text-base">
-            Trocalia Admin
+            Tradealo Admin
           </span>
         </div>
 
@@ -90,7 +90,7 @@ export default function AdminLayout({
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
                   active
-                    ? 'bg-trocalia-primary text-white'
+                    ? 'bg-tradealo-primary text-white'
                     : 'text-gray-400 hover:bg-white/10 hover:text-white'
                 )}
               >
@@ -113,8 +113,8 @@ export default function AdminLayout({
       </aside>
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b border-trocalia-border flex items-center justify-between px-6 shrink-0">
-          <p className="font-heading font-semibold text-trocalia-text">
+        <header className="h-16 bg-white border-b border-tradealo-border flex items-center justify-between px-6 shrink-0">
+          <p className="font-heading font-semibold text-tradealo-text">
             Panel CEO
           </p>
           <div className="flex items-center gap-2">
@@ -123,7 +123,7 @@ export default function AdminLayout({
               username={user.username ?? user.email}
               size="sm"
             />
-            <span className="text-sm font-medium text-trocalia-text">
+            <span className="text-sm font-medium text-tradealo-text">
               {user.username ?? user.email}
             </span>
           </div>

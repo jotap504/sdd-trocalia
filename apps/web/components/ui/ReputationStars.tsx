@@ -41,7 +41,7 @@ export function ReputationStars({
         ))}
       </div>
       {showNumber && (
-        <span className="text-sm text-trocalia-text-muted">
+        <span className="text-sm text-tradealo-text-muted">
           {rating > 0 ? rating.toFixed(1) : 'Sin reseñas'}
           {typeof count === 'number' && count > 0 && (
             <span className="ml-1">({count})</span>

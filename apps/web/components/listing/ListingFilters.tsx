@@ -99,8 +99,8 @@ export function ListingFilters() {
           open ? 'block' : 'hidden lg:block'
         )}
       >
-        <div className="lg:bg-white lg:rounded-xl lg:border lg:border-trocalia-border lg:p-5 fixed inset-0 lg:static z-50 bg-white flex flex-col lg:block">
-          <div className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-trocalia-border shrink-0">
+        <div className="lg:bg-white lg:rounded-xl lg:border lg:border-tradealo-border lg:p-5 fixed inset-0 lg:static z-50 bg-white flex flex-col lg:block">
+          <div className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-tradealo-border shrink-0">
             <h3 className="font-heading font-semibold">Filtros</h3>
             <button
               onClick={() => setOpen(false)}
@@ -115,7 +115,7 @@ export function ListingFilters() {
               <h3 className="font-heading font-semibold text-base mb-1">
                 Filtros
               </h3>
-              <p className="text-xs text-trocalia-text-muted">
+              <p className="text-xs text-tradealo-text-muted">
                 Afiná los resultados a tu gusto
               </p>
             </div>
@@ -137,7 +137,7 @@ export function ListingFilters() {
                 onChange={(e) =>
                   setState({ ...state, category: e.target.value })
                 }
-                className="w-full h-11 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary focus:ring-2 focus:ring-trocalia-primary-light"
+                className="w-full h-11 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary focus:ring-2 focus:ring-tradealo-primary-light"
               >
                 <option value="">Todas las categorías</option>
                 {flatCats.map((c) => (
@@ -173,7 +173,7 @@ export function ListingFilters() {
                           : state.conditions.filter((v) => v !== c.value);
                         setState({ ...state, conditions: next });
                       }}
-                      className="w-4 h-4 rounded text-trocalia-primary focus:ring-trocalia-primary"
+                      className="w-4 h-4 rounded text-tradealo-primary focus:ring-tradealo-primary"
                     />
                     {c.label}
                   </label>
@@ -198,8 +198,8 @@ export function ListingFilters() {
                     className={cn(
                       'h-8 rounded-md text-xs font-medium transition-colors',
                       state.type === t.v
-                        ? 'bg-white text-trocalia-primary shadow-sm'
-                        : 'text-trocalia-text-muted hover:text-trocalia-text'
+                        ? 'bg-white text-tradealo-primary shadow-sm'
+                        : 'text-tradealo-text-muted hover:text-tradealo-text'
                     )}
                   >
                     {t.l}
@@ -218,9 +218,9 @@ export function ListingFilters() {
                   onChange={(e) =>
                     setState({ ...state, minPrice: e.target.value })
                   }
-                  className="w-full h-10 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary"
+                  className="w-full h-10 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary"
                 />
-                <span className="text-trocalia-text-muted">—</span>
+                <span className="text-tradealo-text-muted">—</span>
                 <input
                   type="number"
                   placeholder="Máx"
@@ -228,7 +228,7 @@ export function ListingFilters() {
                   onChange={(e) =>
                     setState({ ...state, maxPrice: e.target.value })
                   }
-                  className="w-full h-10 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary"
+                  className="w-full h-10 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary"
                 />
               </div>
               <div className="grid grid-cols-3 gap-1 mt-2 p-1 bg-gray-100 rounded-lg">
@@ -244,8 +244,8 @@ export function ListingFilters() {
                     className={cn(
                       'h-8 rounded-md text-xs font-medium transition-colors',
                       state.currency === c.v
-                        ? 'bg-white text-trocalia-primary shadow-sm'
-                        : 'text-trocalia-text-muted hover:text-trocalia-text'
+                        ? 'bg-white text-tradealo-primary shadow-sm'
+                        : 'text-tradealo-text-muted hover:text-tradealo-text'
                     )}
                   >
                     {c.l}
@@ -254,7 +254,7 @@ export function ListingFilters() {
               </div>
             </div>
           </div>
-          <div className="lg:mt-5 p-4 lg:p-0 border-t lg:border-t-0 border-trocalia-border flex gap-2 shrink-0 bg-white">
+          <div className="lg:mt-5 p-4 lg:p-0 border-t lg:border-t-0 border-tradealo-border flex gap-2 shrink-0 bg-white">
             <Button variant="secondary" onClick={reset} fullWidth>
               Limpiar
             </Button>

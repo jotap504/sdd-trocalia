@@ -59,13 +59,13 @@ export default function AdminLoginPage() {
       <Card className="w-full max-w-md">
         <CardBody className="space-y-6 p-8">
           <div className="text-center">
-            <div className="w-14 h-14 rounded-2xl bg-gray-800 flex items-center justify-center text-trocalia-primary mx-auto mb-4">
+            <div className="w-14 h-14 rounded-2xl bg-gray-800 flex items-center justify-center text-tradealo-primary mx-auto mb-4">
               <ShieldCheck size={28} />
             </div>
-            <h1 className="font-heading text-xl font-bold text-trocalia-text">
+            <h1 className="font-heading text-xl font-bold text-tradealo-text">
               Acceso Administrativo
             </h1>
-            <p className="text-sm text-trocalia-text-muted mt-1">
+            <p className="text-sm text-tradealo-text-muted mt-1">
               Solo para administradores autorizados
             </p>
           </div>

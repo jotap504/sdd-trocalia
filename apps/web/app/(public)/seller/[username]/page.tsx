@@ -42,8 +42,8 @@ export async function generateMetadata({
   params: { username: string };
 }): Promise<Metadata> {
   return {
-    title: `Perfil de @${params.username} | Trocalia`,
-    description: `Mirá las publicaciones y reputación de @${params.username} en Trocalia.`,
+    title: `Perfil de @${params.username} | Tradealo`,
+    description: `Mirá las publicaciones y reputación de @${params.username} en Tradealo.`,
   };
 }
 
@@ -68,7 +68,7 @@ export default async function SellerProfilePage({
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-10 space-y-8">
       {/* Profile header */}
-      <div className="bg-white rounded-2xl border border-trocalia-border p-6 sm:p-8">
+      <div className="bg-white rounded-2xl border border-tradealo-border p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row gap-6 items-start">
           <Avatar
             src={user.avatarUrl}
@@ -77,11 +77,11 @@ export default async function SellerProfilePage({
           />
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+              <h1 className="font-heading text-2xl font-bold text-tradealo-text">
                 @{user.username ?? user.email}
               </h1>
               {user.kycLevel >= 1 && (
-                <ShieldCheck size={20} className="text-trocalia-primary" />
+                <ShieldCheck size={20} className="text-tradealo-primary" />
               )}
             </div>
 
@@ -93,7 +93,7 @@ export default async function SellerProfilePage({
 
             <ReputationStars rating={rep.average} count={rep.count} />
 
-            <div className="flex flex-col gap-1.5 text-sm text-trocalia-text-muted">
+            <div className="flex flex-col gap-1.5 text-sm text-tradealo-text-muted">
               {user.province && (
                 <div className="flex items-center gap-2">
                   <MapPin size={14} />
@@ -112,7 +112,7 @@ export default async function SellerProfilePage({
             </div>
 
             {user.bio && (
-              <p className="text-sm text-trocalia-text leading-relaxed max-w-prose">
+              <p className="text-sm text-tradealo-text leading-relaxed max-w-prose">
                 {user.bio}
               </p>
             )}
@@ -122,7 +122,7 @@ export default async function SellerProfilePage({
 
       {/* Listings */}
       <section>
-        <h2 className="font-heading text-xl font-bold text-trocalia-text mb-5">
+        <h2 className="font-heading text-xl font-bold text-tradealo-text mb-5">
           Publicaciones activas
         </h2>
         <ListingGrid

@@ -106,7 +106,7 @@ export default function AdminDashboardPage() {
       display: (v: number | string) =>
         typeof v === 'number' ? v.toLocaleString('es-AR') : v,
       icon: Tag,
-      color: 'text-trocalia-primary bg-trocalia-primary-light',
+      color: 'text-tradealo-primary bg-tradealo-primary-light',
     },
     {
       label: 'KYC pendientes',
@@ -121,13 +121,13 @@ export default function AdminDashboardPage() {
       value: formatPrice(stats?.revenueArs ?? 0, 'ARS'),
       display: (v: number | string) => String(v),
       icon: DollarSign,
-      color: 'text-trocalia-success bg-green-50',
+      color: 'text-tradealo-success bg-green-50',
     },
   ];
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Dashboard CEO
       </h1>
 
@@ -148,10 +148,10 @@ export default function AdminDashboardPage() {
                       <Icon size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-trocalia-text-muted">
+                      <p className="text-xs text-tradealo-text-muted">
                         {s.label}
                       </p>
-                      <p className="font-heading font-bold text-xl text-trocalia-text">
+                      <p className="font-heading font-bold text-xl text-tradealo-text">
                         {s.display(s.value)}
                       </p>
                     </div>
@@ -170,14 +170,14 @@ export default function AdminDashboardPage() {
           {loadingListings ? (
             <Skeleton variant="card" className="h-40" />
           ) : !pendingListings?.data?.length ? (
-            <p className="text-sm text-trocalia-text-muted">
+            <p className="text-sm text-tradealo-text-muted">
               No hay listings pendientes.
             </p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[500px]">
                 <thead>
-                  <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                  <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                     <th className="pb-2 font-medium">Título</th>
                     <th className="pb-2 font-medium">Vendedor</th>
                     <th className="pb-2 font-medium">Fecha</th>
@@ -188,15 +188,15 @@ export default function AdminDashboardPage() {
                   {pendingListings.data.slice(0, 5).map((l) => (
                     <tr
                       key={l.id}
-                      className="border-b border-trocalia-border last:border-0"
+                      className="border-b border-tradealo-border last:border-0"
                     >
                       <td className="py-2.5 pr-4 max-w-[180px] truncate font-medium">
                         {l.title}
                       </td>
-                      <td className="py-2.5 pr-4 text-trocalia-text-muted">
+                      <td className="py-2.5 pr-4 text-tradealo-text-muted">
                         {l.seller?.username ?? '—'}
                       </td>
-                      <td className="py-2.5 pr-4 text-trocalia-text-muted whitespace-nowrap">
+                      <td className="py-2.5 pr-4 text-tradealo-text-muted whitespace-nowrap">
                         {formatRelative(l.createdAt)}
                       </td>
                       <td className="py-2.5">
@@ -236,14 +236,14 @@ export default function AdminDashboardPage() {
           {loadingKyc ? (
             <Skeleton variant="card" className="h-40" />
           ) : !pendingKyc?.data?.length ? (
-            <p className="text-sm text-trocalia-text-muted">
+            <p className="text-sm text-tradealo-text-muted">
               No hay KYC pendientes.
             </p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[500px]">
                 <thead>
-                  <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                  <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                     <th className="pb-2 font-medium">Usuario</th>
                     <th className="pb-2 font-medium">Email</th>
                     <th className="pb-2 font-medium">Nivel</th>
@@ -254,12 +254,12 @@ export default function AdminDashboardPage() {
                   {pendingKyc.data.slice(0, 5).map((u) => (
                     <tr
                       key={u.id}
-                      className="border-b border-trocalia-border last:border-0"
+                      className="border-b border-tradealo-border last:border-0"
                     >
                       <td className="py-2.5 pr-4 font-medium">
                         {u.username ?? '—'}
                       </td>
-                      <td className="py-2.5 pr-4 text-trocalia-text-muted">
+                      <td className="py-2.5 pr-4 text-tradealo-text-muted">
                         {u.email}
                       </td>
                       <td className="py-2.5 pr-4">
@@ -306,11 +306,11 @@ export default function AdminDashboardPage() {
       >
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+            <label className="block text-sm font-medium text-tradealo-text mb-1.5">
               Razón del rechazo
             </label>
             <textarea
-              className="w-full rounded-lg border border-trocalia-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary resize-none"
+              className="w-full rounded-lg border border-tradealo-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary resize-none"
               rows={3}
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
@@ -345,11 +345,11 @@ export default function AdminDashboardPage() {
       >
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+            <label className="block text-sm font-medium text-tradealo-text mb-1.5">
               Razón del rechazo
             </label>
             <textarea
-              className="w-full rounded-lg border border-trocalia-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary resize-none"
+              className="w-full rounded-lg border border-tradealo-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary resize-none"
               rows={3}
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}

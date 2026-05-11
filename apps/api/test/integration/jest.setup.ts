@@ -14,7 +14,7 @@ let pool: Pool;
 beforeAll(async () => {
   if (!process.env.CI) {
     execSync(
-      'docker compose -f ../../docker-compose.test.yml -p trocalia-test up -d --wait',
+      'docker compose -f ../../docker-compose.test.yml -p tradealo-test up -d --wait',
       { stdio: 'inherit' },
     );
     execSync('pnpm db:migrate', {

@@ -11,7 +11,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 const VARIANT: Record<Variant, string> = {
   default: 'bg-gray-100 text-gray-700 border-gray-200',
-  primary: 'bg-trocalia-primary-light text-trocalia-primary-hover border-teal-200',
+  primary: 'bg-tradealo-primary-light text-tradealo-primary-hover border-teal-200',
   success: 'bg-green-100 text-green-700 border-green-200',
   warning: 'bg-amber-100 text-amber-700 border-amber-200',
   danger: 'bg-red-100 text-red-700 border-red-200',

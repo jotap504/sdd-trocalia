@@ -25,16 +25,16 @@ export function PriceDisplay({
 }: Props) {
   return (
     <div className={cn('leading-tight', className)}>
-      <p className={cn(SIZES[size], 'text-trocalia-text font-heading')}>
+      <p className={cn(SIZES[size], 'text-tradealo-text font-heading')}>
         {formatPrice(amount, currency)}
         {currency === 'USD' && (
-          <span className="ml-1 text-xs font-medium text-trocalia-text-muted">
+          <span className="ml-1 text-xs font-medium text-tradealo-text-muted">
             USD
           </span>
         )}
       </p>
       {negotiable && (
-        <p className="text-xs text-trocalia-text-muted">Negociable</p>
+        <p className="text-xs text-tradealo-text-muted">Negociable</p>
       )}
     </div>
   );

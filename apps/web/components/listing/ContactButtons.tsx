@@ -50,7 +50,7 @@ export function ContactButtons({ listingId, showPhone, phone, sellerUsername }: 
   const waLink =
     showPhone && waNumber
       ? `https://wa.me/${waNumber}?text=${encodeURIComponent(
-          `Hola${sellerUsername ? ` ${sellerUsername}` : ''}, vi tu publicación en Trocalia y me interesa.`
+          `Hola${sellerUsername ? ` ${sellerUsername}` : ''}, vi tu publicación en Tradealo y me interesa.`
         )}`
       : null;
 
@@ -74,25 +74,25 @@ export function ContactButtons({ listingId, showPhone, phone, sellerUsername }: 
           <div className="rounded-lg bg-green-50 border border-green-200 p-4 text-center">
             <MessageCircle
               size={24}
-              className="mx-auto text-trocalia-success mb-2"
+              className="mx-auto text-tradealo-success mb-2"
             />
-            <p className="text-sm font-medium text-trocalia-success">
+            <p className="text-sm font-medium text-tradealo-success">
               Consulta enviada
             </p>
-            <p className="text-xs text-trocalia-text-muted mt-1">
+            <p className="text-xs text-tradealo-text-muted mt-1">
               El vendedor te responderá por email pronto.
             </p>
             <button
               type="button"
               onClick={() => setSent(false)}
-              className="text-xs text-trocalia-primary hover:underline mt-3"
+              className="text-xs text-tradealo-primary hover:underline mt-3"
             >
               Enviar otra consulta
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-            <p className="text-sm font-medium text-trocalia-text">
+            <p className="text-sm font-medium text-tradealo-text">
               Enviar consulta
             </p>
             <Input

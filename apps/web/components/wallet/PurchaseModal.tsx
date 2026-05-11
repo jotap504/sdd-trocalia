@@ -39,19 +39,19 @@ export function PurchaseModal({ open, pack, onClose }: Props) {
     <Modal open={open} onClose={onClose} title="Confirmar compra" size="md">
       {pack && (
         <div className="space-y-5">
-          <div className="rounded-xl bg-trocalia-primary-light p-5 text-center">
-            <p className="text-xs uppercase tracking-wide text-trocalia-primary-hover font-semibold">
+          <div className="rounded-xl bg-tradealo-primary-light p-5 text-center">
+            <p className="text-xs uppercase tracking-wide text-tradealo-primary-hover font-semibold">
               {pack.name}
             </p>
             <div className="flex items-center justify-center gap-2 mt-2">
-              <Coins className="text-trocalia-primary" size={22} />
-              <span className="font-heading font-bold text-3xl text-trocalia-text">
+              <Coins className="text-tradealo-primary" size={22} />
+              <span className="font-heading font-bold text-3xl text-tradealo-text">
                 {(pack.tokens + (pack.bonusTokens ?? 0)).toLocaleString('es-AR')}
               </span>
-              <span className="text-trocalia-text-muted text-sm">tokens</span>
+              <span className="text-tradealo-text-muted text-sm">tokens</span>
             </div>
             {pack.bonusTokens && pack.bonusTokens > 0 && (
-              <p className="text-xs text-trocalia-success font-medium mt-1">
+              <p className="text-xs text-tradealo-success font-medium mt-1">
                 Incluye {pack.bonusTokens} de regalo
               </p>
             )}
@@ -59,17 +59,17 @@ export function PurchaseModal({ open, pack, onClose }: Props) {
 
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">
-              <span className="text-trocalia-text-muted">Subtotal</span>
+              <span className="text-tradealo-text-muted">Subtotal</span>
               <span>{formatPrice(pack.priceArs, 'ARS')}</span>
             </div>
-            <div className="flex items-center justify-between font-semibold pt-2 border-t border-trocalia-border">
+            <div className="flex items-center justify-between font-semibold pt-2 border-t border-tradealo-border">
               <span>Total a pagar</span>
               <span className="text-lg">{formatPrice(pack.priceArs, 'ARS')}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-trocalia-text-muted bg-gray-50 rounded-lg p-3">
-            <ShieldCheck size={14} className="shrink-0 text-trocalia-success" />
+          <div className="flex items-center gap-2 text-xs text-tradealo-text-muted bg-gray-50 rounded-lg p-3">
+            <ShieldCheck size={14} className="shrink-0 text-tradealo-success" />
             <span>
               Vas a ser redirigido a MercadoPago para completar el pago de
               forma segura.

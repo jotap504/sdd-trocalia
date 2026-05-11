@@ -60,18 +60,18 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-trocalia-border shadow-sm">
+    <header className="sticky top-0 z-40 bg-white border-b border-tradealo-border shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center gap-4">
         <Link
           href="/"
           className="flex items-center gap-2 shrink-0 group"
-          aria-label="Trocalia inicio"
+          aria-label="Tradealo inicio"
         >
-          <span className="w-9 h-9 rounded-lg bg-trocalia-primary flex items-center justify-center text-white shadow-sm group-hover:bg-trocalia-primary-hover transition-colors">
+          <span className="w-9 h-9 rounded-lg bg-tradealo-primary flex items-center justify-center text-white shadow-sm group-hover:bg-tradealo-primary-hover transition-colors">
             <Repeat size={18} strokeWidth={2.5} />
           </span>
-          <span className="font-heading font-bold text-xl text-trocalia-primary tracking-tight">
-            Trocalia
+          <span className="font-heading font-bold text-xl text-tradealo-primary tracking-tight">
+            Tradealo
           </span>
         </Link>
 
@@ -85,8 +85,8 @@ export function Navbar() {
                 className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors',
                   active
-                    ? 'text-trocalia-primary bg-trocalia-primary-light'
-                    : 'text-trocalia-text hover:bg-gray-100'
+                    ? 'text-tradealo-primary bg-tradealo-primary-light'
+                    : 'text-tradealo-text hover:bg-gray-100'
                 )}
               >
                 {l.label}
@@ -107,12 +107,12 @@ export function Navbar() {
           >
             <Search
               size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-trocalia-text-muted pointer-events-none"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-tradealo-text-muted pointer-events-none"
             />
             <input
               name="q"
               placeholder="Buscar productos, categorías…"
-              className="w-full h-10 pl-9 pr-3 rounded-lg border border-trocalia-border bg-gray-50 text-sm focus:outline-none focus:bg-white focus:border-trocalia-primary focus:ring-2 focus:ring-trocalia-primary-light"
+              className="w-full h-10 pl-9 pr-3 rounded-lg border border-tradealo-border bg-gray-50 text-sm focus:outline-none focus:bg-white focus:border-tradealo-primary focus:ring-2 focus:ring-tradealo-primary-light"
             />
           </form>
         </div>
@@ -136,15 +136,15 @@ export function Navbar() {
                     username={user.username ?? user.email}
                     size="sm"
                   />
-                  <ChevronDown size={14} className="text-trocalia-text-muted" />
+                  <ChevronDown size={14} className="text-tradealo-text-muted" />
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-trocalia-border rounded-xl shadow-lg z-50 overflow-hidden animate-slide-up">
-                    <div className="px-4 py-3 border-b border-trocalia-border">
+                  <div className="absolute right-0 mt-2 w-56 bg-white border border-tradealo-border rounded-xl shadow-lg z-50 overflow-hidden animate-slide-up">
+                    <div className="px-4 py-3 border-b border-tradealo-border">
                       <p className="text-sm font-medium truncate">
                         {user.username ?? user.email}
                       </p>
-                      <p className="text-xs text-trocalia-text-muted truncate">
+                      <p className="text-xs text-tradealo-text-muted truncate">
                         {user.email}
                       </p>
                     </div>
@@ -175,7 +175,7 @@ export function Navbar() {
                     />
                     <button
                       onClick={onLogout}
-                      className="w-full text-left flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 text-trocalia-error border-t border-trocalia-border"
+                      className="w-full text-left flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 text-tradealo-error border-t border-tradealo-border"
                     >
                       <LogOut size={15} />
                       Cerrar sesión
@@ -216,9 +216,9 @@ export function Navbar() {
             onClick={() => setMobileOpen(false)}
           />
           <aside className="absolute right-0 top-0 h-full w-72 bg-white shadow-xl flex flex-col animate-slide-up">
-            <div className="flex items-center justify-between px-4 h-16 border-b border-trocalia-border">
-              <span className="font-heading font-bold text-lg text-trocalia-primary">
-                Trocalia
+            <div className="flex items-center justify-between px-4 h-16 border-b border-tradealo-border">
+              <span className="font-heading font-bold text-lg text-tradealo-primary">
+                Tradealo
               </span>
               <button
                 onClick={() => setMobileOpen(false)}
@@ -267,7 +267,7 @@ export function Navbar() {
                 </>
               )}
             </nav>
-            <div className="mt-auto p-4 border-t border-trocalia-border space-y-2">
+            <div className="mt-auto p-4 border-t border-tradealo-border space-y-2">
               {user ? (
                 <>
                   <Link href="/my-listings/new">
@@ -316,9 +316,9 @@ function DropdownLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 text-trocalia-text"
+      className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 text-tradealo-text"
     >
-      <span className="text-trocalia-text-muted">{icon}</span>
+      <span className="text-tradealo-text-muted">{icon}</span>
       {label}
     </Link>
   );

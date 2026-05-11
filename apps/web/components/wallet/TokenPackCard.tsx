@@ -17,8 +17,8 @@ export function TokenPackCard({ pack, selected, onSelect }: Props) {
       className={cn(
         'relative bg-white rounded-2xl border-2 p-5 transition-all',
         selected
-          ? 'border-trocalia-primary shadow-card-hover'
-          : 'border-trocalia-border hover:border-trocalia-primary/50 hover:shadow-card'
+          ? 'border-tradealo-primary shadow-card-hover'
+          : 'border-tradealo-border hover:border-tradealo-primary/50 hover:shadow-card'
       )}
     >
       {pack.popular && (
@@ -33,20 +33,20 @@ export function TokenPackCard({ pack, selected, onSelect }: Props) {
       <div className="text-center">
         <h3 className="font-heading font-bold text-lg">{pack.name}</h3>
         {pack.description && (
-          <p className="text-xs text-trocalia-text-muted mt-1">
+          <p className="text-xs text-tradealo-text-muted mt-1">
             {pack.description}
           </p>
         )}
       </div>
       <div className="my-5 flex flex-col items-center">
         <div className="flex items-baseline gap-1">
-          <Coins size={20} className="text-trocalia-primary" />
-          <span className="font-heading font-bold text-3xl text-trocalia-text">
+          <Coins size={20} className="text-tradealo-primary" />
+          <span className="font-heading font-bold text-3xl text-tradealo-text">
             {total.toLocaleString('es-AR')}
           </span>
         </div>
         {pack.bonusTokens && pack.bonusTokens > 0 && (
-          <p className="text-xs font-medium text-trocalia-success mt-1">
+          <p className="text-xs font-medium text-tradealo-success mt-1">
             + {pack.bonusTokens} tokens de regalo
           </p>
         )}
@@ -55,7 +55,7 @@ export function TokenPackCard({ pack, selected, onSelect }: Props) {
         <p className="font-heading font-bold text-2xl">
           {formatPrice(pack.priceArs, 'ARS')}
         </p>
-        <p className="text-[11px] text-trocalia-text-muted mt-0.5">
+        <p className="text-[11px] text-tradealo-text-muted mt-0.5">
           Precio único
         </p>
       </div>

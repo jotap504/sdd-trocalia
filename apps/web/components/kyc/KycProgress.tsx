@@ -21,25 +21,25 @@ export function KycProgress({ status, className }: Props) {
   const percent = Math.round((completed / total) * 100);
 
   return (
-    <div className={cn('bg-white rounded-2xl border border-trocalia-border p-6', className)}>
+    <div className={cn('bg-white rounded-2xl border border-tradealo-border p-6', className)}>
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary">
+        <div className="w-12 h-12 rounded-full bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary">
           <ShieldCheck size={22} />
         </div>
         <div>
           <h3 className="font-heading font-semibold text-base">
             Verificación de identidad
           </h3>
-          <p className="text-sm text-trocalia-text-muted">
+          <p className="text-sm text-tradealo-text-muted">
             Nivel actual:{' '}
-            <span className="font-semibold text-trocalia-text">
+            <span className="font-semibold text-tradealo-text">
               {status.level}
             </span>{' '}
             de 2
           </p>
         </div>
         <div className="ml-auto text-right">
-          <p className="text-2xl font-heading font-bold text-trocalia-primary">
+          <p className="text-2xl font-heading font-bold text-tradealo-primary">
             {percent}%
           </p>
         </div>
@@ -47,7 +47,7 @@ export function KycProgress({ status, className }: Props) {
 
       <div className="mt-4 h-2 rounded-full bg-gray-100 overflow-hidden">
         <div
-          className="h-full bg-trocalia-primary rounded-full transition-all duration-500"
+          className="h-full bg-tradealo-primary rounded-full transition-all duration-500"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -61,7 +61,7 @@ export function KycProgress({ status, className }: Props) {
                 className={cn(
                   'w-5 h-5 rounded-full flex items-center justify-center',
                   ok
-                    ? 'bg-trocalia-success text-white'
+                    ? 'bg-tradealo-success text-white'
                     : 'bg-gray-200 text-gray-400'
                 )}
               >
@@ -69,7 +69,7 @@ export function KycProgress({ status, className }: Props) {
               </span>
               <span
                 className={cn(
-                  ok ? 'text-trocalia-text' : 'text-trocalia-text-muted'
+                  ok ? 'text-tradealo-text' : 'text-tradealo-text-muted'
                 )}
               >
                 {s.label}

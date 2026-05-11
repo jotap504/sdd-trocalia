@@ -82,7 +82,7 @@ export default function AdminListingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Moderación de listings
       </h1>
 
@@ -92,8 +92,8 @@ export default function AdminListingsPage() {
             <Skeleton variant="card" className="h-64" />
           ) : !data?.data?.length ? (
             <div className="text-center py-12">
-              <Tag size={40} className="mx-auto text-trocalia-text-muted mb-3" />
-              <p className="text-sm text-trocalia-text-muted">
+              <Tag size={40} className="mx-auto text-tradealo-text-muted mb-3" />
+              <p className="text-sm text-tradealo-text-muted">
                 No hay listings pendientes de moderación.
               </p>
             </div>
@@ -102,7 +102,7 @@ export default function AdminListingsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm min-w-[640px]">
                   <thead>
-                    <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                    <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                       <th className="pb-2 font-medium">Imagen</th>
                       <th className="pb-2 font-medium">Título</th>
                       <th className="pb-2 font-medium">Vendedor</th>
@@ -116,7 +116,7 @@ export default function AdminListingsPage() {
                     {data.data.map((l) => (
                       <tr
                         key={l.id}
-                        className="border-b border-trocalia-border last:border-0"
+                        className="border-b border-tradealo-border last:border-0"
                       >
                         <td className="py-3 pr-3">
                           {l.images?.[0] ? (
@@ -133,14 +133,14 @@ export default function AdminListingsPage() {
                           )}
                         </td>
                         <td className="py-3 pr-4 max-w-[160px]">
-                          <p className="font-medium text-trocalia-text truncate">
+                          <p className="font-medium text-tradealo-text truncate">
                             {l.title}
                           </p>
-                          <p className="text-xs text-trocalia-text-muted mt-0.5">
+                          <p className="text-xs text-tradealo-text-muted mt-0.5">
                             {l.category?.name ?? '—'}
                           </p>
                         </td>
-                        <td className="py-3 pr-4 text-trocalia-text-muted">
+                        <td className="py-3 pr-4 text-tradealo-text-muted">
                           {l.seller?.username ?? '—'}
                         </td>
                         <td className="py-3 pr-4 whitespace-nowrap font-medium">
@@ -149,7 +149,7 @@ export default function AdminListingsPage() {
                         <td className="py-3 pr-4">
                           <RiskBadge score={l.riskScore} />
                         </td>
-                        <td className="py-3 pr-4 text-trocalia-text-muted whitespace-nowrap">
+                        <td className="py-3 pr-4 text-tradealo-text-muted whitespace-nowrap">
                           {formatRelative(l.createdAt)}
                         </td>
                         <td className="py-3">
@@ -190,7 +190,7 @@ export default function AdminListingsPage() {
 
               {/* Pagination */}
               {(cursor || data.nextCursor) && (
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-trocalia-border">
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-tradealo-border">
                   <Button
                     size="sm"
                     variant="secondary"
@@ -226,11 +226,11 @@ export default function AdminListingsPage() {
       >
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+            <label className="block text-sm font-medium text-tradealo-text mb-1.5">
               Razón del rechazo
             </label>
             <textarea
-              className="w-full rounded-lg border border-trocalia-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary resize-none"
+              className="w-full rounded-lg border border-tradealo-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary resize-none"
               rows={3}
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
@@ -279,36 +279,36 @@ export default function AdminListingsPage() {
             )}
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <p className="text-trocalia-text-muted text-xs">Vendedor</p>
+                <p className="text-tradealo-text-muted text-xs">Vendedor</p>
                 <p className="font-medium">{drawerListing.seller?.username ?? '—'}</p>
               </div>
               <div>
-                <p className="text-trocalia-text-muted text-xs">Precio</p>
+                <p className="text-tradealo-text-muted text-xs">Precio</p>
                 <p className="font-medium">
                   {formatPrice(drawerListing.price, drawerListing.currency)}
                 </p>
               </div>
               <div>
-                <p className="text-trocalia-text-muted text-xs">Categoría</p>
+                <p className="text-tradealo-text-muted text-xs">Categoría</p>
                 <p className="font-medium">{drawerListing.category?.name ?? '—'}</p>
               </div>
               <div>
-                <p className="text-trocalia-text-muted text-xs">Condición</p>
+                <p className="text-tradealo-text-muted text-xs">Condición</p>
                 <p className="font-medium">{drawerListing.condition}</p>
               </div>
               <div>
-                <p className="text-trocalia-text-muted text-xs">Provincia</p>
+                <p className="text-tradealo-text-muted text-xs">Provincia</p>
                 <p className="font-medium">{drawerListing.province}</p>
               </div>
               <div>
-                <p className="text-trocalia-text-muted text-xs">Riesgo</p>
+                <p className="text-tradealo-text-muted text-xs">Riesgo</p>
                 <RiskBadge score={drawerListing.riskScore} />
               </div>
             </div>
             {drawerListing.description && (
               <div>
-                <p className="text-trocalia-text-muted text-xs mb-1">Descripción</p>
-                <p className="text-sm text-trocalia-text whitespace-pre-line">
+                <p className="text-tradealo-text-muted text-xs mb-1">Descripción</p>
+                <p className="text-sm text-tradealo-text whitespace-pre-line">
                   {drawerListing.description}
                 </p>
               </div>

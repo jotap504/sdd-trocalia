@@ -15,7 +15,7 @@ export function ListingGallery({ images, title }: Props) {
 
   if (!images || images.length === 0) {
     return (
-      <div className="aspect-[4/3] rounded-xl bg-gray-100 flex items-center justify-center text-trocalia-text-muted border border-trocalia-border">
+      <div className="aspect-[4/3] rounded-xl bg-gray-100 flex items-center justify-center text-tradealo-text-muted border border-tradealo-border">
         <ImageIcon size={48} />
       </div>
     );
@@ -23,7 +23,7 @@ export function ListingGallery({ images, title }: Props) {
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 border border-trocalia-border">
+      <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 border border-tradealo-border">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={current.url}
@@ -40,8 +40,8 @@ export function ListingGallery({ images, title }: Props) {
               onClick={() => setSelected(idx)}
               className={`shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
                 idx === selected
-                  ? 'border-trocalia-primary'
-                  : 'border-trocalia-border hover:border-trocalia-primary/50'
+                  ? 'border-tradealo-primary'
+                  : 'border-tradealo-border hover:border-tradealo-primary/50'
               }`}
               aria-label={`Ver imagen ${idx + 1}`}
             >

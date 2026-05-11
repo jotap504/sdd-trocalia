@@ -22,7 +22,7 @@ export function ListingReviews({ sellerId }: Props) {
   const items = data?.data?.slice(0, 5) ?? [];
 
   return (
-    <div className="bg-white rounded-xl border border-trocalia-border p-5">
+    <div className="bg-white rounded-xl border border-tradealo-border p-5">
       <h2 className="font-heading font-semibold text-base mb-4">
         Opiniones del vendedor
       </h2>
@@ -42,7 +42,7 @@ export function ListingReviews({ sellerId }: Props) {
       )}
 
       {!isLoading && items.length === 0 && (
-        <p className="text-sm text-trocalia-text-muted">
+        <p className="text-sm text-tradealo-text-muted">
           El vendedor todavía no tiene opiniones.
         </p>
       )}
@@ -58,7 +58,7 @@ export function ListingReviews({ sellerId }: Props) {
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm font-medium text-trocalia-text">
+                  <span className="text-sm font-medium text-tradealo-text">
                     {review.reviewer?.username ?? 'Usuario'}
                   </span>
                   <div className="flex">
@@ -74,11 +74,11 @@ export function ListingReviews({ sellerId }: Props) {
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-trocalia-text-muted">
+                  <span className="text-xs text-tradealo-text-muted">
                     {formatRelative(review.createdAt)}
                   </span>
                 </div>
-                <p className="text-sm text-trocalia-text leading-relaxed">
+                <p className="text-sm text-tradealo-text leading-relaxed">
                   {review.comment}
                 </p>
               </div>

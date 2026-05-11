@@ -27,13 +27,13 @@ export default function BuyTokensPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-8 space-y-8">
       <div className="text-center">
-        <div className="w-14 h-14 rounded-2xl bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary mx-auto mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary mx-auto mb-4">
           <Coins size={28} />
         </div>
-        <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">
           Comprar tokens
         </h1>
-        <p className="text-trocalia-text-muted mt-2 max-w-md mx-auto text-sm">
+        <p className="text-tradealo-text-muted mt-2 max-w-md mx-auto text-sm">
           Los tokens te permiten publicar anuncios premium y acceder a funciones
           avanzadas. Comprá una vez y usalos cuando quieras.
         </p>
@@ -46,7 +46,7 @@ export default function BuyTokensPage() {
           ))}
         </div>
       ) : !packs || packs.length === 0 ? (
-        <div className="text-center py-12 text-trocalia-text-muted">
+        <div className="text-center py-12 text-tradealo-text-muted">
           <p className="text-sm">No hay paquetes disponibles por el momento.</p>
         </div>
       ) : (

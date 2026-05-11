@@ -3,15 +3,15 @@ import { Repeat, Mail, Globe, Share2 } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-trocalia-footer-bg text-trocalia-footer-text mt-auto">
+    <footer className="bg-tradealo-footer-bg text-tradealo-footer-text mt-auto">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-9 h-9 rounded-lg bg-trocalia-primary flex items-center justify-center text-white">
+            <span className="w-9 h-9 rounded-lg bg-tradealo-primary flex items-center justify-center text-white">
               <Repeat size={18} strokeWidth={2.5} />
             </span>
             <span className="font-heading font-bold text-xl text-white">
-              Trocalia
+              Tradealo
             </span>
           </div>
           <p className="text-sm leading-relaxed max-w-xs">
@@ -106,7 +106,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-          <span>© 2026 Trocalia — Hecho en Argentina</span>
+          <span>© 2026 Tradealo — Hecho en Argentina</span>
           <span>Marketplace C2C de intercambio · Solo Argentina</span>
         </div>
       </div>

@@ -18,15 +18,15 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary:
-    'bg-trocalia-primary text-white hover:bg-trocalia-primary-hover active:bg-trocalia-primary-hover shadow-sm',
+    'bg-tradealo-primary text-white hover:bg-tradealo-primary-hover active:bg-tradealo-primary-hover shadow-sm',
   secondary:
-    'bg-white text-trocalia-primary border border-trocalia-primary hover:bg-trocalia-primary-light',
+    'bg-white text-tradealo-primary border border-tradealo-primary hover:bg-tradealo-primary-light',
   ghost:
-    'bg-transparent text-trocalia-text hover:bg-black/5 active:bg-black/10',
+    'bg-transparent text-tradealo-text hover:bg-black/5 active:bg-black/10',
   danger:
-    'bg-trocalia-error text-white hover:bg-red-700 active:bg-red-800 shadow-sm',
+    'bg-tradealo-error text-white hover:bg-red-700 active:bg-red-800 shadow-sm',
   whatsapp:
-    'bg-trocalia-whatsapp text-white hover:brightness-95 active:brightness-90 shadow-sm',
+    'bg-tradealo-whatsapp text-white hover:brightness-95 active:brightness-90 shadow-sm',
 };
 
 const SIZE_CLASSES: Record<Size, string> = {
@@ -59,7 +59,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'inline-flex items-center justify-center font-medium select-none',
           'transition-colors duration-150 ease-out',
-          'focus:outline-none focus-visible:ring-2 focus-visible:ring-trocalia-primary focus-visible:ring-offset-2',
+          'focus:outline-none focus-visible:ring-2 focus-visible:ring-tradealo-primary focus-visible:ring-offset-2',
           'disabled:opacity-50 disabled:cursor-not-allowed',
           !isDisabled && 'cursor-pointer',
           VARIANT_CLASSES[variant],

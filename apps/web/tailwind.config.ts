@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        trocalia: {
+        tradealo: {
           bg: '#EFEFEF',
           card: '#FFFFFF',
           text: '#333333',

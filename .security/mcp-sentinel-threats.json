@@ -1,0 +1,107 @@
+{
+  "last_scan": "2026-05-11T00:00:00Z",
+  "scan_count": 1,
+  "inventory": [
+    {
+      "name": "supabase",
+      "type": "skill",
+      "source": "github.com/supabase/agent-skills",
+      "version": "0.1.2",
+      "first_seen": "2026-05-11",
+      "status": "clean",
+      "findings": []
+    },
+    {
+      "name": "remotion-best-practices",
+      "type": "skill",
+      "source": "unknown",
+      "version": "unknown",
+      "first_seen": "2026-05-11",
+      "status": "clean",
+      "findings": []
+    },
+    {
+      "name": "supabase-postgres-best-practices",
+      "type": "skill",
+      "source": "unknown",
+      "version": "unknown",
+      "first_seen": "2026-05-11",
+      "status": "clean",
+      "findings": []
+    },
+    {
+      "name": "mcp-sentinel",
+      "type": "skill",
+      "source": "github.com/soy-rafa/claude-mcp-sentinel",
+      "version": "2.0",
+      "first_seen": "2026-05-11",
+      "status": "clean",
+      "findings": []
+    },
+    {
+      "name": "supabase-mcp",
+      "type": "mcp_server",
+      "source": "https://mcp.supabase.com/mcp",
+      "version": "hosted",
+      "first_seen": "2026-05-11",
+      "status": "warning",
+      "findings": [
+        {
+          "id": "CVE-2026-31813",
+          "severity": "high",
+          "description": "Supabase Auth bypass via crafted OIDC tokens (Apple/Azure providers). Fixed in hosted Supabase >= v2.185.0. LOW RISK for this project: trocalia uses email/phone auth only.",
+          "remediation": "Verify project does not enable Apple/Azure OIDC. Already patched on hosted Supabase."
+        },
+        {
+          "id": "SUPABASE-MCP-LETHAL-TRIFECTA",
+          "severity": "medium",
+          "description": "Architectural risk: Supabase MCP uses service_role access (full DB privileges). If Claude processes untrusted user input through MCP tools, prompt injection could trigger unauthorized SQL. Documented incident: Supabase Cursor agent data leak (mid-2025).",
+          "remediation": "Never pass raw user-submitted content as context when invoking Supabase MCP tools. Validate and sanitize before MCP calls."
+        }
+      ]
+    }
+  ],
+  "known_threats": [
+    {
+      "id": "CVE-2025-59536",
+      "source": "check_point_research",
+      "severity": "high",
+      "cvss": 8.7,
+      "affects": ["claude_code"],
+      "description": "RCE via PreToolUse hook execution before trust dialogs. Malicious hooks in project-level config execute automatically.",
+      "discovered": "2025",
+      "remediation": "Patched in Claude Code >= 1.0.111. Keep Claude Code updated.",
+      "directly_affects_user": false
+    },
+    {
+      "id": "CVE-2026-21852",
+      "source": "check_point_research",
+      "severity": "medium",
+      "cvss": 5.3,
+      "affects": ["claude_code"],
+      "description": "API key exfiltration via ANTHROPIC_BASE_URL override in project config.",
+      "discovered": "2026-01",
+      "remediation": "Patched in Claude Code >= 2.0.65.",
+      "directly_affects_user": false
+    },
+    {
+      "id": "CVE-2026-31813",
+      "source": "github_advisory_GHSA-v36f-qvww-8w8m",
+      "severity": "high",
+      "affects": ["supabase-auth"],
+      "description": "Auth bypass via crafted Apple/Azure OIDC ID tokens. Fixed in supabase/auth >= 2.185.0.",
+      "discovered": "2026-03-11",
+      "remediation": "Hosted Supabase patched. Self-hosted: upgrade to >= 2.185.0.",
+      "directly_affects_user": false
+    }
+  ],
+  "community_alerts": [
+    {
+      "source": "pomerium_blog",
+      "url": "https://www.pomerium.com/blog/when-ai-has-root-lessons-from-the-supabase-mcp-data-leak",
+      "summary": "Lethal Trifecta: Supabase MCP + service_role + untrusted input = data leak. Real incident documented.",
+      "date": "2025",
+      "relevance": "direct"
+    }
+  ]
+}

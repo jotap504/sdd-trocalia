@@ -18,12 +18,12 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Trocalia — Marketplace de intercambio Argentina',
+  title: 'Tradealo — Marketplace de intercambio Argentina',
   description:
     'Comprá, vendé y trocá entre vecinos en toda Argentina. Lo que ya no usás se transforma en algo que sí.',
   metadataBase: new URL('https://trocalia.com.ar'),
   openGraph: {
-    title: 'Trocalia',
+    title: 'Tradealo',
     description: 'Marketplace argentino de intercambio C2C',
     type: 'website',
     locale: 'es_AR',
@@ -35,7 +35,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es-AR" className={`${rubik.variable} ${nunito.variable}`}>
-      <body className="bg-trocalia-bg text-trocalia-text font-sans antialiased min-h-screen">
+      <body className="bg-tradealo-bg text-tradealo-text font-sans antialiased min-h-screen">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

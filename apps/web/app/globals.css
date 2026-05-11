@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --trocalia-bg: #EFEFEF;
-  --trocalia-card: #FFFFFF;
-  --trocalia-text: #333333;
-  --trocalia-text-muted: #64748B;
-  --trocalia-primary: #0D9488;
-  --trocalia-primary-hover: #0F766E;
-  --trocalia-primary-light: #CCFBF1;
-  --trocalia-border: #E2E8F0;
-  --trocalia-footer-bg: #222222;
-  --trocalia-footer-text: #CCCCCC;
-  --trocalia-whatsapp: #25D366;
-  --trocalia-error: #DC2626;
-  --trocalia-warning: #F59E0B;
-  --trocalia-success: #16A34A;
+  --tradealo-bg: #EFEFEF;
+  --tradealo-card: #FFFFFF;
+  --tradealo-text: #333333;
+  --tradealo-text-muted: #64748B;
+  --tradealo-primary: #0D9488;
+  --tradealo-primary-hover: #0F766E;
+  --tradealo-primary-light: #CCFBF1;
+  --tradealo-border: #E2E8F0;
+  --tradealo-footer-bg: #222222;
+  --tradealo-footer-text: #CCCCCC;
+  --tradealo-whatsapp: #25D366;
+  --tradealo-error: #DC2626;
+  --tradealo-warning: #F59E0B;
+  --tradealo-success: #16A34A;
 }
 
 * {
@@ -25,8 +25,8 @@
 
 html,
 body {
-  background: var(--trocalia-bg);
-  color: var(--trocalia-text);
+  background: var(--tradealo-bg);
+  color: var(--tradealo-text);
   font-family: var(--font-nunito), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,7 +35,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-rubik), system-ui, sans-serif;
   letter-spacing: -0.01em;
-  color: var(--trocalia-text);
+  color: var(--tradealo-text);
 }
 
 ::-webkit-scrollbar {
@@ -70,6 +70,6 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer components {
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-trocalia-primary focus-visible:ring-offset-2;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-tradealo-primary focus-visible:ring-offset-2;
   }
 }

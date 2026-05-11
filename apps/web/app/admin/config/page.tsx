@@ -44,7 +44,7 @@ function ConfigValueDisplay({ config }: { config: SystemConfig }) {
     );
   }
   return (
-    <span className="text-sm text-trocalia-text">{config.value}</span>
+    <span className="text-sm text-tradealo-text">{config.value}</span>
   );
 }
 
@@ -101,7 +101,7 @@ export default function AdminConfigPage() {
     if (editing.dataType === 'boolean') {
       return (
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+          <label className="block text-sm font-medium text-tradealo-text mb-1.5">
             Valor
           </label>
           <div className="flex gap-3">
@@ -112,8 +112,8 @@ export default function AdminConfigPage() {
                 onClick={() => setEditValue(opt)}
                 className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
                   editValue === opt
-                    ? 'bg-trocalia-primary text-white border-trocalia-primary'
-                    : 'border-trocalia-border text-trocalia-text hover:border-trocalia-primary'
+                    ? 'bg-tradealo-primary text-white border-tradealo-primary'
+                    : 'border-tradealo-border text-tradealo-text hover:border-tradealo-primary'
                 }`}
               >
                 {opt}
@@ -139,17 +139,17 @@ export default function AdminConfigPage() {
     if (editing.dataType === 'json') {
       return (
         <div>
-          <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+          <label className="block text-sm font-medium text-tradealo-text mb-1.5">
             Valor (JSON)
           </label>
           <textarea
-            className="w-full rounded-lg border border-trocalia-border px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary resize-none"
+            className="w-full rounded-lg border border-tradealo-border px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary resize-none"
             rows={5}
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
           />
           {editing.description && (
-            <p className="mt-1 text-xs text-trocalia-text-muted">{editing.description}</p>
+            <p className="mt-1 text-xs text-tradealo-text-muted">{editing.description}</p>
           )}
         </div>
       );
@@ -167,7 +167,7 @@ export default function AdminConfigPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Configuración del sistema
       </h1>
 
@@ -180,7 +180,7 @@ export default function AdminConfigPage() {
       ) : Object.keys(grouped).length === 0 ? (
         <Card>
           <CardBody>
-            <p className="text-sm text-trocalia-text-muted">
+            <p className="text-sm text-tradealo-text-muted">
               No hay configuraciones disponibles.
             </p>
           </CardBody>
@@ -196,17 +196,17 @@ export default function AdminConfigPage() {
                   className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors rounded-xl"
                   onClick={() => toggleCategory(category)}
                 >
-                  <span className="font-heading font-semibold text-trocalia-text capitalize">
+                  <span className="font-heading font-semibold text-tradealo-text capitalize">
                     {category}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-trocalia-text-muted">
+                    <span className="text-xs text-tradealo-text-muted">
                       {items.length} entradas
                     </span>
                     {isOpen ? (
-                      <ChevronDown size={16} className="text-trocalia-text-muted" />
+                      <ChevronDown size={16} className="text-tradealo-text-muted" />
                     ) : (
-                      <ChevronRight size={16} className="text-trocalia-text-muted" />
+                      <ChevronRight size={16} className="text-tradealo-text-muted" />
                     )}
                   </div>
                 </button>
@@ -216,7 +216,7 @@ export default function AdminConfigPage() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm min-w-[500px]">
                         <thead>
-                          <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                          <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                             <th className="pb-2 font-medium">Clave</th>
                             <th className="pb-2 font-medium">Descripción</th>
                             <th className="pb-2 font-medium">Valor actual</th>
@@ -228,12 +228,12 @@ export default function AdminConfigPage() {
                           {items.map((cfg) => (
                             <tr
                               key={cfg.key}
-                              className="border-b border-trocalia-border last:border-0"
+                              className="border-b border-tradealo-border last:border-0"
                             >
-                              <td className="py-3 pr-4 font-mono text-xs text-trocalia-text-muted whitespace-nowrap">
+                              <td className="py-3 pr-4 font-mono text-xs text-tradealo-text-muted whitespace-nowrap">
                                 {cfg.key}
                               </td>
-                              <td className="py-3 pr-4 text-trocalia-text-muted max-w-[200px]">
+                              <td className="py-3 pr-4 text-tradealo-text-muted max-w-[200px]">
                                 {cfg.description ?? '—'}
                               </td>
                               <td className="py-3 pr-4">
@@ -273,7 +273,7 @@ export default function AdminConfigPage() {
       >
         <div className="space-y-4">
           {editing?.description && (
-            <p className="text-sm text-trocalia-text-muted">{editing.description}</p>
+            <p className="text-sm text-tradealo-text-muted">{editing.description}</p>
           )}
           {renderEditInput()}
           <div className="flex gap-2">

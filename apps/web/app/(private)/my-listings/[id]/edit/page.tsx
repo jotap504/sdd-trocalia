@@ -59,15 +59,15 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
                 className={cn(
                   'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0',
                   done
-                    ? 'bg-trocalia-success text-white'
+                    ? 'bg-tradealo-success text-white'
                     : active
-                    ? 'bg-trocalia-primary text-white'
+                    ? 'bg-tradealo-primary text-white'
                     : 'bg-gray-200 text-gray-500'
                 )}
               >
                 {done ? <Check size={12} strokeWidth={3} /> : s}
               </div>
-              <span className="text-[10px] text-trocalia-text-muted hidden sm:block">
+              <span className="text-[10px] text-tradealo-text-muted hidden sm:block">
                 {labels[i]}
               </span>
             </div>
@@ -75,7 +75,7 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
               <div
                 className={cn(
                   'flex-1 h-1 rounded-full mb-4',
-                  done ? 'bg-trocalia-primary' : 'bg-gray-200'
+                  done ? 'bg-tradealo-primary' : 'bg-gray-200'
                 )}
               />
             )}
@@ -200,7 +200,7 @@ export default function EditListingPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text mb-6">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text mb-6">
         Editar publicación
       </h1>
 
@@ -239,7 +239,7 @@ export default function EditListingPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Estado
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -251,8 +251,8 @@ export default function EditListingPage() {
                       className={cn(
                         'py-3 rounded-xl border text-sm font-medium transition-all',
                         formData.condition === c.value
-                          ? 'border-trocalia-primary bg-trocalia-primary-light text-trocalia-primary-hover'
-                          : 'border-trocalia-border bg-white hover:border-trocalia-primary/40'
+                          ? 'border-tradealo-primary bg-tradealo-primary-light text-tradealo-primary-hover'
+                          : 'border-tradealo-border bg-white hover:border-tradealo-primary/40'
                       )}
                     >
                       {c.label}
@@ -290,7 +290,7 @@ export default function EditListingPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+                  <label className="block text-sm font-medium text-tradealo-text mb-1.5">
                     Moneda
                   </label>
                   <select
@@ -298,7 +298,7 @@ export default function EditListingPage() {
                     onChange={(e) =>
                       update({ currency: e.target.value as 'ARS' | 'USD' })
                     }
-                    className="h-11 rounded-lg border border-trocalia-border px-3 text-sm focus:outline-none focus:border-trocalia-primary"
+                    className="h-11 rounded-lg border border-tradealo-border px-3 text-sm focus:outline-none focus:border-tradealo-primary"
                   >
                     <option value="ARS">ARS $</option>
                     <option value="USD">USD U$S</option>
@@ -310,12 +310,12 @@ export default function EditListingPage() {
                   type="checkbox"
                   checked={formData.negotiable}
                   onChange={(e) => update({ negotiable: e.target.checked })}
-                  className="w-4 h-4 rounded text-trocalia-primary"
+                  className="w-4 h-4 rounded text-tradealo-primary"
                 />
                 <span className="text-sm font-medium">Precio negociable</span>
               </label>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Métodos de pago
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -330,7 +330,7 @@ export default function EditListingPage() {
                             : formData.paymentMethods.filter((p) => p !== m);
                           update({ paymentMethods: next });
                         }}
-                        className="w-4 h-4 rounded text-trocalia-primary"
+                        className="w-4 h-4 rounded text-tradealo-primary"
                       />
                       <span className="text-sm">{m}</span>
                     </label>
@@ -338,7 +338,7 @@ export default function EditListingPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-trocalia-text mb-2">
+                <label className="block text-sm font-medium text-tradealo-text mb-2">
                   Opciones de envío
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -353,7 +353,7 @@ export default function EditListingPage() {
                             : formData.shippingOptions.filter((o) => o !== s);
                           update({ shippingOptions: next });
                         }}
-                        className="w-4 h-4 rounded text-trocalia-primary"
+                        className="w-4 h-4 rounded text-tradealo-primary"
                       />
                       <span className="text-sm">{s}</span>
                     </label>
@@ -393,12 +393,12 @@ export default function EditListingPage() {
                     className={cn(
                       'p-4 rounded-xl border-2 text-left transition-all',
                       formData.type === t
-                        ? 'border-trocalia-primary bg-trocalia-primary-light'
-                        : 'border-trocalia-border bg-white hover:border-trocalia-primary/40'
+                        ? 'border-tradealo-primary bg-tradealo-primary-light'
+                        : 'border-tradealo-border bg-white hover:border-tradealo-primary/40'
                     )}
                   >
                     <p className="font-heading font-semibold capitalize">{t}</p>
-                    <p className="text-xs text-trocalia-text-muted mt-1">
+                    <p className="text-xs text-tradealo-text-muted mt-1">
                       {t === 'standard' ? 'Gratis con cuota mensual' : 'Requiere tokens'}
                     </p>
                   </button>
@@ -413,25 +413,25 @@ export default function EditListingPage() {
                     className={cn(
                       'py-3 rounded-xl border text-sm font-medium transition-all',
                       formData.durationDays === d.days
-                        ? 'border-trocalia-primary bg-trocalia-primary-light'
-                        : 'border-trocalia-border bg-white'
+                        ? 'border-tradealo-primary bg-tradealo-primary-light'
+                        : 'border-tradealo-border bg-white'
                     )}
                   >
                     {d.label}
                   </button>
                 ))}
               </div>
-              <div className="bg-gray-50 rounded-xl p-4 space-y-2 border border-trocalia-border">
+              <div className="bg-gray-50 rounded-xl p-4 space-y-2 border border-tradealo-border">
                 <div className="flex items-center justify-between font-semibold text-sm">
                   <span>Costo estimado</span>
                   <TokenBadge tokens={totalCost} size="sm" />
                 </div>
-                <div className="flex items-center justify-between text-xs text-trocalia-text-muted">
+                <div className="flex items-center justify-between text-xs text-tradealo-text-muted">
                   <span>Tu balance</span>
                   <span>{balanceData?.balance ?? 0} tokens</span>
                 </div>
                 {!canAfford && (
-                  <p className="text-xs text-trocalia-error">
+                  <p className="text-xs text-tradealo-error">
                     No tenés suficientes tokens.{' '}
                     <button
                       type="button"

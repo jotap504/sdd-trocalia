@@ -69,7 +69,7 @@ export function CategorySelector({ value, onChange }: Props) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12 text-trocalia-text-muted">
+      <div className="flex items-center justify-center py-12 text-tradealo-text-muted">
         <Loader2 className="animate-spin" />
       </div>
     );
@@ -87,14 +87,14 @@ export function CategorySelector({ value, onChange }: Props) {
         <nav className="flex items-center gap-2 text-sm">
           <button
             onClick={() => setParent(null)}
-            className="text-trocalia-primary hover:underline"
+            className="text-tradealo-primary hover:underline"
           >
             Categorías
           </button>
           {breadcrumb.map((b, i) => (
-            <span key={i} className="flex items-center gap-2 text-trocalia-text-muted">
+            <span key={i} className="flex items-center gap-2 text-tradealo-text-muted">
               <ChevronRight size={14} />
-              <span className="text-trocalia-text font-medium">{b}</span>
+              <span className="text-tradealo-text font-medium">{b}</span>
             </span>
           ))}
         </nav>
@@ -117,11 +117,11 @@ export function CategorySelector({ value, onChange }: Props) {
                 }}
                 className={cn(
                   'group flex flex-col items-center justify-center gap-2 p-5 rounded-xl border bg-white transition-all',
-                  'border-trocalia-border hover:border-trocalia-primary hover:bg-trocalia-primary-light/40',
-                  value === c.id && 'border-trocalia-primary bg-trocalia-primary-light'
+                  'border-tradealo-border hover:border-tradealo-primary hover:bg-tradealo-primary-light/40',
+                  value === c.id && 'border-tradealo-primary bg-tradealo-primary-light'
                 )}
               >
-                <div className="w-12 h-12 rounded-lg bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary-hover">
+                <div className="w-12 h-12 rounded-lg bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary-hover">
                   <Icon size={22} />
                 </div>
                 <span className="font-medium text-sm text-center">{c.name}</span>
@@ -151,8 +151,8 @@ export function CategorySelector({ value, onChange }: Props) {
                   }
                   className={cn(
                     'flex items-center justify-between gap-2 p-4 rounded-lg border bg-white text-left transition-all',
-                    'border-trocalia-border hover:border-trocalia-primary',
-                    value === c.id && 'border-trocalia-primary bg-trocalia-primary-light'
+                    'border-tradealo-border hover:border-tradealo-primary',
+                    value === c.id && 'border-tradealo-primary bg-tradealo-primary-light'
                   )}
                 >
                   <div>
@@ -163,7 +163,7 @@ export function CategorySelector({ value, onChange }: Props) {
                       </p>
                     )}
                   </div>
-                  <ChevronRight size={16} className="text-trocalia-text-muted" />
+                  <ChevronRight size={16} className="text-tradealo-text-muted" />
                 </button>
               ))}
             </div>
@@ -177,7 +177,7 @@ export function CategorySelector({ value, onChange }: Props) {
                   selectedRoot.attributes
                 )
               }
-              className="w-full p-4 rounded-lg border-2 border-trocalia-primary bg-trocalia-primary-light text-trocalia-primary-hover font-medium"
+              className="w-full p-4 rounded-lg border-2 border-tradealo-primary bg-tradealo-primary-light text-tradealo-primary-hover font-medium"
             >
               Seleccionar {selectedRoot.name}
             </button>

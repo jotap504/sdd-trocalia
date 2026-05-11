@@ -44,7 +44,7 @@ export function ListingGrid({
         {Array.from({ length: cols * 2 }).map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-trocalia-border overflow-hidden"
+            className="bg-white rounded-xl border border-tradealo-border overflow-hidden"
           >
             <Skeleton variant="card" className="aspect-[4/3] h-auto rounded-none" />
             <div className="p-4 space-y-2">
@@ -60,12 +60,12 @@ export function ListingGrid({
 
   if (!listings.length) {
     return (
-      <div className="bg-white border border-dashed border-trocalia-border rounded-2xl p-10 text-center">
-        <div className="w-14 h-14 mx-auto rounded-full bg-trocalia-primary-light flex items-center justify-center text-trocalia-primary mb-4">
+      <div className="bg-white border border-dashed border-tradealo-border rounded-2xl p-10 text-center">
+        <div className="w-14 h-14 mx-auto rounded-full bg-tradealo-primary-light flex items-center justify-center text-tradealo-primary mb-4">
           <PackageOpen size={26} />
         </div>
         <h3 className="font-heading font-semibold text-lg mb-1">{emptyTitle}</h3>
-        <p className="text-sm text-trocalia-text-muted max-w-sm mx-auto">
+        <p className="text-sm text-tradealo-text-muted max-w-sm mx-auto">
           {emptyMessage}
         </p>
       </div>

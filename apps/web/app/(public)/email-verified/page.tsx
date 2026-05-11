@@ -11,15 +11,15 @@ export default function EmailVerifiedPage() {
           <div className="flex justify-center">
             <CheckCircle
               size={72}
-              className="text-trocalia-success"
+              className="text-tradealo-success"
               strokeWidth={1.5}
             />
           </div>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+            <h1 className="font-heading text-2xl font-bold text-tradealo-text">
               ¡Email verificado!
             </h1>
-            <p className="text-sm text-trocalia-text-muted mt-2">
+            <p className="text-sm text-tradealo-text-muted mt-2">
               Tu email fue verificado con éxito. Ya podés ingresar a tu cuenta.
             </p>
           </div>

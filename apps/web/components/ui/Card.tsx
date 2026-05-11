@@ -11,7 +11,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        'bg-white rounded-xl border border-trocalia-border overflow-hidden',
+        'bg-white rounded-xl border border-tradealo-border overflow-hidden',
         !flat && 'shadow-card',
         hover && 'transition-shadow duration-200 hover:shadow-card-hover',
         className
@@ -26,7 +26,7 @@ export const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEleme
   ({ className, ...rest }, ref) => (
     <div
       ref={ref}
-      className={cn('px-5 py-4 border-b border-trocalia-border', className)}
+      className={cn('px-5 py-4 border-b border-tradealo-border', className)}
       {...rest}
     />
   )
@@ -44,7 +44,7 @@ export const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEleme
   ({ className, ...rest }, ref) => (
     <div
       ref={ref}
-      className={cn('px-5 py-4 border-t border-trocalia-border bg-gray-50/40', className)}
+      className={cn('px-5 py-4 border-t border-tradealo-border bg-gray-50/40', className)}
       {...rest}
     />
   )

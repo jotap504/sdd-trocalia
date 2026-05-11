@@ -1,36 +1,39 @@
-import { Injectable, Inject, Logger, NotFoundException } from '@nestjs/common'
-import { eq, and, desc, isNull } from 'drizzle-orm'
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
-import { Resend } from 'resend'
-import { DRIZZLE_TOKEN } from '../database/database.module'
-import * as schema from '../database/schema'
+import { Injectable, Inject, Logger, NotFoundException } from '@nestjs/common';
+import { eq, and, desc, isNull } from 'drizzle-orm';
+import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { Resend } from 'resend';
+import { DRIZZLE_TOKEN } from '../database/database.module';
+import * as schema from '../database/schema';
 
-type DB = NodePgDatabase<typeof schema>
+type DB = NodePgDatabase<typeof schema>;
 
 export interface SendNotificationParams {
-  userId: string
-  channel: 'email' | 'push' | 'in_app'
-  type: string
-  title: string
-  body: string
-  data?: Record<string, unknown>
-  toEmail?: string
+  userId: string;
+  channel: 'email' | 'push' | 'in_app';
+  type: string;
+  title: string;
+  body: string;
+  data?: Record<string, unknown>;
+  toEmail?: string;
 }
 
 @Injectable()
 export class NotificationsService {
-  private readonly logger = new Logger(NotificationsService.name)
-  private readonly resend: Resend | null
-  private readonly oneSignalAppId: string
-  private readonly oneSignalKey: string
-  private readonly fromEmail: string
+  private readonly logger = new Logger(NotificationsService.name);
+  private readonly resend: Resend | null;
+  private readonly oneSignalAppId: string;
+  private readonly oneSignalKey: string;
+  private readonly fromEmail: string;
 
   constructor(@Inject(DRIZZLE_TOKEN) private readonly db: DB) {
-    this.resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
-    if (!this.resend) this.logger.warn('RESEND_API_KEY not set — email notifications disabled')
-    this.oneSignalAppId = process.env.ONESIGNAL_APP_ID ?? ''
-    this.oneSignalKey = process.env.ONESIGNAL_API_KEY ?? ''
-    this.fromEmail = process.env.MAIL_FROM ?? 'noreply@trocalia.ar'
+    this.resend = process.env.RESEND_API_KEY
+      ? new Resend(process.env.RESEND_API_KEY)
+      : null;
+    if (!this.resend)
+      this.logger.warn('RESEND_API_KEY not set — email notifications disabled');
+    this.oneSignalAppId = process.env.ONESIGNAL_APP_ID ?? '';
+    this.oneSignalKey = process.env.ONESIGNAL_API_KEY ?? '';
+    this.fromEmail = process.env.MAIL_FROM ?? 'noreply@trocalia.ar';
   }
 
   async send(params: SendNotificationParams): Promise<void> {
@@ -45,55 +48,68 @@ export class NotificationsService {
         data: params.data,
         status: 'pending',
       })
-      .returning()
+      .returning();
 
     try {
       if (params.channel === 'email') {
-        const email = params.toEmail ?? await this.getUserEmail(params.userId)
-        await this.sendEmail(email, params.title, params.body)
+        const email =
+          params.toEmail ?? (await this.getUserEmail(params.userId));
+        await this.sendEmail(email, params.title, params.body);
       } else if (params.channel === 'push') {
-        await this.sendPush(params.userId, params.title, params.body, params.data)
+        await this.sendPush(
+          params.userId,
+          params.title,
+          params.body,
+          params.data,
+        );
       }
 
       await this.db
         .update(schema.notifications)
         .set({ status: 'sent', sentAt: new Date() })
-        .where(eq(schema.notifications.id, notification.id))
+        .where(eq(schema.notifications.id, notification.id));
     } catch (err) {
-      this.logger.error(`Notification send failed [${params.channel}] user=${params.userId}`, err)
+      this.logger.error(
+        `Notification send failed [${params.channel}] user=${params.userId}`,
+        err,
+      );
       await this.db
         .update(schema.notifications)
         .set({ status: 'failed' })
-        .where(eq(schema.notifications.id, notification.id))
+        .where(eq(schema.notifications.id, notification.id));
     }
   }
 
   async findForUser(userId: string, unreadOnly = false) {
-    const conditions = [eq(schema.notifications.userId, userId)]
-    if (unreadOnly) conditions.push(isNull(schema.notifications.readAt))
+    const conditions = [eq(schema.notifications.userId, userId)];
+    if (unreadOnly) conditions.push(isNull(schema.notifications.readAt));
 
     return this.db
       .select()
       .from(schema.notifications)
       .where(and(...conditions))
       .orderBy(desc(schema.notifications.createdAt))
-      .limit(50)
+      .limit(50);
   }
 
   async markRead(userId: string, notificationId: string): Promise<void> {
     const [notification] = await this.db
-      .select({ id: schema.notifications.id, userId: schema.notifications.userId })
+      .select({
+        id: schema.notifications.id,
+        userId: schema.notifications.userId,
+      })
       .from(schema.notifications)
       .where(eq(schema.notifications.id, notificationId))
-      .limit(1)
+      .limit(1);
 
-    if (!notification) throw new NotFoundException('NOTIFICATION_NOT_FOUND')
-    if (notification.userId !== userId) throw new NotFoundException('NOTIFICATION_NOT_FOUND')
+    if (!notification) throw new NotFoundException('NOTIFICATION_NOT_FOUND');
+    if (notification.userId !== userId)
+      throw new NotFoundException('NOTIFICATION_NOT_FOUND');
 
     await this.db
       .update(schema.notifications)
       .set({ readAt: new Date(), status: 'read' })
-      .where(eq(schema.notifications.id, notificationId))
+      .where(eq(schema.notifications.id, notificationId));
   }
 
   async markAllRead(userId: string): Promise<void> {
@@ -105,20 +121,26 @@ export class NotificationsService {
           eq(schema.notifications.userId, userId),
           isNull(schema.notifications.readAt),
         ),
-      )
+      );
   }
 
-  private async sendEmail(to: string, subject: string, text: string): Promise<void> {
+  private async sendEmail(
+    to: string,
+    subject: string,
+    text: string,
+  ): Promise<void> {
     if (!this.resend) {
-      this.logger.warn(`Email skipped (no RESEND_API_KEY): to=${to} subject=${subject}`)
-      return
+      this.logger.warn(
+        `Email skipped (no RESEND_API_KEY): to=${to} subject=${subject}`,
+      );
+      return;
     }
     await this.resend.emails.send({
       from: this.fromEmail,
       to,
       subject,
       text,
-    })
+    });
   }
 
   private async sendPush(
@@ -140,10 +162,10 @@ export class NotificationsService {
         contents: { en: body },
         data: data ?? {},
       }),
-    })
+    });
 
     if (!response.ok) {
-      throw new Error(`OneSignal error: ${response.status}`)
+      throw new Error(`OneSignal error: ${response.status}`);
     }
   }
 
@@ -152,9 +174,10 @@ export class NotificationsService {
       .select({ email: schema.users.email })
       .from(schema.users)
       .where(eq(schema.users.id, userId))
-      .limit(1)
+      .limit(1);
 
-    if (!user) throw new Error(`User ${userId} not found for email notification`)
-    return user.email
+    if (!user)
+      throw new Error(`User ${userId} not found for email notification`);
+    return user.email;
   }
 }

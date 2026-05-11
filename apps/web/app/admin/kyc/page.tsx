@@ -50,7 +50,7 @@ export default function AdminKycPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         KYC pendientes
       </h1>
 
@@ -62,9 +62,9 @@ export default function AdminKycPage() {
             <div className="text-center py-12">
               <ShieldCheck
                 size={40}
-                className="mx-auto text-trocalia-success mb-3"
+                className="mx-auto text-tradealo-success mb-3"
               />
-              <p className="text-sm text-trocalia-text-muted">
+              <p className="text-sm text-tradealo-text-muted">
                 No hay verificaciones KYC pendientes.
               </p>
             </div>
@@ -72,7 +72,7 @@ export default function AdminKycPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[540px]">
                 <thead>
-                  <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                  <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                     <th className="pb-2 font-medium">Usuario</th>
                     <th className="pb-2 font-medium">Email</th>
                     <th className="pb-2 font-medium">Nivel actual</th>
@@ -84,7 +84,7 @@ export default function AdminKycPage() {
                   {data.data.map((u) => (
                     <tr
                       key={u.id}
-                      className="border-b border-trocalia-border last:border-0"
+                      className="border-b border-tradealo-border last:border-0"
                     >
                       <td className="py-3 pr-4">
                         <div className="flex items-center gap-2">
@@ -93,12 +93,12 @@ export default function AdminKycPage() {
                             username={u.username ?? u.email}
                             size="sm"
                           />
-                          <span className="font-medium text-trocalia-text">
+                          <span className="font-medium text-tradealo-text">
                             {u.username ?? '—'}
                           </span>
                         </div>
                       </td>
-                      <td className="py-3 pr-4 text-trocalia-text-muted">
+                      <td className="py-3 pr-4 text-tradealo-text-muted">
                         {u.email}
                       </td>
                       <td className="py-3 pr-4">
@@ -106,7 +106,7 @@ export default function AdminKycPage() {
                           Nivel {u.kycLevel}
                         </Badge>
                       </td>
-                      <td className="py-3 pr-4 text-trocalia-text-muted whitespace-nowrap">
+                      <td className="py-3 pr-4 text-tradealo-text-muted whitespace-nowrap">
                         {u.createdAt ? formatRelative(u.createdAt) : '—'}
                       </td>
                       <td className="py-3">
@@ -152,11 +152,11 @@ export default function AdminKycPage() {
       >
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-trocalia-text mb-1.5">
+            <label className="block text-sm font-medium text-tradealo-text mb-1.5">
               Razón del rechazo
             </label>
             <textarea
-              className="w-full rounded-lg border border-trocalia-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary resize-none"
+              className="w-full rounded-lg border border-tradealo-border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary resize-none"
               rows={3}
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}

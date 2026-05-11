@@ -23,7 +23,7 @@ export function WalletBalance({
   return (
     <Card
       className={cn(
-        'relative overflow-hidden bg-gradient-to-br from-trocalia-primary to-trocalia-primary-hover text-white border-0',
+        'relative overflow-hidden bg-gradient-to-br from-tradealo-primary to-tradealo-primary-hover text-white border-0',
         className
       )}
     >

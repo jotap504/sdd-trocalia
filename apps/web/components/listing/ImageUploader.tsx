@@ -135,16 +135,16 @@ export function ImageUploader({
         className={cn(
           'relative border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center transition-colors',
           dragActive
-            ? 'border-trocalia-primary bg-trocalia-primary-light'
-            : 'border-trocalia-border bg-white',
+            ? 'border-tradealo-primary bg-tradealo-primary-light'
+            : 'border-tradealo-border bg-white',
           !canAdd && 'opacity-50 pointer-events-none'
         )}
       >
-        <UploadCloud className="text-trocalia-primary mb-2" size={28} />
+        <UploadCloud className="text-tradealo-primary mb-2" size={28} />
         <p className="font-medium text-sm">
           Arrastrá tus fotos o hacé click para subirlas
         </p>
-        <p className="text-xs text-trocalia-text-muted mt-1">
+        <p className="text-xs text-tradealo-text-muted mt-1">
           PNG, JPG o WebP — hasta {maxImages} imágenes — máx. 8MB c/u
         </p>
         <input
@@ -156,7 +156,7 @@ export function ImageUploader({
           className="absolute inset-0 opacity-0 cursor-pointer"
         />
         {uploading > 0 && (
-          <div className="mt-3 flex items-center gap-2 text-xs text-trocalia-primary">
+          <div className="mt-3 flex items-center gap-2 text-xs text-tradealo-primary">
             <Loader2 className="animate-spin" size={14} />
             Subiendo {uploading} {uploading === 1 ? 'imagen' : 'imágenes'}…
           </div>
@@ -176,7 +176,7 @@ export function ImageUploader({
               }}
               onDragEnd={() => setDraggingId(null)}
               className={cn(
-                'relative group aspect-square rounded-lg overflow-hidden border border-trocalia-border bg-gray-100 cursor-move',
+                'relative group aspect-square rounded-lg overflow-hidden border border-tradealo-border bg-gray-100 cursor-move',
                 draggingId === img.id && 'opacity-50'
               )}
             >
@@ -187,7 +187,7 @@ export function ImageUploader({
                 className="w-full h-full object-cover"
               />
               {idx === 0 && (
-                <span className="absolute top-1.5 left-1.5 bg-trocalia-primary text-white text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded">
+                <span className="absolute top-1.5 left-1.5 bg-tradealo-primary text-white text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded">
                   Portada
                 </span>
               )}

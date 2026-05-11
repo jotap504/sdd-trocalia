@@ -71,7 +71,7 @@ export default function AdminTokenPacksPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Token Packs
       </h1>
 
@@ -84,8 +84,8 @@ export default function AdminTokenPacksPage() {
       ) : !packs?.length ? (
         <Card>
           <CardBody className="text-center py-12">
-            <Coins size={40} className="mx-auto text-trocalia-text-muted mb-3" />
-            <p className="text-sm text-trocalia-text-muted">
+            <Coins size={40} className="mx-auto text-tradealo-text-muted mb-3" />
+            <p className="text-sm text-tradealo-text-muted">
               No hay packs de tokens configurados.
             </p>
           </CardBody>
@@ -96,7 +96,7 @@ export default function AdminTokenPacksPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[560px]">
                 <thead>
-                  <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                  <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                     <th className="pb-2 font-medium">Nombre</th>
                     <th className="pb-2 font-medium">Tokens</th>
                     <th className="pb-2 font-medium">Bonus</th>
@@ -111,7 +111,7 @@ export default function AdminTokenPacksPage() {
                     return (
                       <tr
                         key={pack.id}
-                        className="border-b border-trocalia-border last:border-0"
+                        className="border-b border-tradealo-border last:border-0"
                       >
                         {isEditing && editForm ? (
                           <>
@@ -149,7 +149,7 @@ export default function AdminTokenPacksPage() {
                                   Sí
                                 </Badge>
                               ) : (
-                                <span className="text-trocalia-text-muted">—</span>
+                                <span className="text-tradealo-text-muted">—</span>
                               )}
                             </td>
                             <td className="py-2.5">
@@ -175,16 +175,16 @@ export default function AdminTokenPacksPage() {
                           </>
                         ) : (
                           <>
-                            <td className="py-3 pr-4 font-medium text-trocalia-text">
+                            <td className="py-3 pr-4 font-medium text-tradealo-text">
                               {pack.name}
                               {pack.description && (
-                                <p className="text-xs text-trocalia-text-muted font-normal mt-0.5">
+                                <p className="text-xs text-tradealo-text-muted font-normal mt-0.5">
                                   {pack.description}
                                 </p>
                               )}
                             </td>
                             <td className="py-3 pr-4">
-                              <span className="font-heading font-bold text-trocalia-primary">
+                              <span className="font-heading font-bold text-tradealo-primary">
                                 {pack.tokens.toLocaleString('es-AR')}
                               </span>
                             </td>
@@ -194,7 +194,7 @@ export default function AdminTokenPacksPage() {
                                   +{pack.bonusTokens}
                                 </Badge>
                               ) : (
-                                <span className="text-trocalia-text-muted">—</span>
+                                <span className="text-tradealo-text-muted">—</span>
                               )}
                             </td>
                             <td className="py-3 pr-4 font-medium">
@@ -207,7 +207,7 @@ export default function AdminTokenPacksPage() {
                                   Sí
                                 </Badge>
                               ) : (
-                                <span className="text-trocalia-text-muted">—</span>
+                                <span className="text-tradealo-text-muted">—</span>
                               )}
                             </td>
                             <td className="py-3">

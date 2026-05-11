@@ -47,11 +47,11 @@ export default function ProfilePage() {
             />
             <div className="flex-1 space-y-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="font-heading text-xl font-bold text-trocalia-text">
+                <h1 className="font-heading text-xl font-bold text-tradealo-text">
                   @{user.username ?? user.email}
                 </h1>
                 {user.kycLevel >= 1 && (
-                  <ShieldCheck size={18} className="text-trocalia-primary" />
+                  <ShieldCheck size={18} className="text-tradealo-primary" />
                 )}
               </div>
               {user.kycLevel > 0 && (
@@ -60,7 +60,7 @@ export default function ProfilePage() {
                 </Badge>
               )}
               <ReputationStars rating={rep.average} count={rep.count} />
-              <div className="flex flex-col gap-1 text-sm text-trocalia-text-muted">
+              <div className="flex flex-col gap-1 text-sm text-tradealo-text-muted">
                 {user.province && (
                   <div className="flex items-center gap-1.5">
                     <MapPin size={13} />
@@ -78,13 +78,13 @@ export default function ProfilePage() {
                 )}
               </div>
               {user.bio && (
-                <p className="text-sm text-trocalia-text leading-relaxed">
+                <p className="text-sm text-tradealo-text leading-relaxed">
                   {user.bio}
                 </p>
               )}
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t border-trocalia-border">
+          <div className="mt-4 pt-4 border-t border-tradealo-border">
             <Link href="/profile/edit">
               <Button
                 variant="secondary"
@@ -122,7 +122,7 @@ export default function ProfilePage() {
           </div>
         ) : latestReviews.length === 0 ? (
           <Card>
-            <CardBody className="text-center py-8 text-trocalia-text-muted">
+            <CardBody className="text-center py-8 text-tradealo-text-muted">
               <Star size={28} className="mx-auto mb-2 opacity-40" />
               <p className="text-sm">Todavía no tenés opiniones.</p>
             </CardBody>
@@ -139,7 +139,7 @@ export default function ProfilePage() {
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium text-trocalia-text">
+                      <span className="text-sm font-medium text-tradealo-text">
                         {review.reviewer?.username ?? 'Usuario'}
                       </span>
                       <div className="flex">
@@ -155,11 +155,11 @@ export default function ProfilePage() {
                           />
                         ))}
                       </div>
-                      <span className="text-xs text-trocalia-text-muted">
+                      <span className="text-xs text-tradealo-text-muted">
                         {formatRelative(review.createdAt)}
                       </span>
                     </div>
-                    <p className="text-sm text-trocalia-text">{review.comment}</p>
+                    <p className="text-sm text-tradealo-text">{review.comment}</p>
                   </div>
                 </CardBody>
               </Card>

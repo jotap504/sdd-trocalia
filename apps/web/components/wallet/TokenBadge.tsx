@@ -18,13 +18,13 @@ export function TokenBadge({ tokens, size = 'md', className }: Props) {
   return (
     <span
       className={cn(
-        'inline-flex items-center font-semibold text-trocalia-primary-hover',
+        'inline-flex items-center font-semibold text-tradealo-primary-hover',
         s.text,
         s.gap,
         className
       )}
     >
-      <Coins size={s.icon} className="text-trocalia-primary" />
+      <Coins size={s.icon} className="text-tradealo-primary" />
       {tokens.toLocaleString('es-AR')}
     </span>
   );

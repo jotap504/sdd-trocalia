@@ -93,7 +93,7 @@ export class AdminAuthService {
     if (admin.totpEnabled) throw new ConflictException('TOTP_ALREADY_ENABLED');
 
     const secret = speakeasy.generateSecret({
-      name: `Trocalia Admin (${admin.email})`,
+      name: `Tradealo Admin (${admin.email})`,
       length: 20,
     });
 

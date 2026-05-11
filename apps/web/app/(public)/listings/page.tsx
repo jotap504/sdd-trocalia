@@ -70,9 +70,9 @@ function ListingsInner() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 flex flex-col gap-6">
       <div>
-        <h1 className="font-heading text-2xl font-bold text-trocalia-text">{title}</h1>
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">{title}</h1>
         {data?.total !== undefined && (
-          <p className="text-sm text-trocalia-text-muted mt-1">
+          <p className="text-sm text-tradealo-text-muted mt-1">
             {data.total.toLocaleString('es-AR')} publicaciones encontradas
           </p>
         )}
@@ -108,7 +108,7 @@ function ListingsInner() {
 
 export default function ListingsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-trocalia-bg" />}>
+    <Suspense fallback={<div className="min-h-screen bg-tradealo-bg" />}>
       <ListingsInner />
     </Suspense>
   );

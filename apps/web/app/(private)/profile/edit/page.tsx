@@ -96,7 +96,7 @@ export default function EditProfilePage() {
 
   return (
     <div className="mx-auto max-w-xl px-4 sm:px-6 py-8 space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Editar perfil
       </h1>
 
@@ -114,7 +114,7 @@ export default function EditProfilePage() {
                 type="button"
                 onClick={() => avatarRef.current?.click()}
                 disabled={uploadingAvatar}
-                className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-trocalia-primary text-white flex items-center justify-center hover:bg-trocalia-primary-hover shadow-sm"
+                className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-tradealo-primary text-white flex items-center justify-center hover:bg-tradealo-primary-hover shadow-sm"
                 aria-label="Cambiar avatar"
               >
                 <Camera size={14} />
@@ -127,7 +127,7 @@ export default function EditProfilePage() {
                 className="hidden"
               />
             </div>
-            <p className="text-xs text-trocalia-text-muted">
+            <p className="text-xs text-tradealo-text-muted">
               Hacé clic en el ícono para cambiar tu foto
             </p>
           </div>

@@ -47,7 +47,7 @@ export function AIGeneratorButton({
       disabled={loading}
       className={cn(
         'inline-flex items-center gap-1.5 rounded-full font-medium transition-colors',
-        'bg-gradient-to-r from-teal-50 to-emerald-50 text-trocalia-primary-hover',
+        'bg-gradient-to-r from-teal-50 to-emerald-50 text-tradealo-primary-hover',
         'border border-teal-200 hover:bg-teal-50 hover:border-teal-300',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         size === 'sm' ? 'text-xs px-2.5 py-1' : 'text-sm px-3 py-1.5',

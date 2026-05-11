@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { Client } from '@elastic/elasticsearch'
-import { SearchService } from './search.service'
-import { SearchController } from './search.controller'
-import { ELASTICSEARCH_TOKEN } from './search.constants'
+import { Module } from '@nestjs/common';
+import { Client } from '@elastic/elasticsearch';
+import { SearchService } from './search.service';
+import { SearchController } from './search.controller';
+import { ELASTICSEARCH_TOKEN } from './search.constants';
 
-export { ELASTICSEARCH_TOKEN }
+export { ELASTICSEARCH_TOKEN };
 
 @Module({
   providers: [

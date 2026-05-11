@@ -1,0 +1,8 @@
+{
+  "paths": [
+    "render.yaml",
+    "apps/api/.env.production.example"
+  ],
+  "domains": [],
+  "commands": []
+}

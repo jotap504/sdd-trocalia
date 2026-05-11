@@ -62,17 +62,17 @@ export default function RegisterPage() {
         <CardBody className="space-y-6 p-8">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="w-10 h-10 rounded-xl bg-trocalia-primary flex items-center justify-center text-white shadow-sm">
+              <span className="w-10 h-10 rounded-xl bg-tradealo-primary flex items-center justify-center text-white shadow-sm">
                 <Repeat size={20} strokeWidth={2.5} />
               </span>
-              <span className="font-heading font-bold text-2xl text-trocalia-primary">
-                Trocalia
+              <span className="font-heading font-bold text-2xl text-tradealo-primary">
+                Tradealo
               </span>
             </div>
-            <h1 className="font-heading text-xl font-bold text-trocalia-text mt-3">
+            <h1 className="font-heading text-xl font-bold text-tradealo-text mt-3">
               Crear cuenta
             </h1>
-            <p className="text-sm text-trocalia-text-muted mt-1">
+            <p className="text-sm text-tradealo-text-muted mt-1">
               Publicá gratis tu primera publicación
             </p>
           </div>
@@ -115,11 +115,11 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <div className="text-center text-sm text-trocalia-text-muted">
+          <div className="text-center text-sm text-tradealo-text-muted">
             ¿Ya tenés cuenta?{' '}
             <Link
               href="/login"
-              className="text-trocalia-primary font-medium hover:underline"
+              className="text-tradealo-primary font-medium hover:underline"
             >
               Iniciá sesión
             </Link>

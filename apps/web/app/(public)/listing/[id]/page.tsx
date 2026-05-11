@@ -29,10 +29,10 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   const listing = await getListing(params.id);
-  if (!listing) return { title: 'Publicación no encontrada | Trocalia' };
+  if (!listing) return { title: 'Publicación no encontrada | Tradealo' };
   const description = listing.description.slice(0, 160);
   return {
-    title: `${listing.title} | Trocalia`,
+    title: `${listing.title} | Tradealo`,
     description,
     openGraph: {
       title: listing.title,
@@ -76,7 +76,7 @@ export default async function ListingDetailPage({
               )}
               <Badge variant="default" size="sm">{conditionLabel}</Badge>
             </div>
-            <h1 className="font-heading text-2xl font-bold text-trocalia-text leading-snug">
+            <h1 className="font-heading text-2xl font-bold text-tradealo-text leading-snug">
               {listing.title}
             </h1>
             <div className="mt-3">
@@ -89,15 +89,15 @@ export default async function ListingDetailPage({
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-trocalia-border p-5">
+          <div className="bg-white rounded-xl border border-tradealo-border p-5">
             <h2 className="font-heading font-semibold text-base mb-3">Descripción</h2>
-            <p className="text-sm text-trocalia-text leading-relaxed whitespace-pre-wrap">
+            <p className="text-sm text-tradealo-text leading-relaxed whitespace-pre-wrap">
               {listing.description}
             </p>
           </div>
 
           {attrs.length > 0 && (
-            <div className="bg-white rounded-xl border border-trocalia-border p-5">
+            <div className="bg-white rounded-xl border border-tradealo-border p-5">
               <h2 className="font-heading font-semibold text-base mb-3">
                 Características
               </h2>
@@ -106,12 +106,12 @@ export default async function ListingDetailPage({
                   {attrs.map(([key, value]) => (
                     <tr
                       key={key}
-                      className="border-b border-trocalia-border last:border-0"
+                      className="border-b border-tradealo-border last:border-0"
                     >
-                      <td className="py-2 pr-4 text-trocalia-text-muted capitalize font-medium w-1/3">
+                      <td className="py-2 pr-4 text-tradealo-text-muted capitalize font-medium w-1/3">
                         {key}
                       </td>
-                      <td className="py-2 text-trocalia-text">{String(value)}</td>
+                      <td className="py-2 text-tradealo-text">{String(value)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -119,7 +119,7 @@ export default async function ListingDetailPage({
             </div>
           )}
 
-          <div className="bg-white rounded-xl border border-trocalia-border p-5 space-y-4">
+          <div className="bg-white rounded-xl border border-tradealo-border p-5 space-y-4">
             {listing.paymentMethods?.length > 0 && (
               <div>
                 <h3 className="font-heading font-semibold text-sm mb-2">
@@ -143,21 +143,21 @@ export default async function ListingDetailPage({
                   {listing.shippingOptions.map((s) => (
                     <li
                       key={s}
-                      className="text-sm text-trocalia-text flex items-center gap-2"
+                      className="text-sm text-tradealo-text flex items-center gap-2"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-trocalia-primary shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-tradealo-primary shrink-0" />
                       {s}
                     </li>
                   ))}
                 </ul>
                 {listing.shippingDescription && (
-                  <p className="mt-2 text-xs text-trocalia-text-muted">
+                  <p className="mt-2 text-xs text-tradealo-text-muted">
                     {listing.shippingDescription}
                   </p>
                 )}
               </div>
             )}
-            <p className="text-xs text-trocalia-text-muted pt-2 border-t border-trocalia-border">
+            <p className="text-xs text-tradealo-text-muted pt-2 border-t border-tradealo-border">
               Publicado el {formatDate(listing.createdAt)} · {listing.viewCount} vistas
             </p>
           </div>

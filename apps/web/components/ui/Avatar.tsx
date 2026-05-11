@@ -21,7 +21,7 @@ export function Avatar({ src, username, size = 'md', className }: Props) {
     <span
       className={cn(
         'inline-flex items-center justify-center rounded-full overflow-hidden font-semibold',
-        'bg-trocalia-primary-light text-trocalia-primary-hover ring-1 ring-white',
+        'bg-tradealo-primary-light text-tradealo-primary-hover ring-1 ring-white',
         SIZES[size],
         className
       )}

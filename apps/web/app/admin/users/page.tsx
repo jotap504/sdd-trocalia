@@ -88,7 +88,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+      <h1 className="font-heading text-2xl font-bold text-tradealo-text">
         Usuarios
       </h1>
 
@@ -96,7 +96,7 @@ export default function AdminUsersPage() {
       <Card>
         <CardBody className="flex flex-wrap items-center gap-3 p-4">
           <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-trocalia-text-muted whitespace-nowrap">
+            <label className="text-sm font-medium text-tradealo-text-muted whitespace-nowrap">
               Rol:
             </label>
             <select
@@ -105,7 +105,7 @@ export default function AdminUsersPage() {
                 setRoleFilter(e.target.value as RoleFilter);
                 setCursor(undefined);
               }}
-              className="rounded-lg border border-trocalia-border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary"
+              className="rounded-lg border border-tradealo-border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary"
             >
               <option value="">Todos</option>
               <option value="user">Usuario</option>
@@ -115,7 +115,7 @@ export default function AdminUsersPage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-trocalia-text-muted whitespace-nowrap">
+            <label className="text-sm font-medium text-tradealo-text-muted whitespace-nowrap">
               KYC:
             </label>
             <select
@@ -124,7 +124,7 @@ export default function AdminUsersPage() {
                 setKycFilter(e.target.value as KycFilter);
                 setCursor(undefined);
               }}
-              className="rounded-lg border border-trocalia-border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-trocalia-primary-light focus:border-trocalia-primary"
+              className="rounded-lg border border-tradealo-border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-tradealo-primary-light focus:border-tradealo-primary"
             >
               <option value="">Todos</option>
               <option value="0">Nivel 0</option>
@@ -148,8 +148,8 @@ export default function AdminUsersPage() {
             <Skeleton variant="card" className="h-64" />
           ) : !data?.data?.length ? (
             <div className="text-center py-12">
-              <UserIcon size={40} className="mx-auto text-trocalia-text-muted mb-3" />
-              <p className="text-sm text-trocalia-text-muted">
+              <UserIcon size={40} className="mx-auto text-tradealo-text-muted mb-3" />
+              <p className="text-sm text-tradealo-text-muted">
                 No se encontraron usuarios.
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function AdminUsersPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm min-w-[600px]">
                   <thead>
-                    <tr className="border-b border-trocalia-border text-left text-trocalia-text-muted text-xs">
+                    <tr className="border-b border-tradealo-border text-left text-tradealo-text-muted text-xs">
                       <th className="pb-2 font-medium">Usuario</th>
                       <th className="pb-2 font-medium">Email</th>
                       <th className="pb-2 font-medium">Rol</th>
@@ -171,7 +171,7 @@ export default function AdminUsersPage() {
                     {data.data.map((u) => (
                       <tr
                         key={u.id}
-                        className="border-b border-trocalia-border last:border-0"
+                        className="border-b border-tradealo-border last:border-0"
                       >
                         <td className="py-3 pr-4">
                           <div className="flex items-center gap-2">
@@ -180,12 +180,12 @@ export default function AdminUsersPage() {
                               username={u.username ?? u.email}
                               size="sm"
                             />
-                            <span className="font-medium text-trocalia-text">
+                            <span className="font-medium text-tradealo-text">
                               {u.username ?? '—'}
                             </span>
                           </div>
                         </td>
-                        <td className="py-3 pr-4 text-trocalia-text-muted">
+                        <td className="py-3 pr-4 text-tradealo-text-muted">
                           {u.email}
                         </td>
                         <td className="py-3 pr-4">
@@ -198,7 +198,7 @@ export default function AdminUsersPage() {
                             {u.kycLevel >= 2 && (
                               <ShieldCheck
                                 size={14}
-                                className="text-trocalia-success shrink-0"
+                                className="text-tradealo-success shrink-0"
                               />
                             )}
                             <Badge variant={kycVariant(u.kycLevel)} size="sm">
@@ -206,7 +206,7 @@ export default function AdminUsersPage() {
                             </Badge>
                           </div>
                         </td>
-                        <td className="py-3 pr-4 text-trocalia-text-muted whitespace-nowrap">
+                        <td className="py-3 pr-4 text-tradealo-text-muted whitespace-nowrap">
                           {u.createdAt ? formatRelative(u.createdAt) : '—'}
                         </td>
                         <td className="py-3">
@@ -231,7 +231,7 @@ export default function AdminUsersPage() {
 
               {/* Pagination */}
               {(cursor || data.nextCursor) && (
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-trocalia-border">
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-tradealo-border">
                   <Button
                     size="sm"
                     variant="secondary"
@@ -263,7 +263,7 @@ export default function AdminUsersPage() {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-trocalia-text-muted">
+          <p className="text-sm text-tradealo-text-muted">
             Usá un valor positivo para acreditar tokens y negativo para debitarlos.
           </p>
           <Input

@@ -73,7 +73,7 @@ export default function MyListingsPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-8 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-2xl font-bold text-trocalia-text">
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">
           Mis publicaciones
         </h1>
         <Link href="/my-listings/new">
@@ -91,8 +91,8 @@ export default function MyListingsPage() {
             className={cn(
               'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
               activeTab === t.key
-                ? 'bg-white text-trocalia-primary shadow-sm'
-                : 'text-trocalia-text-muted hover:text-trocalia-text'
+                ? 'bg-white text-tradealo-primary shadow-sm'
+                : 'text-tradealo-text-muted hover:text-tradealo-text'
             )}
           >
             {t.label}
@@ -107,15 +107,15 @@ export default function MyListingsPage() {
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white border border-dashed border-trocalia-border rounded-2xl p-12 text-center">
+        <div className="bg-white border border-dashed border-tradealo-border rounded-2xl p-12 text-center">
           <PackageOpen
             size={40}
-            className="mx-auto text-trocalia-text-muted mb-4 opacity-50"
+            className="mx-auto text-tradealo-text-muted mb-4 opacity-50"
           />
           <h3 className="font-heading font-semibold text-lg mb-1">
             Todavía no publicaste nada
           </h3>
-          <p className="text-sm text-trocalia-text-muted mb-5">
+          <p className="text-sm text-tradealo-text-muted mb-5">
             Empezá publicando tu primer artículo — es gratis.
           </p>
           <Link href="/my-listings/new">
@@ -146,7 +146,7 @@ export default function MyListingsPage() {
         title="Eliminar publicación"
       >
         <div className="space-y-4">
-          <p className="text-sm text-trocalia-text-muted">
+          <p className="text-sm text-tradealo-text-muted">
             ¿Estás seguro de que querés eliminar esta publicación? Esta acción
             no se puede deshacer.
           </p>
@@ -196,7 +196,7 @@ function ListingRow({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-trocalia-text-muted text-xs">
+            <div className="w-full h-full flex items-center justify-center text-tradealo-text-muted text-xs">
               Sin foto
             </div>
           )}
@@ -204,7 +204,7 @@ function ListingRow({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <h3 className="font-heading font-semibold text-sm text-trocalia-text truncate">
+            <h3 className="font-heading font-semibold text-sm text-tradealo-text truncate">
               {listing.title}
             </h3>
             <Badge variant={badge.variant} size="sm">
@@ -216,7 +216,7 @@ function ListingRow({
             currency={listing.currency}
             size="sm"
           />
-          <p className="text-xs text-trocalia-text-muted mt-1">
+          <p className="text-xs text-tradealo-text-muted mt-1">
             {formatRelative(listing.createdAt)}
           </p>
         </div>
@@ -236,7 +236,7 @@ function ListingRow({
             size="sm"
             leftIcon={<Trash2 size={14} />}
             onClick={onDelete}
-            className="text-trocalia-error hover:bg-red-50"
+            className="text-tradealo-error hover:bg-red-50"
           >
             Eliminar
           </Button>
