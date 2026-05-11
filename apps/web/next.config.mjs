@@ -4,8 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'http', hostname: 'localhost' },
-      { protocol: 'https', hostname: 'storage.trocalia.com.ar' },
-      { protocol: 'https', hostname: '**.r2.cloudflarestorage.com' },
+      { protocol: 'https', hostname: '**.supabase.co' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
