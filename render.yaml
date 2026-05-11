@@ -32,15 +32,13 @@ services:
       - key: ADMIN_SESSION_TIMEOUT
         value: "7200"
       # ── Cloudflare R2 ────────────────────────────────────────────────────────
-      - key: R2_ACCOUNT_ID
+      - key: R2_ENDPOINT
         sync: false
       - key: R2_ACCESS_KEY_ID
         sync: false
       - key: R2_SECRET_ACCESS_KEY
         sync: false
-      - key: R2_KYC_BUCKET_NAME
-        sync: false
-      - key: R2_PUBLIC_BUCKET_NAME
+      - key: R2_BUCKET_NAME
         sync: false
       - key: R2_PUBLIC_URL
         sync: false
