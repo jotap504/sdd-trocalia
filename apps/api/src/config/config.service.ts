@@ -21,12 +21,10 @@ export class ConfigService implements OnModuleInit {
     @Inject(REDIS_TOKEN) private readonly redis: Redis,
   ) {}
 
-  async onModuleInit(): Promise<void> {
-    try {
-      await this.warmCache()
-    } catch (err) {
+  onModuleInit(): void {
+    this.warmCache().catch((err) => {
       this.logger.warn('Config cache warm-up failed — will lazy-load from DB', err)
-    }
+    })
   }
 
   async get<T = unknown>(key: string): Promise<T | null> {
