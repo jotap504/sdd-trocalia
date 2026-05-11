@@ -10,6 +10,13 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] uncaughtException:', err.message, err.stack);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('[FATAL] unhandledRejection:', reason);
+});
+
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
@@ -65,7 +72,10 @@ async function bootstrap(): Promise<void> {
       store: new RedisStore({
         sendCommand: async (...args: string[]) => {
           try {
-            return await (redisClient.call(args[0], ...args.slice(1)) as Promise<number>);
+            return await (redisClient.call(
+              args[0],
+              ...args.slice(1),
+            ) as Promise<number>);
           } catch {
             return 0;
           }
