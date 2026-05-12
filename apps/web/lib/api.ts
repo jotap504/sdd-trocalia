@@ -316,7 +316,7 @@ export const images = {
   deleteImage: (listingId: string, imageId: string) =>
     del<{ ok: true }>(`/listings/${listingId}/images/${imageId}`),
   reorder: (listingId: string, ids: string[]) =>
-    post<{ ok: true }>(`/listings/${listingId}/images/reorder`, { ids }),
+    post<{ ok: true }>(`/listings/${listingId}/images/reorder`, { imageIds: ids }),
 };
 
 export const users = {

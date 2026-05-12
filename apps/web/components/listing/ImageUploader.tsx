@@ -25,11 +25,6 @@ export function ImageUploader({
   const [dragActive, setDragActive] = useState(false);
   const [draggingId, setDraggingId] = useState<string | null>(null);
 
-  const update = (next: ListingImage[]) => {
-    setImgs(next);
-    onChange?.(next);
-  };
-
   const upload = useCallback(
     async (file: File) => {
       if (!file.type.startsWith('image/')) {
@@ -50,17 +45,22 @@ export function ImageUploader({
           headers: { 'Content-Type': file.type },
           body: file,
         });
-        const sortOrder = imgs.length;
         const confirmed = await imagesApi.confirmUpload(listingId, {
           key,
-          sortOrder,
+          sortOrder: 0,
         });
-        update([...imgs, confirmed]);
-      } catch {
-        toast.error('Falló la subida de la imagen');
+        setImgs((prev) => {
+          const next = [...prev, { ...confirmed, sortOrder: prev.length }];
+          onChange?.(next);
+          return next;
+        });
+      } catch (err: unknown) {
+        const apiMsg = (err as { response?: { data?: { error?: { message?: string } } } })
+          ?.response?.data?.error?.message;
+        toast.error(apiMsg ?? 'Falló la subida de la imagen');
       }
     },
-    [imgs, listingId]
+    [listingId, onChange]
   );
 
   const handleFiles = async (files: FileList | File[]) => {
@@ -92,10 +92,13 @@ export function ImageUploader({
   const remove = async (id: string) => {
     try {
       await imagesApi.deleteImage(listingId, id);
-      const next = imgs
-        .filter((i) => i.id !== id)
-        .map((i, idx) => ({ ...i, sortOrder: idx }));
-      update(next);
+      setImgs((prev) => {
+        const next = prev
+          .filter((i) => i.id !== id)
+          .map((i, idx) => ({ ...i, sortOrder: idx }));
+        onChange?.(next);
+        return next;
+      });
     } catch {
       toast.error('No pudimos eliminar la imagen');
     }
@@ -110,7 +113,8 @@ export function ImageUploader({
     const [moved] = next.splice(draggingIdx, 1);
     next.splice(overIdx, 0, moved);
     const reordered = next.map((i, idx) => ({ ...i, sortOrder: idx }));
-    update(reordered);
+    setImgs(reordered);
+    onChange?.(reordered);
     try {
       await imagesApi.reorder(
         listingId,
