@@ -5,7 +5,7 @@ import { ListingGrid } from '@/components/listing/ListingGrid';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { API_URL } from '@/lib/constants';
-import type { Listing, Category, PaginatedResponse } from '@/types';
+import type { Listing, Category } from '@/types';
 
 async function fetchListings(params: string): Promise<Listing[]> {
   try {
@@ -13,8 +13,10 @@ async function fetchListings(params: string): Promise<Listing[]> {
       next: { revalidate: 60 },
     });
     if (!res.ok) return [];
-    const data: PaginatedResponse<Listing> = await res.json();
-    return data.data ?? [];
+    const json = await res.json();
+    // API wraps: { success: true, data: { data: Listing[], total: number } }
+    const arr = json?.data?.data ?? json?.data;
+    return Array.isArray(arr) ? arr : [];
   } catch {
     return [];
   }
@@ -26,7 +28,10 @@ async function fetchCategories(): Promise<Category[]> {
       next: { revalidate: 300 },
     });
     if (!res.ok) return [];
-    return res.json();
+    const json = await res.json();
+    // API wraps: { success: true, data: Category[] }
+    const arr = json?.data ?? json;
+    return Array.isArray(arr) ? arr : [];
   } catch {
     return [];
   }
