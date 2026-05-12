@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt'
 import { eq, and } from 'drizzle-orm'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import { createHash, randomBytes } from 'crypto'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { DRIZZLE_TOKEN } from '../database/database.module'
 import { ConfigService } from '../config/config.service'
 import * as schema from '../database/schema'
@@ -141,12 +141,12 @@ export class AuthService {
       .limit(1)
 
     const row = rows[0]
-    if (!row) throw new UnauthorizedException('INVALID_CREDENTIALS')
+    if (!row) throw new UnauthorizedException('USER_NOT_FOUND_IN_DB')
 
     const { user, profile } = row
 
     const passwordValid = await bcrypt.compare(dto.password, user.passwordHash)
-    if (!passwordValid) throw new UnauthorizedException('INVALID_CREDENTIALS')
+    if (!passwordValid) throw new UnauthorizedException('PASSWORD_MISMATCH')
 
     if (user.status !== 'active') throw new ForbiddenException('ACCOUNT_SUSPENDED')
 
