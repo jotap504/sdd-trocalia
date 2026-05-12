@@ -93,14 +93,6 @@ export default function LoginPage() {
               error={errors.password?.message}
               autoComplete="current-password"
             />
-            <div className="flex justify-end">
-              <Link
-                href="/reset-password"
-                className="text-xs text-tradealo-primary hover:underline"
-              >
-                ¿Olvidaste tu contraseña?
-              </Link>
-            </div>
             <Button type="submit" fullWidth loading={isSubmitting} size="lg">
               Ingresar
             </Button>
