@@ -28,6 +28,16 @@ export const apiClient = axios.create({
 let isRefreshing = false;
 let pendingRequests: Array<(token: boolean) => void> = [];
 
+apiClient.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('accessToken');
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
 apiClient.interceptors.response.use(
   (res) => {
     // Unwrap standardized { success: true, data: T } response
@@ -65,7 +75,16 @@ apiClient.interceptors.response.use(
 
       isRefreshing = true;
       try {
-        await apiClient.post('/auth/refresh');
+        const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;
+        if (!refreshToken) throw new Error('No refresh token');
+        
+        const res = await apiClient.post('/auth/refresh', { refreshToken });
+        const newToken = res.data?.accessToken ?? res.data?.data?.accessToken;
+        
+        if (typeof window !== 'undefined' && newToken) {
+          localStorage.setItem('accessToken', newToken);
+        }
+
         pendingRequests.forEach((cb) => cb(true));
         pendingRequests = [];
         return apiClient(original);
@@ -73,6 +92,8 @@ apiClient.interceptors.response.use(
         pendingRequests.forEach((cb) => cb(false));
         pendingRequests = [];
         if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
           const path = window.location.pathname;
           if (
             !path.startsWith('/login') &&
@@ -127,12 +148,42 @@ export interface RegisterPayload {
 }
 
 export const auth = {
-  login: (payload: LoginPayload) =>
-    post<{ user: User }>('/auth/login', payload),
-  register: (payload: RegisterPayload) =>
-    post<{ user: User }>('/auth/register', payload),
-  logout: () => post<{ ok: true }>('/auth/logout'),
-  refreshToken: () => post<{ ok: true }>('/auth/refresh'),
+  login: async (payload: LoginPayload) => {
+    const res = await post<{ user: User; accessToken: string; refreshToken: string }>('/auth/login', payload);
+    if (typeof window !== 'undefined') {
+      if (res.accessToken) localStorage.setItem('accessToken', res.accessToken);
+      if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
+    }
+    return res;
+  },
+  register: async (payload: RegisterPayload) => {
+    const res = await post<{ user: User; accessToken: string; refreshToken: string }>('/auth/register', payload);
+    if (typeof window !== 'undefined') {
+      if (res.accessToken) localStorage.setItem('accessToken', res.accessToken);
+      if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
+    }
+    return res;
+  },
+  logout: async () => {
+    try {
+      const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;
+      await post<{ ok: true }>('/auth/logout', { refreshToken });
+    } finally {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+      }
+    }
+  },
+  refreshToken: async () => {
+    const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;
+    const res = await post<{ accessToken: string; refreshToken: string }>('/auth/refresh', { refreshToken });
+    if (typeof window !== 'undefined') {
+      if (res.accessToken) localStorage.setItem('accessToken', res.accessToken);
+      if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
+    }
+    return res;
+  },
   getMe: () => get<User>('/auth/me'),
 };
 
