@@ -36,6 +36,7 @@ export interface TokenPair {
 export interface UserSummary {
   id: string
   email: string
+  username?: string
   role: string
   kycLevel: number
   referralCode: string | null
