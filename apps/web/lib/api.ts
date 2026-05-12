@@ -96,10 +96,10 @@ apiClient.interceptors.response.use(
       try {
         const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;
         if (!refreshToken) throw new Error('No refresh token');
-        
+
         const res = await apiClient.post('/auth/refresh', { refreshToken });
         const newToken = res.data?.accessToken ?? res.data?.data?.accessToken;
-        
+
         if (typeof window !== 'undefined' && newToken) {
           localStorage.setItem('accessToken', newToken);
         }
@@ -248,10 +248,11 @@ export const wallet = {
   getBalance: () => get<WalletBalance>('/wallet/balance'),
   getTransactions: (params: { cursor?: string; limit?: number } = {}) =>
     get<PaginatedResponse<WalletTransaction>>('/wallet/transactions', { params }),
-  getPacks: () => get<TokenPack[]>('/token-packs'),
+  getPacks: () => get<TokenPack[]>('/wallet/token-packs'),
   createPayment: (packId: string) =>
     post<{ initPoint: string; preferenceId: string }>(
-      `/token-packs/${packId}/purchase`
+      '/payments/preferences',
+      { packageId: packId }
     ),
 };
 
@@ -301,7 +302,7 @@ export const ai = {
 export const images = {
   getUploadUrl: (listingId: string, contentType: string) =>
     post<{ uploadUrl: string; key: string }>(
-      `/listing-images/${listingId}/upload-url`,
+      `/listings/${listingId}/images/upload-url`,
       { contentType }
     ),
   confirmUpload: (
@@ -309,13 +310,13 @@ export const images = {
     payload: { key: string; sortOrder: number }
   ) =>
     post<{ id: string; url: string; sortOrder: number }>(
-      `/listing-images/${listingId}/confirm`,
+      `/listings/${listingId}/images/confirm`,
       payload
     ),
   deleteImage: (listingId: string, imageId: string) =>
-    del<{ ok: true }>(`/listing-images/${listingId}/${imageId}`),
+    del<{ ok: true }>(`/listings/${listingId}/images/${imageId}`),
   reorder: (listingId: string, ids: string[]) =>
-    post<{ ok: true }>(`/listing-images/${listingId}/reorder`, { ids }),
+    post<{ ok: true }>(`/listings/${listingId}/images/reorder`, { ids }),
 };
 
 export const users = {

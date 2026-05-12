@@ -65,6 +65,16 @@ export class ListingsController {
     );
   }
 
+  @Post(':id/publish')
+  @HttpCode(HttpStatus.OK)
+  publish(
+    @Param('id') id: string,
+    @CurrentUser() user: JwtPayload,
+    @Body() dto: { type?: string; durationDays?: number },
+  ) {
+    return this.listingsService.publish(id, user.sub, dto);
+  }
+
   @Public()
   @Get(':id')
   findOne(

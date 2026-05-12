@@ -196,6 +196,28 @@ export class ListingsService {
     return updated
   }
 
+  async publish(id: string, userId: string, dto: { type?: string; durationDays?: number }): Promise<Listing> {
+    const [listing] = await this.db
+      .select()
+      .from(schema.listings)
+      .where(and(eq(schema.listings.id, id), eq(schema.listings.userId, userId)))
+      .limit(1)
+
+    if (!listing) throw new NotFoundException('LISTING_NOT_FOUND')
+
+    const [updated] = await this.db
+      .update(schema.listings)
+      .set({
+        ...(dto.type && { type: dto.type }),
+        ...(dto.durationDays && { durationDays: dto.durationDays }),
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.listings.id, id))
+      .returning()
+
+    return updated
+  }
+
   async remove(id: string, userId: string): Promise<void> {
     const [listing] = await this.db
       .select({ id: schema.listings.id, userId: schema.listings.userId })
