@@ -253,13 +253,20 @@ export class ListingsService {
 
     if (!listing) throw new NotFoundException('LISTING_NOT_FOUND');
 
+    // Recalculate risk & moderation status with current listing data
+    const recalculatedRisk = this.computeRiskScoreFromListing(listing);
+    const recalculatedModeration = this.resolveModerationStatus(recalculatedRisk);
+
     const durationDays = dto.durationDays ?? listing.durationDays;
     const publishedAt = new Date();
     const expiresAt = new Date(
       publishedAt.getTime() + durationDays * 24 * 60 * 60 * 1000,
     );
+    const moderatorApproved = listing.moderationStatus === 'approved';
     const newStatus =
-      listing.moderationStatus === 'approved' ? 'active' : 'draft';
+      moderatorApproved || recalculatedModeration === 'approved'
+        ? 'active'
+        : 'draft';
 
     const [updated] = await this.db
       .update(schema.listings)
@@ -269,10 +276,12 @@ export class ListingsService {
         }),
         durationDays,
         status: newStatus,
+        riskScore: recalculatedRisk,
+        moderationStatus: recalculatedModeration,
         publishedAt:
-          listing.moderationStatus === 'approved' ? publishedAt : undefined,
+          newStatus === 'active' ? publishedAt : undefined,
         expiresAt:
-          listing.moderationStatus === 'approved' ? expiresAt : undefined,
+          newStatus === 'active' ? expiresAt : undefined,
         updatedAt: new Date(),
       })
       .where(eq(schema.listings.id, id))
@@ -382,6 +391,28 @@ export class ListingsService {
 
     if (dto.price === 0) score += 30;
     if (!dto.city && !dto.province && !dto.locationText) score += 10;
+
+    return Math.min(100, score);
+  }
+
+  private computeRiskScoreFromListing(
+    listing: typeof schema.listings.$inferSelect,
+  ): number {
+    let score = 0;
+    const title = listing.title.toLowerCase();
+    const desc = listing.description.toLowerCase();
+
+    const spamWords = [
+      'urgente',
+      'oferta imperdible',
+      'ganga',
+      'precio increíble',
+    ];
+    if (spamWords.some((w) => title.includes(w) || desc.includes(w)))
+      score += 20;
+
+    if (Number(listing.price) === 0) score += 30;
+    if (!listing.city && !listing.province && !listing.locationText) score += 10;
 
     return Math.min(100, score);
   }
