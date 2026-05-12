@@ -30,13 +30,19 @@ export class ConfigService implements OnModuleInit {
     });
   }
 
+  private get redisReady(): boolean {
+    return this.redis.status === 'ready';
+  }
+
   async get<T = unknown>(key: string): Promise<T | null> {
     const cacheKey = `${CACHE_PREFIX}${key}`;
-    try {
-      const cached = await this.redis.get(cacheKey);
-      if (cached !== null) return JSON.parse(cached) as T;
-    } catch {
-      // Redis unavailable — fall through to DB
+    if (this.redisReady) {
+      try {
+        const cached = await this.redis.get(cacheKey);
+        if (cached !== null) return JSON.parse(cached) as T;
+      } catch {
+        // Redis error — fall through to DB
+      }
     }
 
     const [row] = await this.db
@@ -47,10 +53,12 @@ export class ConfigService implements OnModuleInit {
 
     if (!row) return null;
 
-    try {
-      await this.redis.setex(cacheKey, CACHE_TTL, JSON.stringify(row.value));
-    } catch {
-      // Redis unavailable — skip cache write
+    if (this.redisReady) {
+      try {
+        await this.redis.setex(cacheKey, CACHE_TTL, JSON.stringify(row.value));
+      } catch {
+        // Redis error — skip cache write
+      }
     }
     return row.value as T;
   }
@@ -85,7 +93,11 @@ export class ConfigService implements OnModuleInit {
     for (const row of rows) result[row.key] = row.value;
 
     try {
-      await this.redis.setex(PUBLIC_CACHE_KEY, CACHE_TTL, JSON.stringify(result));
+      await this.redis.setex(
+        PUBLIC_CACHE_KEY,
+        CACHE_TTL,
+        JSON.stringify(result),
+      );
     } catch {
       // Redis unavailable — skip cache write
     }
