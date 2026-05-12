@@ -42,7 +42,19 @@ apiClient.interceptors.response.use(
   (res) => {
     // Unwrap standardized { success: true, data: T } response
     if (res.data && res.data.success === true && res.data.data !== undefined) {
-      return { ...res, data: res.data.data };
+      const unwrapped = res.data.data;
+
+      // Persist tokens as soon as they arrive from any auth endpoint
+      if (typeof window !== 'undefined' && unwrapped) {
+        if (unwrapped.accessToken) {
+          localStorage.setItem('accessToken', unwrapped.accessToken);
+        }
+        if (unwrapped.refreshToken) {
+          localStorage.setItem('refreshToken', unwrapped.refreshToken);
+        }
+      }
+
+      return { ...res, data: unwrapped };
     }
     return res;
   },
