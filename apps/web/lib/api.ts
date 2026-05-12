@@ -49,7 +49,11 @@ apiClient.interceptors.response.use(
   async (error: AxiosError) => {
     const original = error.config as AxiosRequestConfig & { _retry?: boolean };
     const status = error.response?.status;
-    const errorData = error.response?.data as any;
+    const errorData = error.response?.data as {
+      success?: boolean;
+      error?: { message?: string };
+      message?: string;
+    };
 
     // Normalize error message from { success: false, error: { message } }
     if (errorData?.success === false && errorData?.error?.message) {

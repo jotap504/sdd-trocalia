@@ -24,7 +24,6 @@ export default function LoginPage() {
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const initialized = useAuthStore((s) => s.initialized);
-  const initialize = useAuthStore((s) => s.initialize);
   const setUser = useAuthStore((s) => s.setUser);
   const setInitialized = useAuthStore((s) => s.setInitialized);
 
