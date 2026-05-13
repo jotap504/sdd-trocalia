@@ -80,11 +80,7 @@ export class MessagingService {
     return conversation;
   }
 
-  async sendMessage(
-    conversationId: string,
-    senderId: string,
-    content: string,
-  ) {
+  async sendMessage(conversationId: string, senderId: string, content: string) {
     const conv = await this.assertParticipant(conversationId, senderId);
 
     const [msg] = await this.db
@@ -103,11 +99,9 @@ export class MessagingService {
     };
 
     if (senderId === conv.buyerId) {
-      updateFields.sellerUnreadCount =
-        sql`${schema.conversations.sellerUnreadCount} + 1`;
+      updateFields.sellerUnreadCount = sql`${schema.conversations.sellerUnreadCount} + 1`;
     } else {
-      updateFields.buyerUnreadCount =
-        sql`${schema.conversations.buyerUnreadCount} + 1`;
+      updateFields.buyerUnreadCount = sql`${schema.conversations.buyerUnreadCount} + 1`;
     }
 
     await this.db
@@ -116,8 +110,7 @@ export class MessagingService {
       .where(eq(schema.conversations.id, conversationId));
 
     // In-app notification for recipient
-    const preview =
-      content.length > 80 ? content.slice(0, 80) + '…' : content;
+    const preview = content.length > 80 ? content.slice(0, 80) + '…' : content;
     await this.notificationsService
       .send({
         userId: recipientId,
@@ -154,7 +147,8 @@ export class MessagingService {
       conditions.push(
         or(
           lt(
-            schema.conversations.lastMessageAt ?? schema.conversations.createdAt,
+            schema.conversations.lastMessageAt ??
+              schema.conversations.createdAt,
             decoded.createdAt,
           ),
           and(
@@ -203,8 +197,7 @@ export class MessagingService {
     const userMap = new Map(userRows.map((u) => [u.id, u]));
 
     const enriched = data.map((conv) => {
-      const otherId =
-        conv.buyerId === userId ? conv.sellerId : conv.buyerId;
+      const otherId = conv.buyerId === userId ? conv.sellerId : conv.buyerId;
       const other = userMap.get(otherId);
       return {
         ...conv,
@@ -225,9 +218,7 @@ export class MessagingService {
     const nextCursor =
       hasMore && last
         ? encodeCursor({
-            createdAt: new Date(
-              last.lastMessageAt ?? last.createdAt,
-            ),
+            createdAt: new Date(last.lastMessageAt ?? last.createdAt),
             id: last.id,
           })
         : null;
@@ -284,8 +275,7 @@ export class MessagingService {
 
   async markRead(conversationId: string, userId: string) {
     const conv = await this.assertParticipant(conversationId, userId);
-    const otherId =
-      conv.buyerId === userId ? conv.sellerId : conv.buyerId;
+    const otherId = conv.buyerId === userId ? conv.sellerId : conv.buyerId;
 
     await this.db
       .update(schema.messages)

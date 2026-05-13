@@ -109,7 +109,10 @@ export class ListingsService {
         status: 'draft',
         saleType: dto.saleType ?? 'contact',
         stock: dto.stock,
-        desiredPrice: dto.desiredPrice !== undefined ? Math.round(dto.desiredPrice * 100) : undefined,
+        desiredPrice:
+          dto.desiredPrice !== undefined
+            ? Math.round(dto.desiredPrice * 100)
+            : undefined,
       })
       .returning();
 
@@ -543,13 +546,11 @@ export class ListingsService {
     if (listing.userId === userId)
       throw new BadRequestException('CANNOT_CONTACT_OWN_LISTING');
 
-    const conversation =
-      await this.messagingService.findOrCreateConversation(userId, listingId);
-    await this.messagingService.sendMessage(
-      conversation.id,
+    const conversation = await this.messagingService.findOrCreateConversation(
       userId,
-      message,
+      listingId,
     );
+    await this.messagingService.sendMessage(conversation.id, userId, message);
 
     await this.db
       .update(schema.listings)
@@ -589,7 +590,10 @@ export class ListingsService {
         updatedAt: new Date(),
       })
       .where(
-        and(eq(schema.listings.id, listingId), sql`${schema.listings.stock} > 0`),
+        and(
+          eq(schema.listings.id, listingId),
+          sql`${schema.listings.stock} > 0`,
+        ),
       )
       .returning();
 
@@ -604,8 +608,10 @@ export class ListingsService {
         .where(eq(schema.listings.id, listingId));
     }
 
-    const conversation =
-      await this.messagingService.findOrCreateConversation(userId, listingId);
+    const conversation = await this.messagingService.findOrCreateConversation(
+      userId,
+      listingId,
+    );
     await this.messagingService.sendMessage(
       conversation.id,
       userId,
@@ -664,7 +670,12 @@ export class ListingsService {
 
       const [bid] = await this.db
         .insert(schema.listingBids)
-        .values({ listingId, bidderId: userId, amount: amountCents, status: 'won' })
+        .values({
+          listingId,
+          bidderId: userId,
+          amount: amountCents,
+          status: 'won',
+        })
         .returning();
 
       await this.db
@@ -678,8 +689,10 @@ export class ListingsService {
           ),
         );
 
-      const conversation =
-        await this.messagingService.findOrCreateConversation(userId, listingId);
+      const conversation = await this.messagingService.findOrCreateConversation(
+        userId,
+        listingId,
+      );
       await this.messagingService.sendMessage(
         conversation.id,
         userId,
@@ -737,7 +750,12 @@ export class ListingsService {
 
       const [bid] = await tx
         .insert(schema.listingBids)
-        .values({ listingId, bidderId: userId, amount: amountCents, status: 'active' })
+        .values({
+          listingId,
+          bidderId: userId,
+          amount: amountCents,
+          status: 'active',
+        })
         .returning();
 
       if (highestBid && highestBid.bidderId !== userId) {

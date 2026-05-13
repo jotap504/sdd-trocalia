@@ -1,7 +1,8 @@
 {
   "paths": [
     "render.yaml",
-    "apps/api/.env.production.example"
+    "apps/api/.env.production.example",
+    "apps/api/src/database/database.module.ts"
   ],
   "domains": [],
   "commands": []

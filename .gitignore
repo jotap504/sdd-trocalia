@@ -39,3 +39,5 @@ Thumbs.db
 # Drizzle generated client (not migrations)
 # Migration files in apps/api/drizzle/ ARE tracked
 drizzle/meta/
+
+.vercel
