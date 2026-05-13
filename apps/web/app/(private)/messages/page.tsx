@@ -2,7 +2,8 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import { MessageCircle, Loader2, ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, MessageCircle, Loader2, ChevronRight } from 'lucide-react';
 import { conversations } from '@/lib/api';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Avatar } from '@/components/ui/Avatar';
@@ -10,6 +11,7 @@ import { cn, formatRelative } from '@/lib/utils';
 import type { Conversation } from '@/types';
 
 export default function MessagesPage() {
+  const router = useRouter();
   const { data, isLoading } = useQuery({
     queryKey: ['conversations'],
     queryFn: () => conversations.getConversations({ limit: 50 }),
@@ -20,9 +22,18 @@ export default function MessagesPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8">
-      <h1 className="font-heading text-2xl font-bold text-tradealo-text mb-6">
-        Mensajes
-      </h1>
+      <div className="flex items-center gap-3 mb-6">
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="p-2 rounded-lg hover:bg-gray-100 text-tradealo-text-muted"
+          aria-label="Volver"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <h1 className="font-heading text-2xl font-bold text-tradealo-text">
+          Mensajes
+        </h1>
+      </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center py-20 text-tradealo-text-muted">

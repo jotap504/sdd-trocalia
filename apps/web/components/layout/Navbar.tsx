@@ -28,7 +28,6 @@ export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
-  const initialized = useAuthStore((s) => s.initialized);
   const logout = useAuthStore((s) => s.logout);
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -192,7 +191,7 @@ export function Navbar() {
                 )}
               </div>
             </>
-          ) : initialized ? (
+          ) : (
             <>
               <Link href="/login" className="hidden sm:block">
                 <Button variant="ghost" size="md">
@@ -203,8 +202,6 @@ export function Navbar() {
                 <Button size="md">Registrarse</Button>
               </Link>
             </>
-          ) : (
-            <div className="w-20 h-9 rounded-md animate-pulse bg-gray-200" />
           )}
 
           <button

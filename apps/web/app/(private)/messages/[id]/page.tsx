@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Loader2, Send } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowLeft, ExternalLink, Loader2, Send } from 'lucide-react';
 import { conversations } from '@/lib/api';
 import { useAuthStore, toast } from '@/lib/store';
 import { Avatar } from '@/components/ui/Avatar';
@@ -99,9 +100,13 @@ export default function ConversationPage({
                   'Usuario'}
               </p>
               {convListData?.listingTitle && (
-                <p className="text-xs text-tradealo-text-muted">
-                  Re: {convListData.listingTitle}
-                </p>
+                <Link
+                  href={`/listing/${convListData.listingId}`}
+                  className="text-xs text-tradealo-primary hover:underline inline-flex items-center gap-1"
+                >
+                  <ExternalLink size={10} />
+                  {convListData.listingTitle}
+                </Link>
               )}
             </div>
           </div>
