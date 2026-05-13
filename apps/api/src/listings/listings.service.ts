@@ -5,7 +5,7 @@ import {
   BadRequestException,
   ForbiddenException,
 } from '@nestjs/common';
-import { eq, and, desc, asc, lt, or, sql, gte, lte } from 'drizzle-orm';
+import { eq, and, desc, asc, lt, or, sql, gte, lte, inArray } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DRIZZLE_TOKEN } from '../database/database.module';
 import { ConfigService } from '../config/config.service';
@@ -160,6 +160,27 @@ export class ListingsService {
         ? encodeCursor({ createdAt: last.createdAt, id: last.id })
         : null;
 
+    // Attach images
+    const ids = data.map((r) => r.id);
+    if (ids.length > 0) {
+      const imageRows = await this.db
+        .select()
+        .from(schema.listingImages)
+        .where(inArray(schema.listingImages.listingId, ids))
+        .orderBy(asc(schema.listingImages.sortOrder));
+      const imagesByListing = new Map<string, (typeof schema.listingImages.$inferSelect)[]>();
+      for (const img of imageRows) {
+        const arr = imagesByListing.get(img.listingId) ?? [];
+        arr.push(img);
+        imagesByListing.set(img.listingId, arr);
+      }
+      const dataWithImages = data.map((r) => ({
+        ...r,
+        images: imagesByListing.get(r.id) ?? [],
+      }));
+      return { data: dataWithImages, nextCursor, hasMore };
+    }
+
     return { data, nextCursor, hasMore };
   }
 
@@ -255,7 +276,8 @@ export class ListingsService {
 
     // Recalculate risk & moderation status with current listing data
     const recalculatedRisk = this.computeRiskScoreFromListing(listing);
-    const recalculatedModeration = this.resolveModerationStatus(recalculatedRisk);
+    const recalculatedModeration =
+      this.resolveModerationStatus(recalculatedRisk);
 
     const durationDays = dto.durationDays ?? listing.durationDays;
     const publishedAt = new Date();
@@ -278,10 +300,8 @@ export class ListingsService {
         status: newStatus,
         riskScore: recalculatedRisk,
         moderationStatus: recalculatedModeration,
-        publishedAt:
-          newStatus === 'active' ? publishedAt : undefined,
-        expiresAt:
-          newStatus === 'active' ? expiresAt : undefined,
+        publishedAt: newStatus === 'active' ? publishedAt : undefined,
+        expiresAt: newStatus === 'active' ? expiresAt : undefined,
         updatedAt: new Date(),
       })
       .where(eq(schema.listings.id, id))
@@ -412,7 +432,8 @@ export class ListingsService {
       score += 20;
 
     if (Number(listing.price) === 0) score += 30;
-    if (!listing.city && !listing.province && !listing.locationText) score += 10;
+    if (!listing.city && !listing.province && !listing.locationText)
+      score += 10;
 
     return Math.min(100, score);
   }

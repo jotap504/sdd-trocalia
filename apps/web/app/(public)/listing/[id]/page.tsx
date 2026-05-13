@@ -17,7 +17,10 @@ async function getListing(id: string): Promise<Listing | null> {
     });
     if (res.status === 404) return null;
     if (!res.ok) return null;
-    return res.json();
+    const json = await res.json();
+    // Unwrap { success: true, data: ... } envelope
+    if (json?.success && json?.data) return json.data as Listing;
+    return json as Listing;
   } catch {
     return null;
   }
