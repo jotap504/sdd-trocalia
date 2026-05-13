@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Rubik, Nunito_Sans } from 'next/font/google';
 import { AppProviders } from '@/components/providers/AppProviders';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import './globals.css';
 
 const rubik = Rubik({
@@ -36,7 +38,11 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className={`${rubik.variable} ${nunito.variable}`}>
       <body className="bg-tradealo-bg text-tradealo-text font-sans antialiased min-h-screen">
-        <AppProviders>{children}</AppProviders>
+        <AppProviders>
+          <Navbar />
+          <main className="min-h-[calc(100vh-4rem)] flex flex-col">{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );
