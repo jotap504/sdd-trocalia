@@ -1,5 +1,5 @@
 {
   "framework": "nextjs",
   "installCommand": "cd ../.. && npx pnpm@10 install --frozen-lockfile",
-  "buildCommand": "../../node_modules/.bin/next build"
+  "buildCommand": "cd ../.. && npx pnpm@10 --filter web run build"
 }
