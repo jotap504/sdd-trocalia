@@ -10,6 +10,8 @@ import type {
   Notification,
   KycStatus,
   Review,
+  Conversation,
+  Message,
   PaginatedResponse,
   SystemConfig,
   AdminStats,
@@ -236,7 +238,7 @@ export const listings = {
   renewListing: (id: string, durationDays: number) =>
     post<Listing>(`/listings/${id}/renew`, { durationDays }),
   contactSeller: (id: string, payload: { message: string }) =>
-    post<{ ok: true }>(`/listings/${id}/contact`, payload),
+    post<{ conversationId: string }>(`/listings/${id}/contact`, payload),
 };
 
 export const categories = {
@@ -330,6 +332,23 @@ export const users = {
     }),
 };
 
+export const conversations = {
+  getConversations: (params: { cursor?: string; limit?: number } = {}) =>
+    get<PaginatedResponse<Conversation>>('/conversations', { params }),
+  getMessages: (conversationId: string, params: { cursor?: string; limit?: number } = {}) =>
+    get<PaginatedResponse<Message>>(`/conversations/${conversationId}/messages`, { params }),
+  sendMessage: (conversationId: string, payload: { content: string }) =>
+    post<Message>(`/conversations/${conversationId}/messages`, payload),
+  markRead: (conversationId: string) =>
+    patch<{ ok: true }>(`/conversations/${conversationId}/read`),
+  unreadCount: () => get<{ count: number }>('/conversations/unread-count'),
+  startConversation: (listingId: string, payload: { message: string }) =>
+    post<{ conversation: Conversation; message: Message }>(
+      `/listings/${listingId}/conversations`,
+      payload,
+    ),
+};
+
 export const admin = {
   getStats: () => get<AdminStats>('/admin/stats'),
   getUsers: (params: { cursor?: string; role?: string; kycLevel?: number } = {}) =>
@@ -364,5 +383,6 @@ export default {
   ai,
   images,
   users,
+  conversations,
   admin,
 };

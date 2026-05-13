@@ -21,6 +21,7 @@ import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DRIZZLE_TOKEN } from '../database/database.module';
 import { ConfigService } from '../config/config.service';
 import { WalletService } from '../wallet/wallet.service';
+import { MessagingService } from '../messaging/messaging.service';
 import * as schema from '../database/schema';
 import { encodeCursor, decodeCursor } from '../common/utils/cursor.util';
 import { LISTING } from '../common/constants/listing.constants';
@@ -39,6 +40,7 @@ export class ListingsService {
     @Inject(DRIZZLE_TOKEN) private readonly db: DB,
     private readonly configService: ConfigService,
     private readonly walletService: WalletService,
+    private readonly messagingService: MessagingService,
   ) {}
 
   async create(userId: string, dto: CreateListingDto): Promise<Listing> {
@@ -519,7 +521,7 @@ export class ListingsService {
     listingId: string,
     userId: string,
     message: string,
-  ): Promise<void> {
+  ): Promise<{ conversationId: string }> {
     const [listing] = await this.db
       .select({
         id: schema.listings.id,
@@ -534,27 +536,13 @@ export class ListingsService {
     if (listing.userId === userId)
       throw new BadRequestException('CANNOT_CONTACT_OWN_LISTING');
 
-    const [user] = await this.db
-      .select({
-        id: schema.users.id,
-        email: schema.users.email,
-        username: schema.userProfiles.username,
-      })
-      .from(schema.users)
-      .leftJoin(
-        schema.userProfiles,
-        eq(schema.userProfiles.userId, schema.users.id),
-      )
-      .where(eq(schema.users.id, userId))
-      .limit(1);
-
-    await this.db.insert(schema.contactInquiries).values({
-      listingId,
-      senderUserId: userId,
-      senderName: user?.username ?? user?.email ?? 'Usuario',
-      senderEmail: user?.email,
+    const conversation =
+      await this.messagingService.findOrCreateConversation(userId, listingId);
+    await this.messagingService.sendMessage(
+      conversation.id,
+      userId,
       message,
-    });
+    );
 
     await this.db
       .update(schema.listings)
@@ -563,6 +551,8 @@ export class ListingsService {
         updatedAt: new Date(),
       })
       .where(eq(schema.listings.id, listingId));
+
+    return { conversationId: conversation.id };
   }
 
   private async recordView(

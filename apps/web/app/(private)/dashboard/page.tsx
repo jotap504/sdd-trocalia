@@ -9,6 +9,7 @@ import {
   Eye,
   Tag,
   Bell,
+  MessageCircle,
   ArrowRight,
 } from 'lucide-react';
 import { useAuthStore } from '@/lib/store';
@@ -257,6 +258,23 @@ export default function DashboardPage() {
                 </p>
                 <p className="text-xs text-tradealo-text-muted">
                   Publicá algo nuevo
+                </p>
+              </div>
+            </CardBody>
+          </Card>
+        </Link>
+        <Link href="/messages">
+          <Card hover className="cursor-pointer h-full">
+            <CardBody className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 shrink-0">
+                <MessageCircle size={22} />
+              </div>
+              <div>
+                <p className="font-heading font-semibold text-sm">
+                  Mensajes
+                </p>
+                <p className="text-xs text-tradealo-text-muted">
+                  Conversaciones con compradores
                 </p>
               </div>
             </CardBody>

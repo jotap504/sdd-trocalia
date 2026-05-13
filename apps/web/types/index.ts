@@ -132,6 +132,41 @@ export interface PaginatedResponse<T> {
   total?: number;
 }
 
+export interface Conversation {
+  id: string;
+  listingId: string;
+  buyerId: string;
+  sellerId: string;
+  status: string;
+  listingTitle?: string;
+  listingPrice?: string;
+  listingCurrency?: string;
+  listingImage?: string;
+  lastMessageAt?: string;
+  lastMessageText?: string;
+  lastMessageSenderId?: string;
+  buyerUnreadCount: number;
+  sellerUnreadCount: number;
+  createdAt: string;
+  updatedAt: string;
+  otherParticipant: {
+    id: string;
+    username: string | null;
+    email: string | null;
+    avatarUrl: string | null;
+  };
+  unreadCount: number;
+}
+
+export interface Message {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  content: string;
+  readAt?: string;
+  createdAt: string;
+}
+
 export interface SystemConfig {
   key: string;
   value: string;

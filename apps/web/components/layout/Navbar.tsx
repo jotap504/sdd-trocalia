@@ -15,11 +15,13 @@ import {
   LogOut,
   Search,
   Repeat,
+  MessageCircle,
 } from 'lucide-react';
 import { useAuthStore } from '@/lib/store';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { NotificationBell } from './NotificationBell';
+import { MessageBell } from './MessageBell';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
@@ -125,6 +127,7 @@ export function Navbar() {
                   Publicar
                 </Button>
               </Link>
+              <MessageBell />
               <NotificationBell />
               <div className="relative" ref={menuRef}>
                 <button
@@ -162,6 +165,11 @@ export function Navbar() {
                       href="/my-listings"
                       icon={<ListChecks size={15} />}
                       label="Mis publicaciones"
+                    />
+                    <DropdownLink
+                      href="/messages"
+                      icon={<MessageCircle size={15} />}
+                      label="Mensajes"
                     />
                     <DropdownLink
                       href="/wallet"
@@ -251,6 +259,12 @@ export function Navbar() {
                     className="px-3 py-3 rounded-lg text-sm font-medium hover:bg-gray-100"
                   >
                     Mis publicaciones
+                  </Link>
+                  <Link
+                    href="/messages"
+                    className="px-3 py-3 rounded-lg text-sm font-medium hover:bg-gray-100"
+                  >
+                    Mensajes
                   </Link>
                   <Link
                     href="/wallet"

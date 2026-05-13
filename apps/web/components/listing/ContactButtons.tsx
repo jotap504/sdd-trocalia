@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Phone, Send, MessageCircle, User } from 'lucide-react';
+import { Phone, Send, User } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Input';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -25,23 +26,25 @@ interface Props {
 }
 
 export function ContactButtons({ listingId, showPhone, phone, sellerUsername }: Props) {
+  const router = useRouter();
   const currentUser = useAuthStore((s) => s.user);
-  const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
+    formState: { errors },
   } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (values: FormValues) => {
+    setIsSubmitting(true);
     try {
-      await listings.contactSeller(listingId, values);
-      toast.success('¡Tu consulta fue enviada!');
-      setSent(true);
-      reset();
+      const result = await listings.contactSeller(listingId, values);
+      toast.success('Mensaje enviado');
+      router.push(`/messages/${result.conversationId}`);
     } catch {
       toast.error('No pudimos enviar tu consulta. Probá más tarde.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -69,55 +72,33 @@ export function ContactButtons({ listingId, showPhone, phone, sellerUsername }: 
           </a>
         )}
 
-        {sent ? (
-          <div className="rounded-lg bg-green-50 border border-green-200 p-4 text-center">
-            <MessageCircle
-              size={24}
-              className="mx-auto text-tradealo-success mb-2"
-            />
-            <p className="text-sm font-medium text-tradealo-success">
-              Consulta enviada
-            </p>
-            <p className="text-xs text-tradealo-text-muted mt-1">
-              El vendedor te responderá por email pronto.
-            </p>
-            <button
-              type="button"
-              onClick={() => setSent(false)}
-              className="text-xs text-tradealo-primary hover:underline mt-3"
-            >
-              Enviar otra consulta
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-            <p className="text-sm font-medium text-tradealo-text">
-              Enviar consulta
-            </p>
-            {currentUser && (
-              <div className="flex items-center gap-2 text-xs text-tradealo-text-muted bg-tradealo-bg rounded-lg px-3 py-2">
-                <User size={14} />
-                <span>
-                  {currentUser.username ?? currentUser.email}
-                </span>
-              </div>
-            )}
-            <Textarea
-              placeholder="Hola, me interesa, ¿sigue disponible? ¿Aceptás trueque?"
-              rows={4}
-              {...register('message')}
-              error={errors.message?.message}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              loading={isSubmitting}
-              leftIcon={<Send size={16} />}
-            >
-              Enviar consulta
-            </Button>
-          </form>
-        )}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          <p className="text-sm font-medium text-tradealo-text">
+            Enviar consulta
+          </p>
+          {currentUser && (
+            <div className="flex items-center gap-2 text-xs text-tradealo-text-muted bg-tradealo-bg rounded-lg px-3 py-2">
+              <User size={14} />
+              <span>
+                {currentUser.username ?? currentUser.email}
+              </span>
+            </div>
+          )}
+          <Textarea
+            placeholder="Hola, me interesa, ¿sigue disponible? ¿Aceptás trueque?"
+            rows={4}
+            {...register('message')}
+            error={errors.message?.message}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            loading={isSubmitting}
+            leftIcon={<Send size={16} />}
+          >
+            Enviar consulta
+          </Button>
+        </form>
       </CardBody>
     </Card>
   );

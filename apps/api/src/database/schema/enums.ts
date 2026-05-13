@@ -67,3 +67,7 @@ export const moderationStatusEnum = pgEnum('moderation_status', [
 export const configDataTypeEnum = pgEnum('config_data_type', [
   'integer', 'decimal', 'boolean', 'string', 'json', 'select', 'multi_select',
 ])
+
+export const conversationStatusEnum = pgEnum('conversation_status', [
+  'active', 'archived', 'blocked',
+])
