@@ -150,20 +150,29 @@ export function CategoryAccordionHero() {
               ))}
             </div>
 
-            {/* Mobile: category grid */}
-            <div className="grid grid-cols-2 sm:hidden gap-2">
+            {/* Mobile: horizontal image cards */}
+            <div className="flex sm:hidden overflow-x-auto snap-x snap-mandatory gap-3 pb-4 -mx-4 px-4 scrollbar-hide">
               {CATEGORY_DATA.map((item) => (
                 <Link
                   key={item.id}
                   href={`/listings?category=${item.slug}`}
-                  className="bg-white border border-tradealo-border rounded-xl px-4 py-5 text-center hover:bg-tradealo-primary-light hover:border-tradealo-primary transition-colors"
+                  className="relative h-48 w-36 shrink-0 snap-start rounded-xl overflow-hidden"
                 >
-                  <span className="font-heading font-semibold text-sm text-tradealo-text">
-                    {item.title}
-                  </span>
-                  <p className="text-xs text-tradealo-text-muted mt-1">
-                    {item.description}
-                  </p>
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <h3 className="font-heading text-white font-bold text-sm">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/70 text-[11px] mt-0.5 leading-tight">
+                      {item.description}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>
