@@ -69,7 +69,7 @@ export default async function HomePage() {
   const [premiumListings, recentListings, collectibleListings, categories] =
     await Promise.all([
       fetchListings('type=premium&limit=6'),
-      fetchListings('limit=12&sortBy=recent'),
+      fetchListings('limit=12&sort=recent'),
       fetchListings('isCollectible=true&limit=6'),
       fetchCategories(),
     ]);
