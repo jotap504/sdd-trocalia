@@ -102,7 +102,14 @@
       "Read(//c/Users/user/.render/**)",
       "Bash(curl --insecure -s https://tradealo.onrender.com/api/v1/listings/958b20dc-8c42-4015-8606-3a15298cb6ee)",
       "Bash(curl --insecure -s \"https://tradealo.onrender.com/api/v1/listings?limit=5\")",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(npx --node-options=\"--use-system-ca\" vercel deploy --prod --yes)",
+      "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; npx vercel deploy --prod --yes 2>&1)",
+      "PowerShell(mkdir *)",
+      "PowerShell(cd apps/web; $env:NODE_OPTIONS=\"--use-system-ca\"; npx next build 2>&1 | Select-Object -First 30)",
+      "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; npx vercel deploy --prod --yes 2>&1 | Select-Object -Last 10)",
+      "Bash(pnpm --filter @tradealo/api add sharp)",
+      "Bash(NODE_OPTIONS=\"--use-system-ca\" pnpm --filter @tradealo/api add sharp)"
     ]
   },
   "enableAllProjectMcpServers": true,

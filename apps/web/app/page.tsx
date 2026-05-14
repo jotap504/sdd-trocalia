@@ -38,22 +38,22 @@ async function fetchCategories(): Promise<Category[]> {
 }
 
 const CATEGORY_IMAGES: Array<[string, string]> = [
-  ['electronica', '/categories/electronics.png'],
-  ['vehiculos', '/categories/vehicles.png'],
-  ['ropa', '/categories/fashion.png'],
-  ['hogar', '/categories/home.png'],
-  ['deportes', '/categories/sports.png'],
-  ['instrumentos', '/categories/music.png'],
-  ['coleccionables', '/categories/collectibles.png'],
-  ['otros', '/categories/others.png'],
-  ['tecnolog', '/categories/electronics.png'],
-  ['celular', '/categories/electronics.png'],
-  ['mueble', '/categories/home.png'],
-  ['bici', '/categories/sports.png'],
-  ['niño', '/categories/kids.png'],
-  ['bebé', '/categories/kids.png'],
-  ['herram', '/categories/tools.png'],
-  ['libro', '/categories/books.png'],
+  ['electronica', '/categories/electronics_v2.png'],
+  ['vehiculos', '/categories/vehicles_v2.png'],
+  ['ropa', '/categories/fashion_v2.png'],
+  ['hogar', '/categories/home_v2.png'],
+  ['deportes', '/categories/sports_v2.png'],
+  ['instrumentos', '/categories/music_v2.png'],
+  ['coleccionables', '/categories/collectibles_v2.png'],
+  ['otros', '/categories/others_v2.png'],
+  ['tecnolog', '/categories/electronics_v2.png'],
+  ['celular', '/categories/electronics_v2.png'],
+  ['mueble', '/categories/home_v2.png'],
+  ['bici', '/categories/sports_v2.png'],
+  ['niño', '/categories/kids_v2.png'],
+  ['bebé', '/categories/kids_v2.png'],
+  ['herram', '/categories/tools_v2.png'],
+  ['libro', '/categories/books_v2.png'],
 ];
 
 function getCategoryImage(slug: string): string {
@@ -97,7 +97,7 @@ export default async function HomePage() {
                     <img
                       src={getCategoryImage(cat.slug)}
                       alt={cat.name}
-                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110 filter brightness-[1.02] contrast-[1.05]"
                     />
                   </div>
                   <span className="font-semibold text-sm text-tradealo-text text-center line-clamp-1">
