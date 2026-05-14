@@ -36,7 +36,13 @@ export function ImageUploader({
         return;
       }
       try {
-        const image = await imagesApi.upload(listingId, file);
+        const data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve((reader.result as string).split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        const image = await imagesApi.upload(listingId, data, file.type);
         setImgs((prev) => {
           const next = [...prev, { ...image, sortOrder: prev.length }];
           onChange?.(next);

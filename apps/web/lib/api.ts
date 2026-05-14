@@ -318,15 +318,11 @@ export const ai = {
 };
 
 export const images = {
-  upload: (listingId: string, file: File) => {
-    const fd = new FormData();
-    fd.append('file', file);
-    // No Content-Type header — let the browser set multipart boundary
-    return post<ListingImage>(
+  upload: (listingId: string, data: string, mimetype: string) =>
+    post<ListingImage>(
       `/listings/${listingId}/images/upload`,
-      fd,
-    );
-  },
+      { data, mimetype },
+    ),
   getUploadUrl: (listingId: string, contentType: string) =>
     post<{ uploadUrl: string; key: string }>(
       `/listings/${listingId}/images/upload-url`,

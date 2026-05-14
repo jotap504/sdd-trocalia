@@ -7,16 +7,13 @@ import {
   Param,
   HttpCode,
   HttpStatus,
-  UseInterceptors,
-  UploadedFile,
-  ParseFilePipeBuilder,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ListingImagesService } from './listing-images.service';
 import {
   CurrentUser,
   type JwtPayload,
 } from '../common/decorators/current-user.decorator';
+import { UploadImageDto } from './dto/upload-image.dto';
 import { ConfirmImageDto, ReorderImagesDto } from './dto/confirm-image.dto';
 
 @Controller('listings/:listingId/images')
@@ -24,20 +21,14 @@ export class ListingImagesController {
   constructor(private readonly imagesService: ListingImagesService) {}
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
   @HttpCode(HttpStatus.CREATED)
   async upload(
     @CurrentUser() user: JwtPayload,
     @Param('listingId') listingId: string,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({ fileType: /^image\// })
-        .addMaxSizeValidator({ maxSize: 8 * 1024 * 1024 })
-        .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
-    )
-    file: { buffer: Buffer; mimetype: string; size: number },
+    @Body() dto: UploadImageDto,
   ) {
-    return this.imagesService.upload(user.sub, listingId, file.buffer);
+    const buffer = Buffer.from(dto.data, 'base64');
+    return this.imagesService.upload(user.sub, listingId, buffer);
   }
 
   @Post('upload-url')
