@@ -7,6 +7,7 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
 import { ListingImagesService } from './listing-images.service';
 import {
@@ -28,6 +29,9 @@ export class ListingImagesController {
     @Body() dto: UploadImageDto,
   ) {
     const buffer = Buffer.from(dto.data, 'base64');
+    if (buffer.byteLength > 5 * 1024 * 1024) {
+      throw new BadRequestException('La imagen no puede superar 5 MB');
+    }
     return this.imagesService.upload(user.sub, listingId, buffer);
   }
 

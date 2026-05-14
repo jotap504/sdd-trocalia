@@ -20,7 +20,7 @@ process.on('unhandledRejection', (reason) => {
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.useBodyParser('json', { limit: '12mb' });
+  app.useBodyParser('json', { limit: '8mb' });
 
   const redisClient = app.get<Redis>(REDIS_TOKEN);
 

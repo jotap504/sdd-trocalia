@@ -31,8 +31,8 @@ export function ImageUploader({
         toast.error('Solo se permiten imágenes');
         return;
       }
-      if (file.size > 8 * 1024 * 1024) {
-        toast.error('La imagen no puede superar 8 MB');
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('La imagen no puede superar 5 MB');
         return;
       }
       try {
@@ -143,7 +143,7 @@ export function ImageUploader({
           Arrastrá tus fotos o hacé click para subirlas
         </p>
         <p className="text-xs text-tradealo-text-muted mt-1">
-          JPG, PNG, WebP, GIF, AVIF, TIFF o SVG — hasta {maxImages} imágenes — máx. 8MB c/u
+          JPG, PNG, WebP, GIF, AVIF, TIFF o SVG — hasta {maxImages} imágenes — máx. 5MB c/u
         </p>
         <input
           type="file"
