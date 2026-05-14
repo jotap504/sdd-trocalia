@@ -50,8 +50,9 @@ export class ListingImagesService {
         .jpeg({ quality: 70 })
         .toBuffer();
     } catch (err) {
-      this.logger.error(`Sharp processing failed: ${(err as Error).message}`, (err as Error).stack);
-      throw new BadRequestException('INVALID_IMAGE_FORMAT');
+      const msg = (err as Error).message;
+      this.logger.error(`Sharp processing failed: ${msg}`, (err as Error).stack);
+      throw new BadRequestException(`Sharp: ${msg}`);
     }
 
     try {
