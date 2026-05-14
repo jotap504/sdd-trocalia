@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -124,6 +124,11 @@ export default function NewListingPage() {
   const [saving, setSaving] = useState(false);
   const [purchaseModal, setPurchaseModal] = useState(false);
   const [selectedPack, setSelectedPack] = useState<TokenPack | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [step]);
 
   const { data: balanceData } = useQuery({
     queryKey: ['wallet-balance'],
@@ -232,7 +237,7 @@ export default function NewListingPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8">
+    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8" ref={formRef}>
       <h1 className="font-heading text-2xl font-bold text-tradealo-text mb-6">
         Nueva publicación
       </h1>

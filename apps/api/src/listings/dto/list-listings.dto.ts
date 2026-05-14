@@ -61,6 +61,12 @@ export class ListListingsDto {
   saleType?: string;
 
   @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  endingSoon?: number;
+
+  @IsOptional()
   @IsString()
   paymentMethods?: string;
 

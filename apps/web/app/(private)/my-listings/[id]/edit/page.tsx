@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -100,6 +100,11 @@ export default function EditListingPage() {
   const [saving, setSaving] = useState(false);
   const [purchaseModal, setPurchaseModal] = useState(false);
   const [selectedPack, setSelectedPack] = useState<TokenPack | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [step]);
 
   const { data: listing, isLoading } = useQuery({
     queryKey: ['listing', id],
@@ -200,7 +205,7 @@ export default function EditListingPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8">
+    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8" ref={formRef}>
       <h1 className="font-heading text-2xl font-bold text-tradealo-text mb-6">
         Editar publicación
       </h1>

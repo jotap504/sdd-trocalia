@@ -160,7 +160,12 @@ export class ListingsController {
     @CurrentUser() user: JwtPayload,
     @Body() dto: AnswerQuestionDto,
   ) {
-    return this.listingsService.answerQuestion(id, questionId, user.sub, dto.answer);
+    return this.listingsService.answerQuestion(
+      id,
+      questionId,
+      user.sub,
+      dto.answer,
+    );
   }
 
   @Public()

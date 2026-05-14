@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { Search, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { ListingCard } from '@/components/listing/ListingCard';
 import { ListingGrid } from '@/components/listing/ListingGrid';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
+import { CategoryAccordionHero } from '@/components/ui/interactive-image-accordion';
 import { API_URL } from '@/lib/constants';
 import type { Listing, Category } from '@/types';
 
@@ -66,39 +67,25 @@ function getCategoryEmoji(slug: string): string {
 }
 
 export default async function HomePage() {
-  const [premiumListings, recentListings, collectibleListings, categories] =
-    await Promise.all([
-      fetchListings('type=premium&limit=6'),
-      fetchListings('limit=12&sort=recent'),
-      fetchListings('isCollectible=true&limit=6'),
-      fetchCategories(),
-    ]);
+  const [
+    premiumListings,
+    recentListings,
+    collectibleListings,
+    endingSoonAuctions,
+    categories,
+  ] = await Promise.all([
+    fetchListings('type=premium&limit=6'),
+    fetchListings('limit=12&sort=recent'),
+    fetchListings('isCollectible=true&limit=6'),
+    fetchListings('saleType=auction&endingSoon=24&limit=6&sort=recent'),
+    fetchCategories(),
+  ]);
 
   const rootCategories = categories.filter((c) => !c.parentId).slice(0, 12);
 
   return (
     <div className="flex flex-col gap-16 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-tradealo-primary-light to-white py-16 px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="font-heading text-4xl sm:text-5xl font-bold text-tradealo-text leading-tight mb-4">
-            Intercambiá lo que no usás
-          </h1>
-          <p className="text-lg text-tradealo-text-muted mb-8 max-w-xl mx-auto">
-            El marketplace argentino para intercambiar, comprar y vender.
-          </p>
-          <SearchBar />
-          <div className="mt-6">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 text-tradealo-primary border border-tradealo-primary rounded-xl px-6 py-3 font-medium text-sm hover:bg-tradealo-primary-light transition-colors"
-            >
-              Publicá gratis tu primer anuncio
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CategoryAccordionHero />
 
       {/* Categorías */}
       {rootCategories.length > 0 && (
@@ -142,6 +129,28 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* Remates próximos a finalizar */}
+      {endingSoonAuctions.length > 0 && (
+        <section className="px-4 mx-auto w-full max-w-7xl">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-heading text-2xl font-bold text-tradealo-text">
+              Remates Próximos a Finalizar
+            </h2>
+            <Link
+              href="/listings?saleType=auction&endingSoon=24"
+              className="text-sm text-tradealo-primary hover:underline font-medium flex items-center gap-1"
+            >
+              Ver todos <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {endingSoonAuctions.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} variant="grid" />
+            ))}
           </div>
         </section>
       )}
@@ -210,29 +219,5 @@ export default async function HomePage() {
         </div>
       </section>
     </div>
-  );
-}
-
-function SearchBar() {
-  return (
-    <form action="/listings" method="get" className="flex gap-2 max-w-xl mx-auto">
-      <div className="flex-1 relative">
-        <Search
-          size={18}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-tradealo-text-muted pointer-events-none"
-        />
-        <input
-          name="q"
-          placeholder="¿Qué estás buscando?"
-          className="w-full h-14 pl-11 pr-4 rounded-xl border border-tradealo-border bg-white text-base shadow-card focus:outline-none focus:border-tradealo-primary focus:ring-2 focus:ring-tradealo-primary-light"
-        />
-      </div>
-      <button
-        type="submit"
-        className="h-14 px-7 bg-tradealo-primary text-white font-semibold rounded-xl hover:bg-tradealo-primary-hover transition-colors shadow-sm shrink-0"
-      >
-        Buscar
-      </button>
-    </form>
   );
 }

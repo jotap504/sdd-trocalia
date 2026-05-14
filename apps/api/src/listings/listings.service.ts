@@ -167,6 +167,13 @@ export class ListingsService {
       );
     if (dto.saleType)
       conditions.push(eq(schema.listings.saleType, dto.saleType));
+    if (dto.endingSoon)
+      conditions.push(
+        lte(
+          schema.listings.expiresAt,
+          sql`NOW() + INTERVAL '${dto.endingSoon} hours'`,
+        ),
+      );
     if (dto.paymentMethods) {
       const methods = dto.paymentMethods.split(',').filter(Boolean);
       if (methods.length > 0) {
