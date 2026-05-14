@@ -32,14 +32,11 @@ export function Navbar() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const isHome = pathname === '/';
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMobileOpen(false);
     setMenuOpen(false);
-    setScrolled(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -53,13 +50,6 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', onClick);
   }, [menuOpen]);
 
-  useEffect(() => {
-    if (!isHome) return;
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
-  }, [isHome]);
-
   const onLogout = async () => {
     await logout();
     router.push('/');
@@ -71,30 +61,8 @@ export function Navbar() {
   ];
 
   return (
-    <>
-      {isHome && !scrolled && (
-        <style>{`
-          header[data-nav="dark"] a[href="/messages"],
-          header[data-nav="dark"] button[aria-label="Notificaciones"] {
-            color: #fff !important;
-          }
-          header[data-nav="dark"] a[href="/messages"]:hover,
-          header[data-nav="dark"] button[aria-label="Notificaciones"]:hover {
-            background-color: rgba(255,255,255,0.1) !important;
-          }
-        `}</style>
-      )}
-    <header
-      data-nav={isHome && !scrolled ? 'dark' : 'light'}
-      className={cn(
-        isHome ? 'fixed top-0 left-0 right-0' : 'sticky top-0',
-        'z-50 transition-all duration-300',
-        isHome && !scrolled
-          ? 'bg-transparent'
-          : 'bg-white border-b border-tradealo-border shadow-sm'
-      )}
-    >
-      <div className={cn('mx-auto max-w-7xl flex items-center gap-3', isHome && !scrolled ? 'px-8 lg:px-16 py-5' : 'px-4 sm:px-6 h-14')}>
+    <header className="sticky top-0 z-40 bg-white border-b border-tradealo-border shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-14 flex items-center gap-3">
         <Link
           href="/"
           className="flex items-center gap-2 shrink-0 group"
@@ -103,37 +71,32 @@ export function Navbar() {
           <span className="w-8 h-8 rounded-lg bg-tradealo-primary flex items-center justify-center text-white shadow-sm group-hover:bg-tradealo-primary-hover transition-colors">
             <Repeat size={16} strokeWidth={2.5} />
           </span>
-          <span
-            className={cn(
-              'font-bold text-lg tracking-tight transition-colors duration-300',
-              isHome && !scrolled ? 'text-white' : 'font-heading text-tradealo-primary'
-            )}
-            style={isHome && !scrolled ? { fontFamily: "'Sora', sans-serif" } : undefined}
-          >
+          <span className="font-heading font-bold text-lg text-tradealo-primary tracking-tight">
             Tradealo
           </span>
         </Link>
 
-        <nav className={cn('hidden md:flex items-center', isHome && !scrolled ? 'gap-8' : 'gap-1 ml-2')}>
+        <nav className="hidden md:flex items-center gap-1 ml-2">
           {navLinks.map((l) => {
             const active = pathname === l.href;
-            const linkCls = isHome && !scrolled
-              ? 'text-sm uppercase tracking-widest text-white/70 hover:text-white font-medium transition-colors'
-              : cn(
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors',
                   active
                     ? 'text-tradealo-primary bg-tradealo-primary-light'
                     : 'text-tradealo-text hover:bg-gray-100'
-                );
-            return (
-              <Link key={l.href} href={l.href} className={linkCls}>
+                )}
+              >
                 {l.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className={cn('hidden md:flex flex-1 max-w-sm mx-3', isHome && !scrolled && 'md:hidden')}>
+        <div className="hidden md:flex flex-1 max-w-sm mx-3">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -156,15 +119,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 ml-auto">
-          {isHome && !scrolled ? (
-            <Link
-              href="/register"
-              className="hidden md:inline-flex h-10 px-6 rounded-lg text-xs uppercase tracking-widest font-medium items-center justify-center hover:brightness-110 active:scale-[0.97] transition-all"
-              style={{ background: 'hsl(0,0%,18%)', color: 'hsl(0,0%,96%)' }}
-            >
-              Publica gratis
-            </Link>
-          ) : user ? (
+          {user ? (
             <>
               <Link href="/my-listings/new" className="hidden sm:block">
                 <Button size="md" leftIcon={<Plus size={16} />}>
@@ -250,17 +205,11 @@ export function Navbar() {
           )}
 
           <button
-            className={cn(
-              'md:hidden p-2 rounded-lg transition-colors',
-              isHome && !scrolled ? 'hover:bg-white/10' : 'hover:bg-gray-100'
-            )}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
             onClick={() => setMobileOpen(true)}
             aria-label="Abrir menú"
           >
-            <Menu
-              size={20}
-              className={cn(isHome && !scrolled ? 'text-white' : 'text-tradealo-text')}
-            />
+            <Menu size={20} />
           </button>
         </div>
       </div>
@@ -363,7 +312,6 @@ export function Navbar() {
         </div>
       )}
     </header>
-    </>
   );
 }
 
