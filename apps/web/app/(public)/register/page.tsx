@@ -77,7 +77,7 @@ export default function RegisterPage() {
               Crear cuenta
             </h1>
             <p className="text-sm text-tradealo-text-muted mt-1">
-              Publicá gratis tu primera publicación
+              Publicar tu primera publicación
             </p>
           </div>
 

@@ -3,6 +3,7 @@ import { API_URL } from './constants';
 import type {
   User,
   Listing,
+  ListingImage,
   Category,
   TokenPack,
   WalletBalance,
@@ -317,6 +318,15 @@ export const ai = {
 };
 
 export const images = {
+  upload: (listingId: string, file: File) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    return post<ListingImage>(
+      `/listings/${listingId}/images/upload`,
+      fd,
+      { headers: { 'Content-Type': 'multipart/form-data' } },
+    );
+  },
   getUploadUrl: (listingId: string, contentType: string) =>
     post<{ uploadUrl: string; key: string }>(
       `/listings/${listingId}/images/upload-url`,

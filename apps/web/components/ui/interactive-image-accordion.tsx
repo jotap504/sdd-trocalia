@@ -108,7 +108,7 @@ export function CategoryAccordionHero() {
 
   return (
     <section className="bg-gradient-to-br from-tradealo-primary-light to-white overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:py-20">
+      <div className="mx-auto max-w-7xl px-4 pt-4 pb-8 md:pt-6 md:pb-12">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Left: Text + CTAs */}
           <div className="w-full lg:w-[420px] shrink-0 text-center lg:text-left">
@@ -124,7 +124,7 @@ export function CategoryAccordionHero() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-tradealo-primary text-white rounded-xl px-6 py-3 font-medium text-sm hover:bg-tradealo-primary-hover transition-colors shadow-sm"
               >
-                Publicá gratis
+                Publicar
                 <ArrowRight size={16} />
               </Link>
               <Link

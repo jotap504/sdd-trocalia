@@ -36,21 +36,9 @@ export function ImageUploader({
         return;
       }
       try {
-        const { uploadUrl, key } = await imagesApi.getUploadUrl(
-          listingId,
-          file.type
-        );
-        await fetch(uploadUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': file.type },
-          body: file,
-        });
-        const confirmed = await imagesApi.confirmUpload(listingId, {
-          key,
-          sortOrder: 0,
-        });
+        const image = await imagesApi.upload(listingId, file);
         setImgs((prev) => {
-          const next = [...prev, { ...confirmed, sortOrder: prev.length }];
+          const next = [...prev, { ...image, sortOrder: prev.length }];
           onChange?.(next);
           return next;
         });

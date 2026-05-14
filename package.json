@@ -27,6 +27,7 @@
       "bcrypt",
       "esbuild",
       "msgpackr-extract",
+      "sharp",
       "unrs-resolver"
     ],
     "overrides": {

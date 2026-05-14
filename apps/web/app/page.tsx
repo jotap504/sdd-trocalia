@@ -80,7 +80,7 @@ export default async function HomePage() {
   const rootCategories = categories.filter((c) => !c.parentId).slice(0, 12);
 
   return (
-    <div className="flex flex-col gap-16 pb-20">
+    <div className="flex flex-col gap-10 pb-20">
       <CategoryAccordionHero />
 
       {/* Categorías */}
@@ -195,7 +195,7 @@ export default async function HomePage() {
       <section className="px-4 mx-auto w-full max-w-7xl">
         <div className="bg-gradient-to-r from-tradealo-primary to-tradealo-primary-hover rounded-2xl p-8 sm:p-12 text-center text-white">
           <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-3">
-            ¡Publicá gratis!
+            ¡Publicar!
           </h2>
           <p className="text-white/80 mb-6 text-base max-w-md mx-auto">
             Sumate a miles de argentinos que intercambian, compran y venden en Tradealo.

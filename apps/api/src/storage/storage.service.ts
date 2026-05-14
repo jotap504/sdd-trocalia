@@ -59,6 +59,19 @@ export class StorageService {
     return { url: data.signedUrl, expiresIn: PRESIGNED_GET_TTL };
   }
 
+  async uploadBuffer(
+    key: string,
+    buffer: Buffer,
+    contentType: string,
+  ): Promise<string> {
+    if (!this.storage) throw new Error('Storage not configured');
+    const { error } = await this.storage
+      .from(this.bucket)
+      .upload(key, buffer, { contentType, upsert: true });
+    if (error) throw error;
+    return this.getPublicUrl(key);
+  }
+
   async deleteObject(key: string): Promise<void> {
     if (!this.storage) return;
     const { error } = await this.storage.from(this.bucket).remove([key]);

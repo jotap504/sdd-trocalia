@@ -1,3 +1,4 @@
+import sharp from 'sharp';
 import {
   Injectable,
   Inject,
@@ -24,6 +25,58 @@ export class ListingImagesService {
     @Inject(DRIZZLE_TOKEN) private readonly db: DB,
     private readonly storage: StorageService,
   ) {}
+
+  async upload(userId: string, listingId: string, buffer: Buffer) {
+    const listing = await this.assertOwner(userId, listingId);
+    await this.assertBelowMaxImages(listingId, listing.type);
+
+    const timestamp = Date.now();
+    const mainKey = `listings/${listingId}/${timestamp}.jpg`;
+    const thumbKey = `listings/${listingId}/${timestamp}_thumb.jpg`;
+
+    let mainBuffer: Buffer;
+    let thumbBuffer: Buffer;
+    try {
+      mainBuffer = await sharp(buffer)
+        .resize({ width: 1920, withoutEnlargement: true })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+
+      thumbBuffer = await sharp(buffer)
+        .resize({ width: 400, withoutEnlargement: true })
+        .jpeg({ quality: 70 })
+        .toBuffer();
+    } catch {
+      throw new BadRequestException('INVALID_IMAGE_FORMAT');
+    }
+
+    try {
+      const [imageUrl, thumbnailUrl] = await Promise.all([
+        this.storage.uploadBuffer(mainKey, mainBuffer, 'image/jpeg'),
+        this.storage.uploadBuffer(thumbKey, thumbBuffer, 'image/jpeg'),
+      ]);
+
+      const isPrimary = (await this.countImages(listingId)) === 0;
+
+      const [image] = await this.db
+        .insert(schema.listingImages)
+        .values({
+          listingId,
+          url: imageUrl,
+          thumbnailUrl,
+          r2Key: mainKey,
+          sortOrder: 0,
+          isPrimary,
+        })
+        .returning();
+
+      return image;
+    } catch (err) {
+      await this.storage.deleteObject(mainKey).catch(() => {});
+      await this.storage.deleteObject(thumbKey).catch(() => {});
+      throw err;
+    }
+  }
 
   async getUploadUrl(userId: string, listingId: string) {
     const listing = await this.assertOwner(userId, listingId);

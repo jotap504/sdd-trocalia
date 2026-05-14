@@ -25,6 +25,7 @@ export interface User {
 export interface ListingImage {
   id: string;
   url: string;
+  thumbnailUrl?: string;
   sortOrder: number;
 }
 
