@@ -4,12 +4,16 @@ import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { conversations } from '@/lib/api';
+import { useAuthStore } from '@/lib/store';
 
 export function MessageBell() {
+  const user = useAuthStore((s) => s.user);
+
   const { data } = useQuery({
     queryKey: ['messages-unread-count'],
     queryFn: () => conversations.unreadCount(),
     refetchInterval: 30_000,
+    enabled: !!user,
   });
 
   const count = data?.count ?? 0;

@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { Bell, Loader2 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { notifications } from '@/lib/api';
+import { useAuthStore } from '@/lib/store';
 import { formatRelative } from '@/lib/utils';
 
 export function NotificationBell() {
+  const user = useAuthStore((s) => s.user);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const qc = useQueryClient();
@@ -16,6 +18,7 @@ export function NotificationBell() {
     queryKey: ['notifications', 'unread-count'],
     queryFn: () => notifications.unreadCount(),
     refetchInterval: 60_000,
+    enabled: !!user,
   });
 
   const { data: list, isLoading } = useQuery({
