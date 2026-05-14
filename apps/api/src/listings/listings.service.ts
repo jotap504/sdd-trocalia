@@ -648,7 +648,9 @@ export class ListingsService {
 
     // Build message with seller contact info
     let contactMessage = '¡Hola! Quiero comprar este producto.';
-    const contactInfo = listing.contactInfo as Record<string, unknown> | undefined;
+    const contactInfo = listing.contactInfo as
+      | Record<string, unknown>
+      | undefined;
     if (contactInfo?.phone) {
       contactMessage += `\n\n📞 Contacto del vendedor: ${contactInfo.phone}`;
     }

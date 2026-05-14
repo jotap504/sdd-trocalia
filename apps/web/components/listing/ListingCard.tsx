@@ -33,7 +33,7 @@ export function ListingCard({ listing, variant = 'grid', className }: Props) {
             <img
               src={cover}
               alt={listing.title}
-              className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
+              className="w-full h-full object-contain bg-gray-50 group-hover:scale-[1.02] transition-transform duration-200"
             />
           ) : (
             <Placeholder />
@@ -94,7 +94,7 @@ export function ListingCard({ listing, variant = 'grid', className }: Props) {
           <img
             src={cover}
             alt={listing.title}
-            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+            className="w-full h-full object-contain bg-gray-50 group-hover:scale-[1.03] transition-transform duration-300"
           />
         ) : (
           <Placeholder />

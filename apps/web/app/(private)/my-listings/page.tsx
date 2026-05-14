@@ -193,7 +193,7 @@ function ListingRow({
             <img
               src={cover}
               alt={listing.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-gray-50"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-tradealo-text-muted text-xs">

@@ -49,11 +49,22 @@ export const SHIPPING_OPTIONS = [
   'Sin envío',
 ] as const;
 
-export const LISTING_DURATION_OPTIONS = [
-  { days: 30, label: '30 días', multiplier: 1 },
-  { days: 60, label: '60 días', multiplier: 1.5 },
-  { days: 90, label: '90 días', multiplier: 2 },
+export const LISTING_DURATION_PRESETS = [
+  { days: 7, label: '7 días' },
+  { days: 14, label: '14 días' },
+  { days: 30, label: '30 días' },
+  { days: 60, label: '60 días' },
+  { days: 90, label: '90 días' },
 ] as const;
+
+export const LISTING_DURATION_MIN = 1;
+export const LISTING_DURATION_MAX = 90;
+
+export function getDurationMultiplier(days: number): number {
+  if (days <= 30) return 1;
+  if (days <= 60) return 1.5;
+  return 2;
+}
 
 export const LISTING_BASE_COST = {
   standard: 1,

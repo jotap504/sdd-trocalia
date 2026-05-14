@@ -46,7 +46,7 @@ export function ListingGallery({ images, title }: Props) {
               aria-label={`Ver imagen ${idx + 1}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt="" className="w-full h-full object-cover" />
+              <img src={img.url} alt="" className="w-full h-full object-contain bg-gray-50" />
             </button>
           ))}
         </div>
