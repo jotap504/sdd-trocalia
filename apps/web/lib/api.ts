@@ -292,7 +292,7 @@ export const kyc = {
 
 export const reviews = {
   getReviews: (userId: string) =>
-    get<PaginatedResponse<Review>>(`/users/${userId}/reviews`),
+    get<PaginatedResponse<Review>>(`/reviews/user/${userId}`),
   createReview: (payload: {
     revieweeId: string;
     listingId?: string;
