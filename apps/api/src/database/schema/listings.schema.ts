@@ -94,6 +94,8 @@ export const listings = pgTable(
     viewsCount: integer('views_count').notNull().default(0),
     contactsCount: integer('contacts_count').notNull().default(0),
 
+    youtubeLiveId: varchar('youtube_live_id', { length: 50 }),
+
     creditsSpent: integer('credits_spent').notNull().default(0),
     wasFreeQuota: boolean('was_free_quota').notNull().default(false),
     durationDays: smallint('duration_days').notNull().default(30),

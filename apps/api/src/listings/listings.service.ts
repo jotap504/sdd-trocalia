@@ -18,6 +18,7 @@ import {
   lte,
   inArray,
   ilike,
+  isNotNull,
 } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DRIZZLE_TOKEN } from '../database/database.module';
@@ -184,6 +185,10 @@ export class ListingsService {
           )}]`}`,
         );
       }
+    }
+
+    if (dto.hasYoutubeLive) {
+      conditions.push(isNotNull(schema.listings.youtubeLiveId));
     }
 
     if (dto.cursor) {

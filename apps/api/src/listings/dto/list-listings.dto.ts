@@ -2,6 +2,7 @@ import {
   IsOptional,
   IsString,
   IsNumber,
+  IsBoolean,
   IsEnum,
   Min,
   Max,
@@ -86,6 +87,11 @@ export class ListListingsDto {
   @Min(1)
   @Max(500)
   radiusKm?: number;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  @IsBoolean()
+  hasYoutubeLive?: boolean;
 
   @IsOptional()
   @IsEnum(SortOrder)

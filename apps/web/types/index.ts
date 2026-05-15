@@ -61,6 +61,7 @@ export interface Listing {
     phone?: string;
     showWhatsApp?: boolean;
   };
+  youtubeLiveId?: string;
   riskScore?: number;
   stock?: number;
   desiredPrice?: number;

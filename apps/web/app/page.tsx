@@ -4,6 +4,7 @@ import { ListingCard } from '@/components/listing/ListingCard';
 import { ListingGrid } from '@/components/listing/ListingGrid';
 import { Badge } from '@/components/ui/Badge';
 import { CategoryAccordionHero } from '@/components/ui/interactive-image-accordion';
+import { LiveVideosSection } from '@/components/listing/LiveVideosSection';
 import { API_URL } from '@/lib/constants';
 import type { Listing, Category } from '@/types';
 
@@ -68,12 +69,14 @@ export default async function HomePage() {
     recentListings,
     collectibleListings,
     endingSoonAuctions,
+    liveListings,
     categories,
   ] = await Promise.all([
     fetchListings('type=premium&limit=6'),
     fetchListings('limit=12&sort=recent'),
     fetchListings('isCollectible=true&limit=6'),
     fetchListings('saleType=auction&endingSoon=24&limit=6&sort=recent'),
+    fetchListings('hasYoutubeLive=true&limit=10'),
     fetchCategories(),
   ]);
 
@@ -82,6 +85,8 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col gap-10 pb-20">
       <CategoryAccordionHero />
+
+      <LiveVideosSection listings={liveListings} />
 
       {/* Categorías */}
       {rootCategories.length > 0 && (
